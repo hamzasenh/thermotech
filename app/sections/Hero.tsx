@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import {motion, useScroll, useTransform } from "framer-motion";
+import {motion} from "framer-motion";
 // icons
 import { BsArrowRight } from "react-icons/bs";
 // Assets
@@ -17,11 +16,6 @@ const scrollToSection = (id: string) => {
 export const Hero = () => {
 
     const heroRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: heroRef,
-        offset: ['start end', 'end start']
-    });
-    const translateY = useTransform(scrollYProgress, [0, 1], [150, -150]);
 
 
   return (

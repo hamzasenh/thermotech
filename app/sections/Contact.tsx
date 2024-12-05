@@ -3,17 +3,10 @@ import img from "@/assets/entretien.webp";
 import Image from "next/image";
 import { BsArrowRight } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 export const Contact = () => {
     const sectionRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ['start end', 'end start']
-    });
-
-    const translateY = useTransform(scrollYProgress, [0, 1], [150, -150]);
 
   return (
     <section ref={sectionRef} className="py-24 bg-gradient-to-b from-white  to-[#D2DCFF] overflow-x-clip" id="contact">

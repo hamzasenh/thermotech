@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
 // assets
 import avatar1 from "@/assets/avatar-1.png";
