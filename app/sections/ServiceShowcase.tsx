@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import Image, { StaticImageData } from "next/image";
 import { BsArrowRight } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 // Importation des images (ces variables sont des objets StaticImageData)
 import installation from "@/assets/installation.webp";
@@ -119,11 +120,18 @@ export const ServiceShowcase = () => {
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
           {servicesData.map((service, index) => (
-            <div key={index} className="relative group overflow-hidden rounded-lg h-100">
+            <motion.div 
+              key={index} 
+              className="relative group overflow-hidden rounded-lg h-100"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              whileHover={{ scale: 1.05 }}
+            >
               <Image
                 src={service.imageUrl}
                 alt={service.imageAlt}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                className="w-full h-full object-cover"
               />
               <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center">
                 <button 
@@ -134,7 +142,7 @@ export const ServiceShowcase = () => {
                   <BsArrowRight className="h-5 w-5" />
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

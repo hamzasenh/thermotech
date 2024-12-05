@@ -2,12 +2,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 // assets
-import acme from "@/assets/logo-acme.png";
-import quantum from "@/assets/logo-quantum.png";
-import echo from "@/assets/logo-echo.png";
-import celestia from "@/assets/logo-celestial.png"; 
-import pulse from "@/assets/logo-pulse.png";
-import apex from "@/assets/logo-apex.png";
+import vaillant from "@/assets/vaillant.png";
+import bulex from "@/assets/blx.png";
+import ariston from "@/assets/ariston.svg";
 
 
 
@@ -30,65 +27,67 @@ export const LogoTicker = () => {
                     }}
                 >
                     <Image 
-                        src={acme} 
-                        alt="acme"
+                        src={vaillant} 
+                        alt="vaillant"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={quantum} 
-                        alt="quantum"
+                        src={bulex} 
+                        alt="bulex"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={echo} 
-                        alt="echo"
+                        src={ariston} 
+                        alt="ariston"
+                        className="logo-ticker-image" 
+                    />
+                    
+                    <Image 
+                        src={vaillant} 
+                        alt="vaillant"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={celestia} 
-                        alt="celestia"
+                        src={bulex} 
+                        alt="bulex"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={pulse} 
-                        alt="pulse"
+                        src={ariston} 
+                        alt="ariston"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={apex} 
-                        alt="apex"
+                        src={vaillant} 
+                        alt="vaillant"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={acme} 
-                        alt="acme"
+                        src={bulex} 
+                        alt="bulex"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={quantum} 
-                        alt="quantum"
+                        src={ariston} 
+                        alt="ariston"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={echo} 
-                        alt="echo"
+                        src={vaillant} 
+                        alt="vaillant"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={celestia} 
-                        alt="celestia"
+                        src={bulex} 
+                        alt="bulex"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={pulse} 
-                        alt="pulse"
+                        src={ariston} 
+                        alt="ariston"
                         className="logo-ticker-image" 
                     />
-                    <Image 
-                        src={apex} 
-                        alt="apex"
-                        className="logo-ticker-image" 
-                    />
+                    
                 </motion.div>
             </div>
         </div>
