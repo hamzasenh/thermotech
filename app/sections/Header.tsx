@@ -7,8 +7,9 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const navLinks = [
-  { label: "Accueil", href: "accueil" },
-  { label: "Services", href: "services" },
+  { label: "Accueil", href: "hero" },
+  { label: "Chauffage", href: "chauffage" },
+  { label: "Électricité", href: "elec" },
   { label: "Témoignages", href: "testimonials" },
   { label: "FAQs", href: "faqs" },
   { label: "Contact", href: "contact" },
@@ -114,10 +115,13 @@ export const Header = () => {
               </nav>
 
               {/* Numéro de téléphone visible à droite sur lg+ */}
-              <button className="hidden lg:flex items-center gap-2 btn btn-primary">
+              <a 
+                className="hidden lg:flex items-center gap-2 btn btn-primary"
+                href="tel:+32487942774"
+              >
                 <FaPhoneAlt />
-                048957893
-              </button>
+                0487942774
+              </a>
             </div>
           </div>
 

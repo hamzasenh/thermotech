@@ -1,7 +1,7 @@
 import logo from "@/assets/logo.png";
 import Image from "next/image";
-import { FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaTiktok } from "react-icons/fa";
+import { GrInstagram } from "react-icons/gr";
 
 export const Footer = () => {
   return (
@@ -23,16 +23,15 @@ export const Footer = () => {
 
             <nav className="flex flex-col md:flex-row md:justify-center gap-6 mt-6">
                 <a href="#">Accueil</a>
-                <a href="#services">Services</a>
+                <a href="#chauffage">Chauffage</a>
+                <a href="#elec">Électricité</a>
                 <a href="#testimonials">Temoignages</a>
-                <a href="#faqs">FAQ</a>
+                <a href="#faqs">FAQs</a>
                 <a href="#contact">Contact</a>
             </nav>
             <div className=" flex justify-center gap-6 mt-6">
-                <FaXTwitter />
-                <FaInstagram />
-                <FaLinkedinIn />
-                <FaYoutube />
+                <GrInstagram />
+                <FaTiktok />          
             </div>
             <p className="mt-6">
                 &copy; 2024 ThermoTech. 

@@ -1,5 +1,6 @@
 "use client";
-import img from "@/assets/entretien.webp";
+import email from "@/assets/email.jpg";
+import phone from "@/assets/phone.jpg";
 import Image from "next/image";
 import { BsArrowRight } from "react-icons/bs";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -16,10 +17,10 @@ export const Contact = () => {
                 <h2 className="section-title mt-5">Contactez-nous</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-                    {/* Card for Phone Contact */}
+                    
                     <div className="relative group cta-card">
                         <Image
-                            src={img}
+                            src={phone}
                             alt="Contactez-nous par téléphone"
                             fill
                             className="cta-image object-cover"
@@ -28,18 +29,18 @@ export const Contact = () => {
                             <h3 className="section-h3 mb-2">Contactez-nous par téléphone</h3>
                             <p className="text-sm text-center mb-4 ">Appelez-nous pour obtenir une assistance immédiate.</p>
                             <a
-                                href="tel:+32489745620"
+                                href="tel:+32487942774"
                                 className="btn btn-primary gap-2"
                             >
-                                <FaPhoneAlt /> 048957893
+                                <FaPhoneAlt /> 0487942774
                             </a>
                         </div>
                     </div>
 
-                    {/* Card for Email Contact */}
+                    
                     <div className="relative group cta-card">
                         <Image
-                            src={img}
+                            src={email}
                             alt="Contactez-nous par email"
                             fill
                             className="cta-image object-cover"
@@ -49,7 +50,7 @@ export const Contact = () => {
                             <p className="text-sm text-center mb-4">Envoyez-nous un e-mail et nous vous répondrons rapidement.</p>
                             <a
                                 className="btn btn-primary gap-2"
-                                href="mailto:hamzasenhaji0@gmail.com"
+                                href="mailto:info@thermotechs.be"
                             >
                                 Écrivez-nous
                                 <BsArrowRight className="h-5 w-5" />

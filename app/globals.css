@@ -16,7 +16,7 @@
   }
 
   .logo-ticker-image {
-    @apply h-8 w-auto
+    @apply h-10 w-auto
   }
 
   .section-title {
@@ -42,5 +42,9 @@
 
   .cta-image {
     @apply absolute inset-0 transition-transform duration-500 group-hover:scale-110
+  }
+
+  .service-icon {
+    @apply inline-block mb-2
   }
 }

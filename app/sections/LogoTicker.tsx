@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 // assets
 import vaillant from "@/assets/vaillant.png";
 import bulex from "@/assets/blx.png";
-import ariston from "@/assets/ariston.svg";
+import buderus from "@/assets/buderus.png";
+import bosch from "@/assets/bosch.png";
+import junkers from "@/assets/junkers.png";
+import viessmann from "@/assets/viessmann.png";
+import chaffoteaux from "@/assets/chaffoteaux.png";
 
 
 
@@ -37,39 +41,29 @@ export const LogoTicker = () => {
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={ariston} 
+                        src={bosch} 
                         alt="ariston"
                         className="logo-ticker-image" 
                     />
                     
                     <Image 
-                        src={vaillant} 
-                        alt="vaillant"
+                        src={buderus} 
+                        alt="buderus"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={bulex} 
-                        alt="bulex"
+                        src={junkers} 
+                        alt="junkers"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={ariston} 
-                        alt="ariston"
+                        src={viessmann} 
+                        alt="viessmann"
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={vaillant} 
-                        alt="vaillant"
-                        className="logo-ticker-image" 
-                    />
-                    <Image 
-                        src={bulex} 
-                        alt="bulex"
-                        className="logo-ticker-image" 
-                    />
-                    <Image 
-                        src={ariston} 
-                        alt="ariston"
+                        src={chaffoteaux} 
+                        alt="chaffoteaux"
                         className="logo-ticker-image" 
                     />
                     <Image 
@@ -83,8 +77,28 @@ export const LogoTicker = () => {
                         className="logo-ticker-image" 
                     />
                     <Image 
-                        src={ariston} 
-                        alt="ariston"
+                        src={bosch} 
+                        alt="bosch"
+                        className="logo-ticker-image" 
+                    />
+                    <Image 
+                        src={buderus} 
+                        alt="buderus"
+                        className="logo-ticker-image" 
+                    />
+                    <Image 
+                        src={junkers} 
+                        alt="junkers"
+                        className="logo-ticker-image" 
+                    />
+                    <Image 
+                        src={viessmann} 
+                        alt="viessmann"
+                        className="logo-ticker-image" 
+                    />
+                    <Image 
+                        src={chaffoteaux} 
+                        alt="chaffoteaux"
                         className="logo-ticker-image" 
                     />
                     

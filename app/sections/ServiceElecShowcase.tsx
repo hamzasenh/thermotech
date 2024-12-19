@@ -4,11 +4,14 @@ import Image, { StaticImageData } from "next/image";
 import { BsArrowRight } from "react-icons/bs";
 import { motion } from "framer-motion";
 
-import installation from "@/assets/installation.jpg";
-import repair from "@/assets/repair.jpg";
-import entretien from "@/assets/entretien.jpg";
+import installation from "@/assets/installation_elec.jpg";
+import repair from "@/assets/depannage_elec.webp";
+import conformite from "@/assets/conformite.jpg";
+import borne from "@/assets/borne.jpg";
+import parlophone from "@/assets/parlophone.jpeg";
+import videophone from "@/assets/videophone.jpg";
 import { FaPlus } from "react-icons/fa";
-import chauffage from "@/assets/chauffage.png";
+import elec from "@/assets/elec.png";
 
 interface Service {
   title: string;
@@ -22,27 +25,51 @@ interface Service {
 const servicesData: Service[] = [
   {
     title: "Installation",
-    titleModal: "Installation de Chauffage",
+    titleModal: "Installation de l'électricité",
     description:
-      "Nous vous accompagnons dans l’installation de systèmes de chauffage performants et adaptés à vos besoins énergétiques. Qu'il s'agisse de chaudières à condensation, de pompes à chaleur, ou de systèmes de chauffage central, notre équipe de techniciens qualifiés assure une pose professionnelle et conforme aux normes les plus strictes. Profitez d’un confort optimal tout en maîtrisant votre consommation énergétique grâce à des solutions modernes et éco-responsables.",
+      "Nous réalisons des installations électriques sûres et conformes aux normes, adaptées aux besoins de votre logement ou de votre entreprise. Que ce soit pour une construction neuve, une rénovation ou un projet spécifique, notre équipe vous accompagne de la planification à la mise en service de votre installation. Profitez d’un réseau électrique fiable et optimisé pour garantir votre confort et votre sécurité au quotidien.",
     imageUrl: installation, 
     imageAlt: "Installation",
   },
   {
-    title: "Réparation",
-    titleModal: "Dépannage et réparation de chaudière",
+    title: "Dépannage",
+    titleModal: "Dépannage électrique",
     description:
-      "Une panne de chauffage ? Nos experts interviennent rapidement pour diagnostiquer et réparer tous types de systèmes, qu’il s’agisse de chaudières, de radiateurs, ou d’autres équipements de chauffage. Nous vous garantissons un service réactif et efficace pour rétablir la chaleur et le confort dans votre espace, avec des solutions durables et sécurisées. Grâce à notre expertise, nous assurons des interventions de qualité pour résoudre vos problèmes de chauffage en toute sérénité.",
+      "En cas de panne ou de dysfonctionnement électrique, notre équipe intervient rapidement pour diagnostiquer et résoudre le problème. Nous mettons notre expertise au service de dépannages efficaces, couvrant tous types de systèmes électriques. Qu’il s’agisse de pannes mineures ou de coupures de courant, nous sommes disponibles pour rétablir la sécurité et la fonctionnalité de votre réseau électrique.",
     imageUrl: repair,
     imageAlt: "Réparation",
   },
   {
-    title: "Entretien",
-    titleModal: "Entretien de chaudière",
+    title: "Mise en conformité",
+    titleModal: "Mise en conformité",
     description:
-      "Un bon entretien de votre système de chauffage est essentiel pour garantir son bon fonctionnement, sa durabilité et votre sécurité. Nos techniciens se chargent de l’entretien de vos chaudières, radiateurs et autres équipements, en réalisant les vérifications, réglages et nettoyages nécessaires. En choisissant un entretien régulier, vous optimisez les performances de votre installation, réduisez les risques de pannes, et assurez une consommation énergétique maîtrisée.",
-    imageUrl: entretien, 
-    imageAlt: "Entretien",
+      "Assurez-vous que votre installation électrique respecte les dernières normes de sécurité grâce à notre service de mise en conformité. Nos experts vérifient l’ensemble de votre réseau, identifient les points à corriger et effectuent les travaux nécessaires.",
+    imageUrl: conformite, 
+    imageAlt: "conformite",
+  },
+  {
+    title: "Borne de recharge",
+    titleModal: "Installation de Bornes de Recharge",
+    description:
+      "Pour faciliter la recharge de vos véhicules électriques, nous proposons des solutions d’installation de bornes de recharge adaptées à vos besoins. Que ce soit pour une installation domestique, en entreprise, ou dans un parking, nous assurons une pose professionnelle et une intégration optimale de vos bornes. Profitez d’une solution de recharge rapide, efficace et sécurisée.",
+    imageUrl: borne, 
+    imageAlt: "borne electrique",
+  },
+  {
+    title: "Parlophonie",
+    titleModal: "Installation de parlophonie",
+    description:
+      "Améliorez l’accès et la communication dans votre bâtiment avec nos systèmes de parlophonie. Nous installons des solutions de parlophonie modernes et performantes, idéales pour les habitations, immeubles et entreprises. Ces systèmes de communication offrent un accès sécurisé et pratique pour vos visiteurs, tout en garantissant votre tranquillité.",
+    imageUrl: parlophone, 
+    imageAlt: "parlophone",
+  },
+  {
+    title: "Vidéophonie",
+    titleModal: "Installation de Vidéophonie",
+    description:
+      "Avec nos systèmes de vidéophonie, bénéficiez d’une surveillance visuelle et d’un contrôle d’accès renforcé pour votre bâtiment. Nous proposons l’installation de solutions de vidéophonie performantes et adaptées, vous permettant de voir et d’identifier vos visiteurs avant d’ouvrir. Ce service vous apporte une sécurité accrue pour vos locaux et une tranquillité d’esprit précieuse.",
+    imageUrl: videophone, 
+    imageAlt: "videophone",
   },
 ];
 
@@ -90,13 +117,13 @@ const Modal = ({ service, onClose }: ModalProps) => {
   );
 };
 
-export const ServiceShowcase = () => {
+export const ServiceElecShowcase = () => {
   const sectionRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null); 
 
   const openModal = (service: Service) => {
-    setSelectedService(service);  // Pas d'erreur ici, car selectedService peut être un Service ou null
+    setSelectedService(service);
     setIsModalOpen(true);
   };
 
@@ -105,17 +132,17 @@ export const ServiceShowcase = () => {
   };
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-b from-[#FFFFFF] to-[#D2DCFF] py-24 overflow-x-clip" id="chauffage">
+    <section ref={sectionRef} className="bg-gradient-to-b from-[#D2DCFF] to-[#FFFFFF] py-24 overflow-x-clip" id="elec" >
       <div className="container">
         <div className="section-heading text-center">
           <Image
-            src={chauffage} 
-            alt="Service Icon" 
-            className="service-icon"
-            width={70} 
+              src={elec} 
+              alt="Service Icon" 
+              className="service-icon"
+              width={70} 
           />
           <h2 className="section-title mt-5">
-            Nos 3 services de chauffage
+            Nos services en électricité
           </h2>
         </div>
 
