@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 
 import installation from "@/assets/installation.jpg";
 import repair from "@/assets/repair.jpg";
-import entretien from "@/assets/entretien.jpg";
+import entretien from "@/assets/entretien.png";
 import { FaPlus } from "react-icons/fa";
 import chauffage from "@/assets/chauffage.png";
+import ramonage from "@/assets/ramonage.jpg";
+
 
 interface Service {
   title: string;
@@ -16,6 +18,7 @@ interface Service {
   description: string;
   imageUrl: StaticImageData;
   imageAlt: string;
+  price?: string; // Nouveau champ ajouté
 }
 
 // Données des services
@@ -43,6 +46,15 @@ const servicesData: Service[] = [
       "Un bon entretien de votre système de chauffage est essentiel pour garantir son bon fonctionnement, sa durabilité et votre sécurité. Nos techniciens se chargent de l’entretien de vos chaudières, radiateurs et autres équipements, en réalisant les vérifications, réglages et nettoyages nécessaires. En choisissant un entretien régulier, vous optimisez les performances de votre installation, réduisez les risques de pannes, et assurez une consommation énergétique maîtrisée.",
     imageUrl: entretien, 
     imageAlt: "Entretien",
+    price: "145 euros", // Nouveau champ ajouté
+  },
+  {
+    title: "Ramonage",
+    titleModal: "Ramonage de cheminée",
+    description:
+      "Le ramonage est essentiel pour assurer la sécurité et le bon fonctionnement de vos installations de chauffage à combustion. Notre équipe propose un service professionnel pour nettoyer et entretenir vos cheminées, conduits et chaudières. En effectuant un ramonage régulier, vous réduisez les risques d'incendie, améliorez les performances de votre système et respectez les obligations légales en matière d'entretien des conduits.",
+    imageUrl: ramonage,
+    imageAlt: "Ramonage",
   },
 ];
 
@@ -82,6 +94,12 @@ const Modal = ({ service, onClose }: ModalProps) => {
             <h2 className="text-3xl md:text-[54px] md:leading-[60px] mb-3 font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text">
               {service.titleModal}
             </h2>
+                  {/* Ajout du prix */}
+                  {service.price && (
+              <p className="text-xl font-semibold text-gray-700 mb-4">
+                À partir de {service.price}
+              </p>
+            )}
             <p>{service.description}</p>
           </div>
         </div>
@@ -93,10 +111,10 @@ const Modal = ({ service, onClose }: ModalProps) => {
 export const ServiceShowcase = () => {
   const sectionRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<Service | null>(null); 
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const openModal = (service: Service) => {
-    setSelectedService(service);  // Pas d'erreur ici, car selectedService peut être un Service ou null
+    setSelectedService(service);
     setIsModalOpen(true);
   };
 
@@ -109,20 +127,20 @@ export const ServiceShowcase = () => {
       <div className="container">
         <div className="section-heading text-center">
           <Image
-            src={chauffage} 
-            alt="Service Icon" 
+            src={chauffage}
+            alt="Service Icon"
             className="service-icon"
-            width={70} 
+            width={70}
           />
           <h2 className="section-title mt-5">
-            Nos 3 services de chauffage
+            Nos 4 services de chauffage
           </h2>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-          {servicesData.map((service, index) => (
-            <motion.div 
-              key={index} 
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+        {servicesData.map((service, index) => (
+            <motion.div
+              key={index}
               className="relative group overflow-hidden rounded-lg h-80"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -135,8 +153,8 @@ export const ServiceShowcase = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center">
-                <button 
-                  onClick={() => openModal(service)} 
+                <button
+                  onClick={() => openModal(service)}
                   className="btn btn-primary gap-1"
                 >
                   {service.title}
@@ -145,6 +163,7 @@ export const ServiceShowcase = () => {
               </div>
             </motion.div>
           ))}
+
         </div>
       </div>
 

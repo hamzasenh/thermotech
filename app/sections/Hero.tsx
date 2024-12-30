@@ -27,7 +27,7 @@ export const Hero = () => {
                     Besoin d’une intervention en chauffage ou électricité ?
                 </h1>
                 <p className="text-xl text-[#010D3E] tracking-tight mt-6">
-                    Relax… faites confiance à ThermoTech. Nous vous envoyons rapidement nos professionels
+                    Relax… faites confiance à Radialec. Nous vous envoyons rapidement nos professionels
                     qualifiés, sympathiques et à un prix honnête.
                 </p>
                 <div className="flex flex-col gap-2 items-start mt-[30px] md:flex-row md:gap-1">

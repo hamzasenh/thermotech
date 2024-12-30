@@ -32,7 +32,8 @@ export const Contact = () => {
                                 href="tel:+32487942774"
                                 className="btn btn-primary gap-2"
                             >
-                                <FaPhoneAlt /> 0487942774
+                                <FaPhoneAlt /> +32 487 94 27 74
+
                             </a>
                         </div>
                     </div>

@@ -19,8 +19,16 @@
     @apply h-10 w-auto
   }
 
+  .logo-agregation {
+    @apply h-32 w-auto
+  }
+
   .section-title {
     @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text
+  }
+
+  .section-title-h3 {
+    @apply text-center text-3xl md:text-3xl md:leading-[40px] font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text
   }
 
   .section-h3 {

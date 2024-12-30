@@ -1,3 +1,4 @@
+import { Agregation } from "./sections/agregation";
 import { Contact } from "./sections/Contact";
 import { Faqs } from "./sections/Faqs";
 import Footer from "./sections/Footer";
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <LogoTicker />
       <ServiceShowcase />
+      <Agregation />
       <ServiceElecShowcase />
       <Testimonials />
       <Faqs />

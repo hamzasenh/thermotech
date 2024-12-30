@@ -1,74 +1,49 @@
 "use client";
-import Image from "next/image";
 import { motion } from "framer-motion";
 // assets
 import avatar1 from "@/assets/avatar-1.png";
-import avatar2 from "@/assets/avatar-2.png";
-import avatar3 from "@/assets/avatar-3.png";
-import avatar4 from "@/assets/avatar-4.png";
-import avatar5 from "@/assets/avatar-5.png";
-import avatar6 from "@/assets/avatar-6.png";
-import avatar7 from "@/assets/avatar-7.png";
-import avatar8 from "@/assets/avatar-8.png";
-import avatar9 from "@/assets/avatar-9.png";
 import React from "react";
 
 
 const testimonials = [
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
+    text: "Un grand merci à l'équipe pour l'installation de notre nouvelle chaudière. Travail propre, rapide et efficace. Les techniciens sont très professionnels !",
     imageSrc: avatar1.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    name: "Karim El Mansouri",
+    username: "@karimelmansouri"
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar2.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Je suis ravie du dépannage de ma chaudière en plein hiver. L'équipe est intervenue très vite et a réglé le problème en un rien de temps. Je recommande fortement !",
+    name: "Sophie Leclercq",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar3.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Ils ont installé une borne de recharge pour ma voiture électrique et tout s'est passé parfaitement. Les explications étaient claires, et le service impeccable.",
+    name: "Ekim Yildiz",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar4.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "J'avais besoin d'une mise en conformité pour mon installation électrique. Résultat : travail soigné et dans les délais. Merci encore !",
+    name: "Marie Van Hove",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar5.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Super service pour le ramonage de ma cheminée. Très sympa et efficace, je referai appel à eux sans hésiter.",
+    name: "Jean-Claude Mukendi",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar6.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Installation de chauffage au top ! L'équipe est très compétente et à l'écoute. Je suis vraiment satisfait de leur service.",
+    name: "Omar Aït Yahia",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar7.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Service impeccable pour l'entretien de mes radiateurs. On voit qu'ils connaissent leur métier. Je recommande vivement !",
+    name: "Aïcha Bensalem",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar8.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
+    text: "Travail soigné pour la réparation de mon système de chauffage. Très bonne communication, je suis vraiment content du résultat.",
+    name: "Laurent Dupuis",
   },
   {
-    text: "Lorem ipsum dolor sit amet. Aut sunt nihil qui eius voluptatem non dolorum voluptatem sit ipsam dolores sit nulla repudiandae sit odit enim ut ratione labore. Et delectus tenetur aut soluta ipsam et error provident vel quam repellendus vel explicabo laboriosam qui modi laboriosam.",
-    imageSrc: avatar9.src,
-    name: "Nom Prenom",
-    username: "@nomprenom",
-  },
+    text: "Ils ont installé un système de vidéophonie chez moi, et tout fonctionne parfaitement. Très professionnels et disponibles.",
+    name: "Fatoumata Diallo",
+  }
 ];
 
 const firstColumn = testimonials.slice(0, 3);
@@ -95,20 +70,12 @@ const TestimonialsColumn = (props: {
     >
       {[...new Array(2)].fill(0).map((_, index) => (
         <React.Fragment key={index}>
-          {props.testimonials.map(({ text, imageSrc, name, username}, testimonialIndex) => (
+          {props.testimonials.map(({ text, name}, testimonialIndex) => (
               <div className="card" key={testimonialIndex}>
                   <div>{text}</div>
                   <div className="flex items-center gap-2 mt-5">
-                      <Image 
-                          src={imageSrc} 
-                          alt={name} 
-                          width={40}
-                          height={40}
-                          className="h-10 w-10 rounded-full" 
-                      />
                       <div className="flex flex-col">
-                          <div className="font-medium tracking-tight leading-5">{name}</div>
-                          <div className="leading-5 tracking-tight">{username}</div>
+                          <div className="font-bold tracking-tight leading-5">{name}</div>
                       </div>
                   </div>
               </div>

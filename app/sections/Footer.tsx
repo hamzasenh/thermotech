@@ -13,8 +13,7 @@ export const Footer = () => {
               <Image src={logo} alt="logo" height={50} width={50} />
               <div className="md:flex flex-col mt-2">
                   <div className="text-white font-extrabold text-[24px] md:text-[32px]  mt-2">
-                      <p>ThermoTech</p>
-                      <p className="text-[16px] md:text-[20px] font-light uppercase tracking-[6px] md:tracking-[10px] ml-2 md:ml-3 mt-0.5 md:mt-2">Solutions</p>
+                      <p>Radialec</p>
                   </div>
     
               </div>
@@ -34,7 +33,7 @@ export const Footer = () => {
                 <FaTiktok />          
             </div>
             <p className="mt-6">
-                &copy; 2024 ThermoTech. 
+                &copy; 2025 Radialec. 
             </p>
         </div>
     </footer>

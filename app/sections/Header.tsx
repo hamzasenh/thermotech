@@ -38,7 +38,7 @@ export const Header = () => {
               <Image src={Logo} alt="logo" height={50} width={50} />
               <div className="hidden md:flex flex-col">
                 <div className="text-gray font-extrabold text-[32px] mt-2">
-                  ThermoTech
+                  Radialec
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@ export const Header = () => {
                 href="tel:+32487942774"
               >
                 <FaPhoneAlt />
-                0487942774
+                +32 487 94 27 74
               </a>
             </div>
           </div>
