@@ -9,8 +9,7 @@ const testimonials = [
   {
     text: "Un grand merci à l'équipe pour l'installation de notre nouvelle chaudière. Travail propre, rapide et efficace. Les techniciens sont très professionnels !",
     imageSrc: avatar1.src,
-    name: "Karim El Mansouri",
-    username: "@karimelmansouri"
+    name: "Dominique Le Mouzer",
   },
   {
     text: "Je suis ravie du dépannage de ma chaudière en plein hiver. L'équipe est intervenue très vite et a réglé le problème en un rien de temps. Je recommande fortement !",
@@ -22,7 +21,7 @@ const testimonials = [
   },
   {
     text: "J'avais besoin d'une mise en conformité pour mon installation électrique. Résultat : travail soigné et dans les délais. Merci encore !",
-    name: "Marie Van Hove",
+    name: "Violette Boremans",
   },
   {
     text: "Super service pour le ramonage de ma cheminée. Très sympa et efficace, je referai appel à eux sans hésiter.",
@@ -38,11 +37,11 @@ const testimonials = [
   },
   {
     text: "Travail soigné pour la réparation de mon système de chauffage. Très bonne communication, je suis vraiment content du résultat.",
-    name: "Laurent Dupuis",
+    name: "Laurent Guillon",
   },
   {
     text: "Ils ont installé un système de vidéophonie chez moi, et tout fonctionne parfaitement. Très professionnels et disponibles.",
-    name: "Fatoumata Diallo",
+    name: "Emma Peel",
   }
 ];
 
