@@ -117,10 +117,10 @@ export const Header = () => {
               {/* Numéro de téléphone visible à droite sur lg+ */}
               <a 
                 className="hidden lg:flex items-center gap-2 btn btn-primary"
-                href="tel:+32487942774"
+                href="tel:+32486442186"
               >
                 <FaPhoneAlt />
-                +32 487 94 27 74
+                +32 486 44 21 86
               </a>
             </div>
           </div>

@@ -29,10 +29,10 @@ export const Contact = () => {
                             <h3 className="section-h3 mb-2">Contactez-nous par téléphone</h3>
                             <p className="text-sm text-center mb-4 ">Appelez-nous pour obtenir une assistance immédiate.</p>
                             <a
-                                href="tel:+32487942774"
+                                href="tel:+32486442186"
                                 className="btn btn-primary gap-2"
                             >
-                                <FaPhoneAlt /> +32 487 94 27 74
+                                <FaPhoneAlt /> +32 486 44 21 86
 
                             </a>
                         </div>
