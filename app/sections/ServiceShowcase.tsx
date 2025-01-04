@@ -43,7 +43,7 @@ const servicesData: Service[] = [
     title: "Entretien",
     titleModal: "Entretien de chaudière",
     description:
-      "Un bon entretien de votre système de chauffage est essentiel pour garantir son bon fonctionnement, sa durabilité et votre sécurité. Nos techniciens se chargent de l’entretien de vos chaudières, radiateurs et autres équipements, en réalisant les vérifications, réglages et nettoyages nécessaires. En choisissant un entretien régulier, vous optimisez les performances de votre installation, réduisez les risques de pannes, et assurez une consommation énergétique maîtrisée.",
+    "Un bon entretien de votre système de chauffage est essentiel pour garantir son bon fonctionnement, sa durabilité et votre sécurité. Nos techniciens agrées se chargent de l’entretien de vos chaudières, radiateurs et autres équipements, en réalisant les vérifications, réglages et le nettoyage nécessaire. En choisissant un entretien régulier, vous optimisez les performances de votre installation, réduisez les risques de pannes, et assurez une consommation énergétique plus économique.",
     imageUrl: entretien, 
     imageAlt: "Entretien",
     price: "145 euros", // Nouveau champ ajouté
@@ -52,7 +52,7 @@ const servicesData: Service[] = [
     title: "Ramonage",
     titleModal: "Ramonage de cheminée",
     description:
-      "Le ramonage est essentiel pour assurer la sécurité et le bon fonctionnement de vos installations de chauffage à combustion. Notre équipe propose un service professionnel pour nettoyer et entretenir vos cheminées, conduits et chaudières. En effectuant un ramonage régulier, vous réduisez les risques d'incendie, améliorez les performances de votre système et respectez les obligations légales en matière d'entretien des conduits.",
+    "Le ramonage est essentiel pour assurer la sécurité et le bon fonctionnement de votre cheminée. Notre équipe propose un service professionnel pour nettoyer et entretenir vos cheminées, conduits de chaudières. En effectuant un ramonage régulier, vous réduisez les risques d'incendie, améliorez les performances de votre système et respectez les obligations légales en matière d'entretien des conduits.",
     imageUrl: ramonage,
     imageAlt: "Ramonage",
   },
