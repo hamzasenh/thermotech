@@ -48,10 +48,10 @@ export const Header = () => {
               {/* Numéro de téléphone */}
               <a
                 className="flex items-center gap-2 btn btn-primary lg:hidden"
-                href="tel:+32489745620"
+                href="tel:+32486442186"
               >
                 <FaPhoneAlt />
-                048957893
+                +32 486 44 21 86
               </a>
 
               {/* Menu hamburger visible sur mobile et tablette */}
