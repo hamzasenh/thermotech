@@ -3,16 +3,69 @@
 @tailwind utilities;
 
 @layer components {
+  /* ---------------------------------------------------------------
+     Boutons « historiques » (.btn + variante), encore utilisés par les
+     formulaires et quelques composants : alignés sur le design refondu
+     (mêmes rendus que .v2-btn / .v2-btn-primary plus bas).
+     --------------------------------------------------------------- */
   .btn {
-    @apply px-6 py-4 rounded-lg font-bold inline-flex items-center justify-center tracking-tight
+    @apply inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl px-6 text-center text-[15px] font-semibold tracking-tight transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-water-light focus-visible:ring-offset-2
+  }
+
+  .btn-sm {
+    @apply min-h-[44px] px-4 text-sm
   }
 
   .btn-primary {
-    @apply bg-[radial-gradient(ellipse_600%_500%_at_bottom_left,#e52619,#f9bc2d_100%)] bg-[] text-white
+    @apply font-bold text-white shadow-[0_12px_32px_-12px_rgba(229,38,25,0.6)] hover:-translate-y-px hover:brightness-110;
+    background-color: #e52619;
+    background-image: radial-gradient(ellipse 600% 500% at bottom left, #e52619, #f9bc2d 100%);
+  }
+
+  .btn-secondary {
+    @apply border border-night/15 bg-white text-night hover:border-night/40
+  }
+
+  .btn-dark {
+    @apply bg-night text-white hover:bg-black
+  }
+
+  .btn-glass {
+    @apply border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 focus-visible:ring-white focus-visible:ring-offset-0
   }
 
   .btn-text {
     @apply text-black bg-transparent
+  }
+
+  /* Dégradé flamme de la marque (CTA, pastilles, badges) */
+  .bg-flame {
+    background-image: radial-gradient(ellipse 600% 500% at bottom left, #e52619, #f9bc2d 100%);
+  }
+
+  /* Ancien titre en dégradé : désormais un titre plein (plus de texte en dégradé). */
+  .text-gradient {
+    @apply font-display font-extrabold tracking-[-0.025em] text-night;
+    font-stretch: 112.5%;
+  }
+
+  /* Sur-titre : même rendu que le composant Eyebrow (filet aux trois énergies). */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-night/60;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-[3px] w-7 flex-shrink-0 rounded-full;
+    background-image: linear-gradient(90deg, #e52619 0%, #ed7020 28%, #ffd505 52%, #38b7e8 76%, #3468af 100%);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-night/10 bg-white px-4 py-2 text-sm font-medium text-night transition-colors duration-200 hover:border-night/30
+  }
+
+  .section-y {
+    @apply py-16 md:py-24
   }
 
   .logo-ticker-image {
@@ -24,7 +77,8 @@
   }
 
   .section-title {
-    @apply text-center text-3xl md:text-[54px] md:leading-[60px] font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text
+    @apply text-center font-display text-[2.1rem] font-extrabold leading-[1.02] tracking-[-0.025em] text-night sm:text-[2.6rem] md:text-[3.2rem];
+    font-stretch: 112.5%;
   }
 
   .section-title-h3 {
@@ -54,5 +108,202 @@
 
   .service-icon {
     @apply inline-block mb-2
+  }
+
+  .callout {
+    @apply border-l-2 border-flame py-2 pl-6
+  }
+
+  /* ---------------------------------------------------------------
+     Refonte « les trois énergies » (pages listées dans
+     app/data/redesign.ts). Préfixe v2- tant que les deux designs
+     cohabitent.
+     --------------------------------------------------------------- */
+  .v2-wide {
+    font-stretch: 125%;
+  }
+
+  .v2-semi {
+    font-stretch: 112.5%;
+  }
+
+  /* Titres : Archivo large, très gras, serré. */
+  .v2-title {
+    @apply font-display font-extrabold leading-[1.02] tracking-[-0.025em] text-night;
+    font-stretch: 112.5%;
+  }
+
+  /* Dégradé des trois énergies du logo : flamme → éclair → goutte. Rare, signature. */
+  .v2-energy {
+    background-image: linear-gradient(90deg, #e52619 0%, #ed7020 28%, #ffd505 52%, #38b7e8 76%, #3468af 100%);
+  }
+
+  .v2-energy-y {
+    background-image: linear-gradient(180deg, #e52619 0%, #ed7020 28%, #ffd505 52%, #38b7e8 76%, #3468af 100%);
+  }
+
+  .v2-btn {
+    @apply inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl px-6 text-[15px] font-semibold tracking-tight transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-water-light focus-visible:ring-offset-2;
+  }
+
+  /* Traitement photo commun des pages refondues : noirs relevés vers le bleu
+     nuit, tons légèrement réchauffés, grain fin. Photos réelles et visuels IA
+     paraissent ainsi de la même famille. Sur le conteneur (positionné) d'une
+     photo rectangulaire uniquement — jamais sur un détourage transparent. */
+  .v2-grade {
+    isolation: isolate;
+  }
+
+  .v2-grade img {
+    filter: saturate(0.8) contrast(1.08) sepia(0.16) brightness(0.96);
+  }
+
+  .v2-grade::before,
+  .v2-grade::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .v2-grade::before {
+    background: #18203a;
+    mix-blend-mode: lighten;
+  }
+
+  .v2-grade::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    mix-blend-mode: overlay;
+    opacity: 0.42;
+  }
+
+  /* Bouton d'appel : exactement le rendu du bouton « Demander un devis gratuit »
+     du hero de l'accueil — le rouge du logo qui glisse vers l'orange de la
+     flamme (même dégradé que .bg-flame). Réservé à l'appel. */
+  .v2-btn-primary {
+    @apply font-bold text-white shadow-[0_12px_32px_-12px_rgba(229,38,25,0.6)] hover:-translate-y-px hover:brightness-110;
+    background-color: #e52619;
+    background-image: radial-gradient(ellipse 600% 500% at bottom left, #e52619, #f9bc2d 100%);
+  }
+
+  /* Aplat uni du CTA final : la teinte moyenne de ce bouton (token blaze). */
+  .v2-flame-solid {
+    background-color: #e83c1c;
+    background-image: none;
+  }
+
+  /* Lueur rouge qui monte du bas des sections sombres (parent : relative isolate). */
+  .v2-glow {
+    @apply pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-3/4;
+    background: radial-gradient(ellipse 75% 95% at 50% 100%, rgba(229, 38, 25, 0.42) 0%, rgba(229, 38, 25, 0.12) 45%, transparent 75%);
+  }
+}
+
+/* Bulle d'accroche Causerie : fermée une fois = plus affichée de la visite (ChatWidget.tsx). */
+html[data-chat-bubble="closed"] #causerie-bubble {
+  display: none !important;
+}
+
+/* Mobile : pas de bulle d'accroche (elle couvre le contenu), l'avatar reste ;
+   le widget remonte au-dessus de la barre d'actions. */
+@media (max-width: 1023px) {
+  html #causerie-bubble {
+    display: none !important;
+  }
+  body:has(.v2-mobile-bar) #causerie-launcher {
+    bottom: 100px !important;
+  }
+  body:has(.v2-mobile-bar) #causerie-window {
+    bottom: 168px !important;
+  }
+}
+
+@layer base {
+  /* Les ancres (/#faqs, /contact#devis…) ne doivent pas finir sous le header sticky */
+  html {
+    scroll-padding-top: 6rem;
+  }
+}
+
+/*---break---*/
+
+@layer base {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: #001e80;
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: #eaeefe;
+    --secondary-foreground: #001e80;
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.48 0.02 264);
+    --accent: #eaeefe;
+    --accent-foreground: #001e80;
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: #001e80;
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+  }
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
