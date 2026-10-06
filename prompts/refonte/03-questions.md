@@ -262,3 +262,12 @@ Q8 : Non, on ne garde pas les rendus 3D des métiers.
 Q9 : Oui pour la mise à jour Next.js vers la dernière version 15.x.
 Q10 : Oui, validé pour le CTA urgence sur fond lavande avec cette image.
 Q29 : Non, en dehors de la ventilation, on ne retire aucun autre service 
+
+### Suite donnée (5 octobre 2026)
+
+- Q1 : commit de sauvegarde fait sur main (`aa300bd`).
+- Q2 : la version en ligne n'a qu'une page (l'accueil) : aucune ancienne URL à rediriger. Les redirections existantes sont gardées, sans effet négatif.
+- Q4, Q5, Q6, Q10, Q29 : déjà appliqués à l'étape A.
+- Q7 : la mascotte n'est plus utilisée (404 typographique). L'avatar du chat se change dans Causerie.
+- Q8 : rendus 3D retirés partout (accueil, tarifs, promo, devis, images de partage).
+- Q9 : Next.js passé de 15.0.3 à 15.5.27 (dernière 15.x), React 18 conservé. Build, pages et redirections vérifiés.

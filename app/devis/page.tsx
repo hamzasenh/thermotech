@@ -1,8 +1,4 @@
 import localFont from "next/font/local";
-import chaudiereIcon from "@/assets/chaudiere-icon.png";
-import panelIcon from "@/assets/panel-icon.png";
-import toiletIcon from "@/assets/toilet-icon.png";
-import climIcon from "@/assets/clim-icon.png";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { GoogleRating } from "@/components/site/GoogleRating";
 import { Icon } from "@/components/site/Icon";
@@ -40,28 +36,24 @@ const categoryOptions: CategoryOption[] = [
   {
     id: "chauffage",
     label: "Chauffage",
-    image: chaudiereIcon,
     icon: "fire",
     placeholder: "Ex. : chaudière gaz d'une quinzaine d'années à remplacer, maison 3 façades, 4 radiateurs par étage…",
   },
   {
     id: "electricite",
     label: "Électricité",
-    image: panelIcon,
     icon: "bolt",
     placeholder: "Ex. : tableau à fusibles à remplacer avant la vente de la maison, contrôle RGIE prévu le mois prochain…",
   },
   {
     id: "plomberie",
     label: "Plomberie",
-    image: toiletIcon,
     icon: "faucet",
     placeholder: "Ex. : évier de cuisine qui s'écoule très mal depuis une semaine, appartement au 3e étage…",
   },
   {
     id: "climatisation",
     label: "Clim & PAC",
-    image: climIcon,
     icon: "snowflake",
     placeholder: "Ex. : airco réversible pour 2 chambres à l'étage, maison mitoyenne, jardin à l'arrière…",
   },

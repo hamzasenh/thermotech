@@ -144,8 +144,7 @@ export function ServiceHeroV2({
                     ))}
                   </span>
                   <span className="underline-offset-4 group-hover:underline">
-                    <strong className={cn("font-semibold", light ? "text-night" : "text-white")}>{company.google.rating}/5</strong> · {company.google.reviewCount} avis Google
-                  </span>
+                    <strong className={cn("font-semibold", light ? "text-night" : "text-white")}>{company.google.rating}/5</strong> sur Google</span>
                 </a>
               </li>
               <li className="flex items-center gap-2">

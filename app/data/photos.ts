@@ -48,7 +48,7 @@ export const photos: Partial<Record<AssetId, Photo>> = {
   P02: { src: heroRemplacementChaudiere, position: "60% 50%" },
   P03: { src: etape4Suivi },
   P04: { src: etape2Planification },
-  P05: { src: chaudiereNeuve },
+  P05: { src: chaudiereNeuve, position: "50% 25%" },
   P06: { src: entretienChaudiere },
   P07: { src: entretienMesure },
   P08: { src: entretienAttestation },

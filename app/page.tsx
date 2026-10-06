@@ -1,11 +1,7 @@
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import chaudiereAccueil from "@/assets/refonte/chaudiere-accueil.png";
-import chaudiereIcon from "@/assets/chaudiere-icon.png";
-import panelIcon from "@/assets/panel-icon.png";
-import toiletIcon from "@/assets/toilet-icon.png";
-import climIcon from "@/assets/clim-icon.png";
 import { JsonLd } from "@/components/site/JsonLd";
 import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { fr } from "@/lib/typography";
@@ -14,13 +10,14 @@ import { company, contactActionHref } from "./data/company";
 import { homeFaqs } from "./data/home";
 import type { PriceRef } from "./data/pricing";
 import { getServiceByRef } from "./data/services";
-import type { Fact } from "./data/services/types";
+import type { Fact, ImageSpec } from "./data/services/types";
 import { ctaDefaults } from "./sections/ctaDefaults";
 import { ProofV2, ZonesV2 } from "./sections/v2/blocks";
 import { FinalCtaV2 } from "./sections/v2/chrome";
 import { PricingV2, ServiceGridV2 } from "./sections/v2/content";
 import { finalCtaVisual } from "./sections/v2/cta";
 import { FaqV2 } from "./sections/v2/FaqV2";
+import { MediaSlot } from "./sections/v2/media";
 import { ServiceHeroV2 } from "./sections/v2/ServiceHeroV2";
 import { backgrounds, cardBg, toneBg } from "./sections/v2/tones";
 import { SectionTitle } from "./sections/v2/ui";
@@ -36,16 +33,17 @@ export const metadata = pageMetadata({
 const trust: Fact[] = [
   { icon: "users", stat: company.promises.clients, label: "Ils nous recommandent partout à Bruxelles." },
   { icon: "shield", stat: company.promises.warranty, label: "Toutes nos pièces et interventions couvertes." },
-  { icon: "clock", stat: company.promises.intervention, label: "Une urgence ? On est chez vous le jour même. 7/7" },
+  { icon: "clock", stat: company.promises.intervention, label: "Une urgence ? Appelez-nous, 7j/7." },
   { icon: "euro", stat: "Prix transparents", label: "Le prix annoncé est le prix payé, point final." },
 ];
 
 // Les 4 métiers (brief accueil) : sous-services cliquables.
-const trades: { title: string; href: string; image: StaticImageData; links: { label: string; href: string }[] }[] = [
+// Photo de chaque métier : app/data/photos.ts (identifiants de 02-assets.md).
+const trades: { title: string; href: string; image: ImageSpec; links: { label: string; href: string }[] }[] = [
   {
     title: "Chauffage",
     href: "/chauffage",
-    image: chaudiereIcon,
+    image: { asset: "P05", alt: "Chaudière murale neuve installée, raccords visibles" },
     links: [
       { label: "Dépannage chaudière", href: "/chauffage/depannage-chaudiere" },
       { label: "Entretien chaudière gaz", href: "/chauffage/entretien-chaudiere" },
@@ -56,7 +54,7 @@ const trades: { title: string; href: string; image: StaticImageData; links: { la
   {
     title: "Électricité",
     href: "/electricite",
-    image: panelIcon,
+    image: { asset: "P20", alt: "Électricien intervenant sur un tableau électrique ouvert" },
     links: [
       { label: "Installation électrique", href: "/electricite/installation-electricite" },
       { label: "Dépannage électrique", href: "/electricite/depannage-electrique" },
@@ -67,7 +65,7 @@ const trades: { title: string; href: string; image: StaticImageData; links: { la
   {
     title: "Plomberie & sanitaire",
     href: "/plomberie",
-    image: toiletIcon,
+    image: { asset: "P30", alt: "Plombier réparant un siphon sous un évier" },
     links: [
       { label: "Dépannage plomberie", href: "/plomberie/depannage" },
       { label: "Détartrage", href: "/plomberie/detartrage" },
@@ -77,7 +75,7 @@ const trades: { title: string; href: string; image: StaticImageData; links: { la
   {
     title: "Climatisation & pompes à chaleur",
     href: "/climatisation",
-    image: climIcon,
+    image: { asset: "P43", alt: "Technicien posant une unité intérieure de climatisation" },
     links: [
       { label: "Installation airco", href: "/climatisation/installation-climatisation" },
       { label: "Entretien clim & PAC", href: "/climatisation/entretien-climatisation" },
@@ -162,25 +160,27 @@ export default function Home() {
           />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
             {trades.map((trade) => (
-              <li key={trade.href} className={cn("flex flex-col rounded-[28px] p-6 ring-1 ring-night/[0.06]", cardBg[tones.trades])}>
-                <Link href={trade.href} className="group flex items-center justify-between gap-3">
-                  <h3 className="v2-semi font-display text-xl font-bold leading-snug text-night group-hover:text-flame">{fr(trade.title)}</h3>
-                  <Image src={trade.image} alt="" sizes="96px" className="h-20 w-20 flex-shrink-0 object-contain transition-transform duration-300 group-hover:scale-105" />
-                </Link>
-                <ul className="mt-4 divide-y divide-night/[0.07] border-t border-night/[0.07]">
-                  {trade.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="group flex items-center justify-between gap-3 py-3 text-[15px] text-night/80 hover:text-night">
-                        {link.label}
-                        <BsArrowRight className="h-4 w-4 flex-shrink-0 text-night/30 transition-all group-hover:translate-x-0.5 group-hover:text-flame" aria-hidden="true" />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link href={trade.href} className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-flame hover:underline">
-                  Tous les services
-                  <BsArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
+              <li key={trade.href} className={cn("flex flex-col overflow-hidden rounded-[28px] ring-1 ring-night/[0.06]", cardBg[tones.trades])}>
+                <MediaSlot image={trade.image} sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 92vw" className="aspect-[4/3]" compact />
+                <div className="flex flex-1 flex-col p-6">
+                  <Link href={trade.href} className="group">
+                    <h3 className="v2-semi font-display text-xl font-bold leading-snug text-night group-hover:text-flame">{fr(trade.title)}</h3>
+                  </Link>
+                  <ul className="mt-4 divide-y divide-night/[0.07] border-t border-night/[0.07]">
+                    {trade.links.map((link) => (
+                      <li key={link.href}>
+                        <Link href={link.href} className="group flex items-center justify-between gap-3 py-3 text-[15px] text-night/80 hover:text-night">
+                          {link.label}
+                          <BsArrowRight className="h-4 w-4 flex-shrink-0 text-night/30 transition-all group-hover:translate-x-0.5 group-hover:text-flame" aria-hidden="true" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={trade.href} className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-flame hover:underline">
+                    Tous les services
+                    <BsArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>

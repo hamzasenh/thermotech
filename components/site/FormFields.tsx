@@ -1,5 +1,4 @@
 "use client";
-import Image, { type StaticImageData } from "next/image";
 import type { ComponentProps, ReactNode } from "react";
 import { FaCheck, FaExclamationCircle } from "react-icons/fa";
 import { cn } from "@/lib/utils";
@@ -82,9 +81,8 @@ interface ChoiceCardProps {
   label: string;
   description?: string;
   icon?: IconKey;
-  image?: StaticImageData;
   describedBy?: string;
-  /** Pictogramme au-dessus du libellé (automatique avec une image). */
+  /** Pictogramme au-dessus du libellé. */
   stacked?: boolean;
   className?: string;
 }
@@ -98,12 +96,11 @@ export function ChoiceCard({
   label,
   description,
   icon,
-  image,
   describedBy,
   stacked,
   className,
 }: ChoiceCardProps) {
-  const vertical = stacked || Boolean(image);
+  const vertical = Boolean(stacked);
   return (
     <label className={cn("group relative block cursor-pointer", className)}>
       <input
@@ -124,9 +121,7 @@ export function ChoiceCard({
             : "border-ink/10 hover:border-navy/40 hover:shadow-sm"
         )}
       >
-        {image ? (
-          <Image src={image} alt="" sizes="64px" className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-14" />
-        ) : icon ? (
+        {icon ? (
           <span
             className={cn(
               "inline-flex flex-shrink-0 items-center justify-center rounded-xl transition-colors",

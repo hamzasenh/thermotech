@@ -1,4 +1,3 @@
-import Image from "next/image";
 import localFont from "next/font/local";
 import { BsArrowDown } from "react-icons/bs";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
@@ -48,7 +47,7 @@ const faqs: FaqItem[] = [
   {
     id: 1,
     question: "Combien coûte un entretien de chaudière à Bruxelles ?",
-    answer: `${p.entretienChaudiereGaz.amount}€ TVAC pour une chaudière gaz (au lieu de ${p.entretienChaudiereGaz.originalAmount}€) et ${p.entretienChaudiereMazout.amount}€ TVAC pour une chaudière mazout. Contrôle complet, tests de sécurité et attestation remise le jour même compris. [En savoir plus sur l'entretien](/chauffage/entretien-chaudiere).`,
+    answer: `${p.entretienChaudiereGaz.amount}€ TVAC pour une chaudière gaz et ${p.entretienChaudiereMazout.amount}€ TVAC pour une chaudière mazout. Contrôle complet, tests de sécurité et attestation remise le jour même compris. [En savoir plus sur l'entretien](/chauffage/entretien-chaudiere).`,
   },
   {
     id: 2,
@@ -176,7 +175,6 @@ export default function TarifsPage() {
                       href={`#tarifs-${group.id}`}
                       className="group flex h-full items-center gap-3 rounded-2xl bg-white p-3 ring-1 ring-night/[0.06] transition-shadow duration-300 hover:shadow-[0_18px_40px_-24px_rgba(11,18,34,0.5)] sm:p-4"
                     >
-                      <Image src={group.icon} alt="" sizes="48px" className="h-10 w-10 flex-shrink-0 object-contain sm:h-12 sm:w-12" />
                       <span className="min-w-0 flex-1">
                         <span className="v2-semi block font-display font-bold leading-tight text-night">{group.shortLabel}</span>
                         <span className="mt-0.5 block text-xs font-semibold text-flame">

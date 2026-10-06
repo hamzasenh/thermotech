@@ -188,7 +188,7 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
                   <FaStar key={i} className="h-3 w-3" />
                 ))}
               </span>
-              {company.google.rating}/5 · {company.google.reviewCount} avis Google
+              {company.google.rating}/5 sur Google
             </a>
           </div>
 

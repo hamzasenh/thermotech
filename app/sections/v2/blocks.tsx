@@ -283,7 +283,7 @@ export function CallBandV2({
 /* ------------------------------------------------------------------ */
 
 export function ProofV2({ tone = "white", footnote }: { tone?: Tone; /** Note sous la section (ex. info à fournir). */ footnote?: React.ReactNode }) {
-  const { rating, reviewCount, url } = company.google;
+  const { rating, url } = company.google;
   return (
     <section className={cn("py-20 lg:py-28", toneBg[tone])} aria-labelledby="confiance-titre">
       <div className="container grid gap-12 lg:grid-cols-2 lg:gap-20">
@@ -302,7 +302,7 @@ export function ProofV2({ tone = "white", footnote }: { tone?: Tone; /** Note so
                   <FaStar key={i} className="h-5 w-5" />
                 ))}
               </span>
-              <p className="mt-1.5 text-sm font-semibold text-night">{reviewCount} avis sur Google</p>
+              <p className="mt-1.5 text-sm font-semibold text-night">Note sur Google</p>
             </div>
           </div>
           <p className="mt-6 max-w-md text-[17px] leading-relaxed text-night/70">

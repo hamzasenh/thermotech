@@ -1,8 +1,3 @@
-import type { StaticImageData } from "next/image";
-import chaudiereIcon from "@/assets/chaudiere-icon.png";
-import toiletIcon from "@/assets/toilet-icon.png";
-import panelIcon from "@/assets/panel-icon.png";
-import climIcon from "@/assets/clim-icon.png";
 import { pricingPolicy, resolvePrice, type PriceRef } from "./pricing";
 import { getServiceByRef, serviceHref } from "./services";
 import type { ServiceRef } from "./services/types";
@@ -29,7 +24,6 @@ interface TarifGroup {
   label: string;
   shortLabel: string;
   href: string;
-  icon: StaticImageData;
   lines: TarifLine[];
 }
 
@@ -39,7 +33,6 @@ const groups: TarifGroup[] = [
     label: "Chauffage",
     shortLabel: "Chauffage",
     href: "/chauffage",
-    icon: chaudiereIcon,
     lines: [
       { id: "entretien-gaz", price: { key: "entretienChaudiereGaz" }, service: "chauffage/entretien-chaudiere" },
       { id: "entretien-mazout", price: { key: "entretienChaudiereMazout" }, service: "chauffage/entretien-chaudiere" },
@@ -78,7 +71,6 @@ const groups: TarifGroup[] = [
     label: "Plomberie & sanitaire",
     shortLabel: "Plomberie",
     href: "/plomberie",
-    icon: toiletIcon,
     lines: [
       { id: "depannage-sanitaire", price: { key: "depannage", label: "Dépannage sanitaire" }, service: "plomberie/depannage" },
       { id: "debouchage", price: { key: "debouchage", label: "Débouchage" }, service: "plomberie/debouchage" },
@@ -94,7 +86,6 @@ const groups: TarifGroup[] = [
     label: "Électricité",
     shortLabel: "Électricité",
     href: "/electricite",
-    icon: panelIcon,
     lines: [
       {
         id: "depannage-electrique",
@@ -143,7 +134,6 @@ const groups: TarifGroup[] = [
     label: "Climatisation & PAC",
     shortLabel: "Clim & PAC",
     href: "/climatisation",
-    icon: climIcon,
     lines: [
       { id: "entretien-pac", price: { key: "entretienPac" }, service: "climatisation/entretien-climatisation" },
       {
@@ -180,7 +170,6 @@ export interface ResolvedGroup {
   label: string;
   shortLabel: string;
   href: string;
-  icon: StaticImageData;
   lines: ResolvedTarif[];
 }
 
@@ -190,7 +179,6 @@ export function getTarifGroups(): ResolvedGroup[] {
     label: group.label,
     shortLabel: group.shortLabel,
     href: group.href,
-    icon: group.icon,
     lines: group.lines.map((line) => {
       const price = resolvePrice(line.price);
       const service = getServiceByRef(line.service);

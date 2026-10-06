@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
-import chaudiereIcon from "@/assets/chaudiere-icon.png";
+import chaudiereAccueil from "@/assets/refonte/chaudiere-accueil.png";
 import { fr } from "@/lib/typography";
 import { contactActionHref } from "../../data/company";
-import { prices } from "../../data/pricing";
+import { prices, pricingPolicy } from "../../data/pricing";
 import { cn } from "@/lib/utils";
 import { toneBg, type Tone } from "../v2/tones";
 import { ButtonLink, Eyebrow } from "../v2/ui";
@@ -14,7 +14,7 @@ import { ButtonLink, Eyebrow } from "../v2/ui";
  * Carte lavande sans fond propre : elle prolonge la section précédente (v2/tones.ts).
  */
 export function PromoBanner({ tone = "white", attached }: { tone?: Tone; attached?: boolean }) {
-  const { amount, originalAmount } = prices.entretienChaudiereGaz;
+  const { amount } = prices.entretienChaudiereGaz;
 
   return (
     <section className={cn(toneBg[tone], attached ? "pb-16 lg:pb-28" : "py-16 lg:py-24")} aria-labelledby="offre-du-moment">
@@ -29,8 +29,7 @@ export function PromoBanner({ tone = "white", attached }: { tone?: Tone; attache
               </h2>
               <p className="mt-5 max-w-xl text-lg text-night/75">
                 Entretien de chaudière gaz à{" "}
-                <strong className="v2-semi font-display text-2xl font-bold tabular-nums text-night">{amount}€</strong> TVAC au lieu de{" "}
-                <span className="tabular-nums line-through">{originalAmount}€</span> : contrôle complet, tests de sécurité et
+                <strong className="v2-semi font-display text-2xl font-bold tabular-nums text-night">{amount}€</strong> TVAC{pricingPolicy.promoValidity ? ` (${pricingPolicy.promoValidity.toLowerCase()})` : ""} : contrôle complet, tests de sécurité et
                 attestation remise le jour même.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -46,13 +45,8 @@ export function PromoBanner({ tone = "white", attached }: { tone?: Tone; attache
                 </Link>
               </div>
             </div>
-            <div className="relative mx-auto w-full max-w-[260px] md:max-w-[320px]">
-              <Image
-                src={chaudiereIcon}
-                alt="Chaudière murale gaz à condensation"
-                sizes="320px"
-                className="h-auto w-full drop-shadow-[0_30px_40px_rgba(11,18,34,0.25)]"
-              />
+            <div className="relative mx-auto w-full max-w-[200px] md:max-w-[240px]">
+              <Image src={chaudiereAccueil} alt="Chaudière murale gaz à condensation" sizes="240px" className="h-auto w-full" />
             </div>
           </div>
         </div>

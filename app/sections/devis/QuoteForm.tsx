@@ -1,5 +1,4 @@
 "use client";
-import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -37,7 +36,6 @@ import { QuoteSuccess } from "./QuoteSuccess";
 export interface CategoryOption {
   id: string;
   label: string;
-  image?: StaticImageData;
   icon: IconKey;
   placeholder: string;
 }
@@ -316,8 +314,7 @@ export function QuoteForm({
                               checked={quote.category === c.id}
                               onChange={chooseCategory}
                               label={c.label}
-                              image={c.image}
-                              icon={c.image ? undefined : c.icon}
+                              icon={c.icon}
                               describedBy={err("category")}
                               stacked
                             />

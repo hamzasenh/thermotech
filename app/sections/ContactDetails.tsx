@@ -83,7 +83,7 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
                 <a href={google.url} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2">
                   <Stars />
                   <span className="font-semibold group-hover:underline">
-                    {google.rating}/5 sur Google · {google.reviewCount} avis
+                    {google.rating}/5 sur Google
                   </span>
                 </a>
               </Row>

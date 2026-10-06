@@ -16,22 +16,19 @@ interface Visual {
   path: string;
   width: number;
   height: number;
+  /** Personnage : pleine hauteur, posé en bas. Sinon : appareil, contenu à droite. */
+  person?: boolean;
 }
 
 const visuals = {
-  technicien: { path: "assets/technicien_debout_souriant_bras_croises_coupés_aux_cuisses.png", width: 1024, height: 1536 },
-  chauffage: { path: "assets/chaudiere-icon.png", width: 1290, height: 1219 },
-  electricite: { path: "assets/panel-icon.png", width: 1238, height: 1271 },
-  plomberie: { path: "assets/toilet-icon.png", width: 1297, height: 1212 },
-  climatisation: { path: "assets/clim-icon.png", width: 1330, height: 1182 },
+  technicien: { path: "assets/technicien_debout_souriant_bras_croises_coupés_aux_cuisses.png", width: 1024, height: 1536, person: true },
+  // Chaudière détourée de l'accueil. Plus de rendus 3D par métier (réponse Q8).
+  chaudiere: { path: "assets/refonte/chaudiere-accueil.png", width: 743, height: 900 },
 } satisfies Record<string, Visual>;
 
+// Les autres métiers gardent le technicien (visuel par défaut).
 const categoryVisual: Partial<Record<ServiceCategory, Visual>> = {
-  chauffage: visuals.chauffage,
-  electricite: visuals.electricite,
-  plomberie: visuals.plomberie,
-  climatisation: visuals.climatisation,
-  professionnels: visuals.technicien,
+  chauffage: visuals.chaudiere,
 };
 
 const file = (path: string) => readFile(join(process.cwd(), path));
@@ -61,9 +58,8 @@ export async function renderOgImage({
     file(visual.path),
   ]);
 
-  // Personnage (nettement plus haut que large) : pleine hauteur, posé en bas.
-  // Rendus produits (quasi carrés) : contenus dans 380 × 400 px, à droite.
-  const isPortrait = visual.height / visual.width > 1.2;
+  // Personnage : pleine hauteur, posé en bas. Appareil : contenu dans 380 × 400 px, à droite.
+  const isPortrait = Boolean(visual.person);
   const scale = isPortrait ? 600 / visual.height : Math.min(400 / visual.height, 380 / visual.width);
   const visualHeight = Math.round(visual.height * scale);
   const visualWidth = Math.round(visual.width * scale);
@@ -150,7 +146,7 @@ export async function renderOgImage({
               <Star />
             </div>
             <span>
-              {company.google.rating}/5 sur Google · Sous 24h, 7j/7 · {company.phone.display}
+              {company.google.rating}/5 sur Google · 7j/7, 10h–21h · {company.phone.display}
             </span>
           </div>
         </div>

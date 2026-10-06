@@ -7,7 +7,7 @@ export const company = {
   name: "Radialec",
   tagline: "Chauffage, électricité, plomberie et climatisation à Bruxelles",
   description:
-    "Chauffagiste, électricien et plombier à Bruxelles et ses environs : installation, entretien et dépannage 7j/7, intervention sous 24h, devis gratuit.",
+    "Chauffagiste, électricien et plombier à Bruxelles et ses environs : installation, entretien et dépannage 7j/7, de 10h à 21h, devis gratuit.",
 
   phone: {
     display: "+32 486 44 21 86",
@@ -17,9 +17,8 @@ export const company = {
     e164: "+32486442186",
   },
 
-  // NB : adresse e-mail héritée de l'ancienne marque ThermoTech — à remplacer
-  // par une adresse @radialec si elle existe.
-  email: "info@thermotechs.be",
+  // Boîte @radialec active (Q45, 04-reponses) : remplace info@thermotechs.be.
+  email: "info@radialec.be",
 
   // À FOURNIR — aucune adresse postale n'existe dans le repo. Tant que c'est
   // null, les pages affichent un placeholder et le JSON-LD n'expose que la
@@ -32,13 +31,13 @@ export const company = {
 
   hours: {
     summary: "7j/7",
-    // À FOURNIR — horaires précis (ex. « Lun–Ven 7h30–19h · Sam–Dim urgences »).
-    detail: null as string | null,
+    // Appels pris tous les jours de 10h à 21h (Q20). Jamais « 24h/24 ».
+    detail: "7j/7, de 10h à 21h" as string | null,
   },
 
   google: {
+    // Pas de nombre d'avis en dur (D5, 04-reponses) : il change, on ne l'affiche plus.
     rating: 5,
-    reviewCount: 19,
     url: "https://share.google/2lcgT4FuqMHlxXEqc",
   },
 
@@ -50,15 +49,14 @@ export const company = {
   },
 
   promises: {
-    intervention: "Intervention sous 24h",
+    // Aucun délai d'intervention promis (D5 / Q28, 04-reponses) : seulement les heures d'appel.
+    intervention: "De 10h à 21h",
     availability: "7j/7",
-    quote: "Devis gratuit sous 24h",
+    quote: "Devis gratuit",
     warranty: "Garantie 2 ans",
     clients: "+200 clients satisfaits",
-    // À FOURNIR — délai de rappel que l'équipe peut tenir (ex. « sous 1h en
-    // journée »). Tant que c'est null, le formulaire « Être rappelé » ne promet
-    // aucun délai.
-    callback: null as string | null,
+    // Seul délai confirmé (Q27, 04-reponses) : rappel en journée.
+    callback: "sous 2 h, entre 10h et 21h" as string | null,
   },
 
   // À FOURNIR — informations légales (mentions légales, politique de

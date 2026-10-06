@@ -196,7 +196,7 @@ Documentary-style photograph, soft natural daylight, warm highlights and cool sh
 | `boiler-maintenance.png` | 1536 × 1024 | **Réutilisé** | Remplacement (étape 1), entretien |
 | `boiler-installation.png` (IA) | 1586 × 992 | En attente, remplacé par P02 | Remplacement |
 | `technicien-assis-fait-entretien-chaudière-avec-appareil.png` (scène IA, en attendant P06/P07), `entretienbIS.jpg` | 1400 / 1640 px | À vérifier visuellement (origine [Q42]) | Entretien, ramonage |
-| `chaudiere-icon.png`, `panel-icon.png`, `toilet-icon.png`, `clim-icon.png` (rendus 3D) | ~1300 px | **Réutilisés** pour la navigation par métier [Q8] | Accueil, catégories, tarifs, devis |
+| `chaudiere-icon.png`, `panel-icon.png`, `toilet-icon.png`, `clim-icon.png` (rendus 3D) | ~1300 px | **Retirés du site** (réponse Q8, 5 octobre) : photos par métier sur l'accueil, chaudière détourée pour la promo et l'image de partage | — |
 | Logos marques et agréments (PNG) | 72 à 917 px de haut | Réutilisés en attendant G02 et G03 | Marques, preuve |
 | `borne.jpg`, `conformite.jpg`, `videophone.jpg`, `repair.jpg`, `ramonage.jpg` | 275 à 740 px | **Trop petits** pour le nouveau design, et origine inconnue [Q42] | Remplacés par P18, P21, P23, P24 |
 | `depannage_elec.webp`, `installation_elec.jpg`, `installation.jpg`, `parlophone.jpeg` | 1000 à 1600 px | Utilisables si la licence est OK [Q42] | Électricité |

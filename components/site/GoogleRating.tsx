@@ -21,7 +21,7 @@ export function GoogleRating({
   tone?: "light" | "dark";
   className?: string;
 }) {
-  const { rating, reviewCount, url } = company.google;
+  const { rating, url } = company.google;
   return (
     <a
       href={url}
@@ -39,7 +39,7 @@ export function GoogleRating({
           tone === "light" ? "text-ink" : "text-white/90"
         )}
       >
-        {rating}/5 sur Google · {reviewCount} avis
+        {rating}/5 sur Google
       </span>
       <BsArrowRight
         aria-hidden="true"

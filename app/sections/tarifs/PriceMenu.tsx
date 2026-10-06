@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import { Reveal } from "@/components/site/Motion";
@@ -66,10 +65,7 @@ export function PriceMenu({
                   <Reveal key={group.id} delay={columnIndex * 0.08}>
                     <div id={`tarifs-${group.id}`} className="scroll-mt-28">
                       <div className="flex items-end justify-between gap-4 border-b-2 border-white/15 pb-4">
-                        <div className="flex items-center gap-4">
-                          <Image src={group.icon} alt="" sizes="56px" className="h-14 w-auto object-contain" />
-                          <h3 className="text-2xl font-bold tracking-tight">{group.label}</h3>
-                        </div>
+                        <h3 className="text-2xl font-bold tracking-tight">{group.label}</h3>
                         <Link
                           href={group.href}
                           className="group hidden flex-shrink-0 items-center gap-1 text-sm font-semibold text-white/60 hover:text-amber sm:inline-flex"
