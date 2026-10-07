@@ -7,7 +7,6 @@ import { ProofV2, ZonesV2 } from "../sections/v2/blocks";
 import { FinalCtaV2 } from "../sections/v2/chrome";
 import { TrustStripV2 } from "../sections/v2/content";
 import { finalCtaVisual } from "../sections/v2/cta";
-import { MediaSlot } from "../sections/v2/media";
 import { cn } from "@/lib/utils";
 import { backgrounds, toneBg } from "../sections/v2/tones";
 import { PhoneButton, SectionTitle } from "../sections/v2/ui";
@@ -48,10 +47,10 @@ export default function AProposPage() {
       </PageHeader>
 
       <section className={cn("py-16 lg:py-24", toneBg[tones.story])} aria-labelledby="histoire-titre">
-        <div className="container grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-20">
+        <div className="container grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-20">
+          <SectionTitle id="histoire-titre" eyebrow="Qui sommes-nous" title="Un seul interlocuteur pour tout votre habitat" />
           <div>
-            <SectionTitle id="histoire-titre" eyebrow="Qui sommes-nous" title="Un seul interlocuteur pour tout votre habitat" />
-            <div className="mt-6 space-y-4">
+            <div className="space-y-4">
               {/* Faits vérifiés (BCE, 04-reponses Q26). Ne jamais publier la taille de l'équipe ni l'autre employeur du technicien. */}
               <p className="text-[17px] leading-relaxed text-night/75">
                 {fr(
@@ -60,7 +59,6 @@ export default function AProposPage() {
               </p>
             </div>
           </div>
-          <MediaSlot asset="P62" sizes="(min-width: 1024px) 45vw, 92vw" className="aspect-[3/2] rounded-[28px]" />
         </div>
       </section>
 

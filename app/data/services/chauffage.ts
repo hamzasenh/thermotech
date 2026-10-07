@@ -1405,10 +1405,9 @@ export const chauffageServices: Service[] = [
       eyebrow: "Sécurité · Entretien annuel",
       intro:
         "Feu ouvert, insert, poêle à bois ou chaudière au mazout : les suies qui tapissent vos conduits sont une cause majeure de feux de cheminée et d'intoxications. Nos techniciens ramonent et contrôlent vos conduits, au prix affiché.",
-      // Ancienne photo retirée : licence inconnue (Q42). Emplacement P18 en attendant la vraie photo.
       image: {
         asset: "P18",
-        alt: "Ramonage d'un conduit de fumée à l'aide d'un hérisson rotatif",
+        alt: "Technicien ramonant un conduit de fumée",
       },
     },
     facts: [

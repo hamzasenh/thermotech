@@ -46,14 +46,6 @@ export default function CookiesPage() {
           ["_ga", "Google Analytics", "Distinguer les visiteurs de façon anonyme", "13 mois", "Oui"],
           ["_ga_<identifiant>", "Google Analytics", "Conserver l'état de la visite", "13 mois", "Oui"],
           [
-            // causeriebot.com/confidentialite (08/10/2026) : stockage local, pas de cookie, durée non précisée.
-            "Identifiant de visiteur et conversations (stockage local)",
-            "Causerie",
-            "Retrouver votre conversation d'une page à l'autre",
-            <MissingInfo key="d">durée non précisée par Causerie</MissingInfo>,
-            <MissingInfo key="c">à vérifier auprès de Causerie</MissingInfo>,
-          ],
-          [
             "Agenda de réservation",
             "Cal.com",
             "Afficher les créneaux et enregistrer votre réservation (page « Prendre rendez-vous » uniquement)",

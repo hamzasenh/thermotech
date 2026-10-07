@@ -19,17 +19,21 @@ import etape2Planification from "@/assets/refonte/etape-2-planification.png";
 import etape3Installation from "@/assets/refonte/etape-3-installation.png";
 import etape4Suivi from "@/assets/refonte/etape-4-suivi.png";
 import heroRemplacementChaudiere from "@/assets/refonte/hero-remplacement-chaudiere.png";
+import immeubleFacade from "@/assets/refonte/immeuble-facade.png";
 import manometresClim from "@/assets/refonte/manometres-clim.png";
 import pacUniteExterieure from "@/assets/refonte/pac-unite-exterieure.png";
+import parlophoneImmeuble from "@/assets/refonte/parlophone-immeuble.png";
 import pacUniteInterieure from "@/assets/refonte/pac-unite-interieure.png";
 import platineRue from "@/assets/refonte/platine-rue.png";
 import plomberieSiphon from "@/assets/refonte/plomberie-siphon.png";
 import radiateurNeuf from "@/assets/refonte/radiateur-neuf.png";
+import ramonage from "@/assets/refonte/ramonage.png";
 import robinetCalcaire from "@/assets/refonte/robinet-calcaire.png";
 import schemaUnifilaire from "@/assets/refonte/schema-unifilaire.png";
 import tableauArmoire from "@/assets/refonte/tableau-armoire.png";
 import tableauNeuf from "@/assets/refonte/tableau-neuf.png";
 import tableauOuvert from "@/assets/refonte/tableau-ouvert.png";
+import testeurPrise from "@/assets/refonte/testeur-prise.png";
 import videophoneEcran from "@/assets/refonte/videophone-ecran.png";
 
 export interface Photo {
@@ -58,9 +62,11 @@ export const photos: Partial<Record<AssetId, Photo>> = {
   P14: { src: radiateurNeuf },
   P16: { src: desembouageEau },
   P17: { src: boilerAnode },
+  P18: { src: ramonage, position: "60% 50%" },
   P19: { src: boilerResistance },
   P20: { src: tableauOuvert },
   P21: { src: tableauNeuf },
+  P22: { src: testeurPrise },
   P23: { src: borneRecharge, position: "45% 50%" },
   P24: { src: platineRue, position: "60% 50%" },
   P25: { src: schemaUnifilaire },
@@ -75,4 +81,6 @@ export const photos: Partial<Record<AssetId, Photo>> = {
   P42: { src: manometresClim },
   P43: { src: aircoInstallation, position: "38% 50%" },
   P44: { src: aircoNettoyage },
+  P50: { src: immeubleFacade },
+  P52: { src: parlophoneImmeuble },
 };

@@ -58,6 +58,7 @@ export const neededAssets = {
   // Sans priorité
   P60: { file: "rue-bruxelles.png", subject: "Rue bruxelloise typique (façades), sans personne ni plaque lisible.", format: "Paysage" },
   P61: { file: "devis-tablette.png", subject: "Mains qui notent sur une tablette ou un bloc devant une installation.", format: "Portrait" },
+  // P62 abandonnée le 08/10/2026 (pas de photo d'équipe sur le site).
   P62: { file: "equipe.png", subject: "Portrait d'équipe, le jour où les tenues Radialec existent.", format: "Paysage" },
   P63: { file: "camionnette.png", subject: "La camionnette, si elle est floquée Radialec.", format: "Paysage" },
   // Vidéos courtes (facultatives)

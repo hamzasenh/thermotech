@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import logo from "@/assets/logo.png";
-import { ChatWidget } from "@/components/site/ChatWidget";
 import { ClickTracking } from "@/components/site/ClickTracking";
 import { AttributionCapture } from "@/components/site/useAttribution";
 import { CookieConsent } from "@/components/site/CookieConsent";
@@ -71,8 +70,6 @@ export default function RootLayout({
         <ClickTracking />
         <AttributionCapture />
 
-        {/* Chatbot Causerie (chargé après l'affichage, bulle d'accroche discrète) */}
-        <ChatWidget />
       </body>
     </html>
   );

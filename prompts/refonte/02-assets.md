@@ -24,7 +24,9 @@ Les étapes de l'entretien chaudière sont illustrées par P04, P03, P09 et P08.
 
 Livrées ensuite et intégrées : P23 borne (haut de page de la borne ; la checklist de cette page montre P21, le tableau neuf), P27 écran de vidéophone, P42 manomètres clim.
 
-**Encore affichés « Photo à fournir » sur le site :** P50 façade d'immeuble (Professionnels), P62 équipe (À propos). Composant en attente : carte Google Maps de /contact (attend l'adresse, Q20).
+Livrées le 8 octobre et intégrées : P18 ramonage, P22 testeur de prise, P50 façade d'immeuble (Professionnels), P52 parlophone d'immeuble. P62 (équipe) abandonnée : pas de photo d'équipe. La carte Google Maps de /contact est abandonnée (siège sans accueil du public, Q20).
+
+**Plus aucun emplacement « Photo à fournir » sur le site au 8 octobre 2026.**
 
 **Prévus pour l'étape B, pas encore placés :** P05 (livrée), P10, P11, P15, P18 (ramonage, l'ancienne photo est encore en place), P22, P51, P52, P60, P61 (remplacerait l'ancienne photo de l'étape « Devis » du remplacement), P63, vidéos V01 et V02.
 

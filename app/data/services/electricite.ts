@@ -288,10 +288,9 @@ export const electriciteServices: Service[] = [
           "[Schéma unifilaire et plans de position](/electricite/schema-electrique) pour le contrôle",
         ],
         note: "Le choix de l'appareillage et des luminaires se fait avec vous, au moment du devis.",
-        // Ancienne photo retirée : licence inconnue (Q42). Emplacement P22 en attendant la vraie photo.
         image: {
           asset: "P22",
-          alt: "Testeur électrique sur une prise murale",
+          alt: "Électricien mesurant la tension d'une prise murale au multimètre",
         },
       },
       {
@@ -860,7 +859,6 @@ export const electriciteServices: Service[] = [
           "Étiquetage des noms sur la platine",
           "Essais d'appel et d'ouverture depuis chaque combiné",
         ],
-        // Ancienne photo retirée : licence inconnue (Q42). Emplacement P52 en attendant la vraie photo.
         image: {
           asset: "P52",
           alt: "Platine de parlophone à l'entrée d'un immeuble",

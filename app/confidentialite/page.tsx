@@ -87,36 +87,21 @@ export default function ConfidentialitePage() {
       </p>
       {/*
         Localisations relevées le 08/10/2026 dans la politique de confidentialité de chaque prestataire :
-        resend.com/legal/privacy-policy (traitement aux États-Unis, mécanisme de transfert non précisé),
+        resend.com/legal/privacy-policy et resend.com/legal/dpa (États-Unis, DPF + clauses contractuelles types),
         policies.google.com/privacy/frameworks (Google LLC certifiée EU-U.S. Data Privacy Framework),
-        causeriebot.com/confidentialite (hébergement UE, requêtes envoyées à des fournisseurs d'IA),
         cal.com/privacy (États-Unis, DPF + clauses contractuelles types),
         vercel.com/legal/privacy-policy (États-Unis et autres pays, DPF + clauses contractuelles types).
       */}
       <LegalTable
         head={["Prestataire", "Rôle", "Localisation"]}
         rows={[
+          ["Resend", "Acheminement des demandes de devis et de rappel par e-mail", "États-Unis, certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
           [
-            "Resend",
-            "Acheminement des demandes de devis et de rappel par e-mail",
-            <span key="r">
-              États-Unis. <MissingInfo>garanties de transfert à vérifier dans le contrat de traitement de Resend</MissingInfo>
-            </span>,
-          ],
-          [
-            "Google (Gmail)",
+            "Messagerie info@radialec.be",
             "Réception et stockage des e-mails de demande",
-            <span key="g">
-              Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework.{" "}
-              <MissingInfo>à confirmer : boîte qui reçoit les demandes (Gmail ou info@radialec.be)</MissingInfo>
-            </span>,
+            <MissingInfo key="m">hébergeur de la boîte à préciser</MissingInfo>,
           ],
           ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
-          [
-            "Causerie",
-            "Assistant de discussion du site",
-            "Hébergement dans l'Union européenne ; les messages sont transmis à des fournisseurs d'intelligence artificielle (notamment aux États-Unis) pour générer les réponses, sans servir à entraîner leurs modèles",
-          ],
           ["Cal.com", "Réservation de rendez-vous en ligne", "Cal.com, Inc. (États-Unis), certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
           [
             <OrMissing key="h" value={legal.host} what="hébergeur" />,

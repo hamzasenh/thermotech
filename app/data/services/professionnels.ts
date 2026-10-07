@@ -25,9 +25,7 @@ export const professionnelsServices: Service[] = [
         "Chaufferie collective, éclairage des communs, parlophonie, colonnes d'eau : gérer un immeuble, c'est jongler avec les corps de métier. Radialec vous offre un interlocuteur unique, disponible 7j/7, et des devis clairs à présenter à vos copropriétaires.",
       image: {
         asset: "P50",
-        alt: "Technicien Radialec dans la chaufferie collective d'un immeuble",
-        placeholder:
-          "Technicien Radialec en tenue navy dans la chaufferie collective d'un immeuble bruxellois, tablette en main devant une chaudière au sol (format paysage)",
+        alt: "Façade d'un immeuble à appartements à Bruxelles",
       },
     },
     facts: [
