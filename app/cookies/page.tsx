@@ -41,7 +41,8 @@ export default function CookiesPage() {
             company.name,
             "Mémoriser la page d'arrivée et la campagne d'origine, jointes uniquement à une demande de devis ou de rappel que vous envoyez",
             "Fin de la visite",
-            <MissingInfo key="at">à valider</MissingInfo>,
+            // Option A retenue par le propriétaire le 08/10/2026 : pas d'accord demandé.
+            "Non (transmis uniquement avec votre demande)",
           ],
           ["_ga", "Google Analytics", "Distinguer les visiteurs de façon anonyme", "13 mois", "Oui"],
           ["_ga_<identifiant>", "Google Analytics", "Conserver l'état de la visite", "13 mois", "Oui"],
