@@ -10,7 +10,8 @@ import { toneBg, type Tone } from "../v2/tones";
 import { ButtonLink, Eyebrow } from "../v2/ui";
 
 /**
- * Offre du moment : entretien chaudière gaz (prix et ancien prix issus de pricing.ts).
+ * Rappel saisonnier : entretien chaudière gaz (prix issu de pricing.ts ; mention de
+ * validité seulement si pricingPolicy.promoValidity est renseigné).
  * Carte lavande sans fond propre : elle prolonge la section précédente (v2/tones.ts).
  */
 export function PromoBanner({ tone = "white", attached }: { tone?: Tone; attached?: boolean }) {
@@ -23,7 +24,7 @@ export function PromoBanner({ tone = "white", attached }: { tone?: Tone; attache
           <div aria-hidden="true" className="v2-glow" />
           <div className="grid items-center gap-10 md:grid-cols-[1.4fr_1fr]">
             <div>
-              <Eyebrow>Offre du moment</Eyebrow>
+              <Eyebrow>Avant l&apos;hiver</Eyebrow>
               <h2 id="offre-du-moment" className="v2-title mt-5 text-[2rem] lg:text-[2.8rem]">
                 {fr("L'hiver arrive, faites entretenir votre chaudière !")}
               </h2>

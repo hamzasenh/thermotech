@@ -17,7 +17,8 @@ export interface PriceItem {
 export const prices = {
   entretienChaudiereGaz: {
     label: "Entretien chaudière gaz",
-    amount: 129,
+    // Repassé à 149 € le 08/10/2026 (fin du prix de lancement à 129 €).
+    amount: 149,
     note: "Contrôle complet + attestation",
     popular: true,
   },
@@ -73,7 +74,7 @@ export const pricingPolicy = {
   /** Moyens de paiement acceptés. Ex. « Bancontact, Payconiq, virement » */
   payment: null as string | null,
   /** Validité de l'offre entretien gaz (prix et ancien prix : entretienChaudiereGaz). Ex. « Jusqu'au 31/12/2026 » */
-  promoValidity: "Prix de lancement jusqu'au 31 décembre 2026" as string | null,
+  promoValidity: null as string | null,
 };
 
 /** Référence à un tarif de la grille, avec libellé/note surchargeables pour le contexte d'une page. */
