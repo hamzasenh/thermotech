@@ -177,6 +177,15 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
               <FaEnvelope className="h-3.5 w-3.5" aria-hidden="true" />
               {company.email}
             </a>
+            {company.address && (
+              // Siège social uniquement : pas d'accueil du public (Q20).
+              <p className={cn("mt-5", light ? "text-night/65" : "text-white/60")}>
+                <span className={cn("block text-xs font-semibold uppercase tracking-[0.14em]", light ? "text-night/45" : "text-white/40")}>
+                  Siège social
+                </span>
+                {company.address.street}, {company.address.postalCode} {company.address.city}
+              </p>
+            )}
             <a
               href={company.google.url}
               target="_blank"
@@ -196,8 +205,8 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
             <FooterColumn title="Chauffage" href="/chauffage" links={group("chauffage").items} light={light} />
             <FooterColumn title="Électricité" href="/electricite" links={group("electricite").items} light={light} />
             <div className="space-y-10">
-              <FooterColumn title="Plomberie" href="/plomberie" links={group("plomberie").items} light={light} />
               <FooterColumn title="Climatisation" href="/climatisation" links={own(group("climatisation"))} light={light} />
+              <FooterColumn title="Plomberie" href="/plomberie" links={group("plomberie").items} light={light} />
             </div>
             <FooterColumn title="Radialec" links={companyLinks} light={light} />
           </nav>

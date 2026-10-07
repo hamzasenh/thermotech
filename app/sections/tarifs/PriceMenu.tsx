@@ -31,7 +31,7 @@ export function PriceMenu({
 }: {
   groups: ResolvedGroup[];
   tone?: Tone;
-  /** Conditions générales (pied de carte) ; `value: null` = encore à confirmer. */
+  /** Conditions générales (pied de carte), seulement celles qui sont décidées. */
   policies: ReturnType<typeof getPolicyRows>;
 }) {
   return (
@@ -127,14 +127,7 @@ export function PriceMenu({
                 <li key={policy.label} className="flex items-baseline gap-3">
                   <span className="text-white/80">{policy.label}</span>
                   <span aria-hidden="true" className="min-w-[1.5rem] flex-1 -translate-y-1 border-b-2 border-dotted border-white/15" />
-                  {policy.value ? (
-                    <span className="text-right font-mono font-semibold text-white">{policy.value}</span>
-                  ) : (
-                    // À CONFIRMER par Radialec : renseigner pricingPolicy dans app/data/pricing.ts.
-                    <span className="whitespace-nowrap rounded border border-dashed border-amber/60 px-1.5 font-mono text-[11px] uppercase tracking-wide text-amber">
-                      à confirmer
-                    </span>
-                  )}
+                  <span className="text-right font-mono font-semibold text-white">{policy.value}</span>
                 </li>
               ))}
             </ul>

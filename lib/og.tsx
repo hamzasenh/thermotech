@@ -146,7 +146,7 @@ export async function renderOgImage({
               <Star />
             </div>
             <span>
-              {company.google.rating}/5 sur Google · 7j/7, 10h–21h · {company.phone.display}
+              {company.google.rating}/5 sur Google · Sous 24h, 7j/7 · {company.phone.display}
             </span>
           </div>
         </div>

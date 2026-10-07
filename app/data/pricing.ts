@@ -69,7 +69,7 @@ export const pricingPolicy = {
   /** Déplacement pour un entretien ou une installation. Ex. « Inclus dans toute la zone » */
   travel: null as string | null,
   /** Taux de TVA appliqué. Ex. « 6% (logement de plus de 10 ans), sinon 21% » */
-  vatRate: null as string | null,
+  vatRate: "6 % sur le remplacement de chaudière si le logement a au moins 10 ans" as string | null,
   /** Moyens de paiement acceptés. Ex. « Bancontact, Payconiq, virement » */
   payment: null as string | null,
   /** Validité de l'offre entretien gaz (prix et ancien prix : entretienChaudiereGaz). Ex. « Jusqu'au 31/12/2026 » */

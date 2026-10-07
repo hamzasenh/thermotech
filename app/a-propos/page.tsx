@@ -1,5 +1,6 @@
 import { MissingInfo } from "@/components/site/MissingInfo";
 import { pageMetadata } from "@/lib/seo";
+import { fr } from "@/lib/typography";
 import { company } from "../data/company";
 import type { Fact } from "../data/services/types";
 import { PageHeader } from "../sections/PageHeader";
@@ -52,11 +53,15 @@ export default function AProposPage() {
           <div>
             <SectionTitle id="histoire-titre" eyebrow="Qui sommes-nous" title="Un seul interlocuteur pour tout votre habitat" />
             <div className="mt-6 space-y-4">
+              {/* Faits vérifiés (BCE, 04-reponses Q26). Ne jamais publier la taille de l'équipe ni l'autre employeur du technicien. */}
+              <p className="text-[17px] leading-relaxed text-night/75">
+                {fr(
+                  `${company.name} est le nom commercial de ${company.legal.companyName ?? "notre société"}, créée en 2024. Chauffage, électricité, plomberie et climatisation : un seul interlocuteur, du premier appel à la fin de l'intervention.`
+                )}
+              </p>
               <MissingInfo>
-                À fournir (Q26) : date de création, nombre de techniciens, prénom et parcours du fondateur, passage de ThermoTech à
-                Radialec.
+                À fournir (Q26) : prénom et parcours du fondateur à publier, histoire du passage de ThermoTech à Radialec.
               </MissingInfo>
-              <MissingInfo>À fournir (Q20) : adresse du siège ou de l&apos;atelier.</MissingInfo>
             </div>
           </div>
           <MediaSlot asset="P62" sizes="(min-width: 1024px) 45vw, 92vw" className="aspect-[3/2] rounded-[28px]" />

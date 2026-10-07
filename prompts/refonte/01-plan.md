@@ -203,7 +203,16 @@ L'ordre dépend de l'intention de la page :
 
 ### 3.1 Requêtes prioritaires
 
-Ce sont des hypothèses, à confirmer avec Search Console [Q11, Q13].
+**Mise à jour du 6 octobre (D1, `04-reponses`).** Volumes réels du Keyword Planner, Bruxelles, septembre 2025 à août 2026 (fourchettes). Source : `claude/keyword-planner-bxl-vs-belgique-2026-10-06.md`, 118 mots-clés, fourni à part et absent du repo.
+- `chauffagiste bruxelles` : 1K–10K.
+- `entretien chaudière`, `entretien chaudière bruxelles`, `chauffagiste uccle` : 100–1K.
+- `dépannage chaudière`, `réparation chaudière`, `remplacement chaudière`, `installation chaudière` : 10–100 chacun.
+- `électricien bruxelles`, `panne électricité` : 100–1K.
+- Plomberie : volumes élevés (`plombier bruxelles`, `débouchage canalisation` : 1K–10K), mais enchères de 5 à 30 € et service complémentaire. **Ne pas la remonter dans les priorités.**
+
+Priorité commerciale [Q13] : 1. dépannage chaudière, 2. entretien chaudière, 3. installation et remplacement, 4. électricité, 5. pompes à chaleur et climatisation, 6. plomberie. Le site suit cet ordre depuis le 8 octobre (navigation, accueil, tarifs).
+
+Le tableau ci-dessous (hypothèses de départ) reste valable pour le ciblage des pages :
 
 | Requête (et variantes) | Intention | Page cible | Priorité |
 |---|---|---|---|
@@ -222,7 +231,7 @@ Ce sont des hypothèses, à confirmer avec Search Console [Q11, Q13].
 | mise en conformité électrique · borne de recharge · parlophone | Projet | Pages concernées | P3 |
 | installation airco · entretien airco · PAC bruxelles | Projet, entretien | `/climatisation` et pages | P3 |
 
-Bruxelles est bilingue et compte beaucoup d'expatriés. Des versions néerlandaise et anglaise pourraient peser lourd [Q15].
+Langues [Q15, D4] : **français uniquement** pour l'instant. À réévaluer après 3 mois de données Ads et Search Console.
 
 ### 3.2 Architecture et maillage interne
 
@@ -780,8 +789,8 @@ Cette page sert la crédibilité auprès de Google et des clients.
 | Pages marques (7) | `/chauffage/chaudiere-vaillant`… | Entretien, dépannage et remplacement de la marque à Bruxelles : modèles courants, pannes fréquentes, codes erreur principaux, prix validés, FAQ | Un technicien relit chaque page |
 | Codes erreur | `/chauffage/codes-erreur/vaillant`… | Signification de chaque code, ce que l'on peut faire soi-même, quand appeler (→ dépannage 149 €) | Sources : notices des fabricants + relecture |
 | Guides | `/conseils/…` | Prix d'une nouvelle chaudière en 2026, entretien obligatoire (réglementation à sourcer), pression qui baisse, sortir du mazout, chaudière ou PAC | Prix et faits validés |
-| Pages communes | `/chauffagiste/uccle`… | Seulement avec du contenu vraiment local (interventions, type de bâti, délais) : sinon Google les traite comme des pages satellites | Démarrer par 5 communes |
-| NL / EN | `/nl/…`, `/en/…` | Traduction des pages chaudière d'abord, avec `hreflang` | Relecture par une personne native [Q15] |
+| Pages communes | `/chauffagiste/uccle`… | **Pas de page par commune par défaut** (D2) : Google les classe en « doorway abuse ». Une page n'est créée qu'avec du contenu réel de la commune (réalisations, photos, avis) | Premier candidat : Uccle (seule requête par commune testée au-dessus de 100 recherches par mois) |
+| NL / EN | — | Abandonné pour l'instant (D4) : français uniquement | À réévaluer après 3 mois de données |
 
 ---
 

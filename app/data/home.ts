@@ -1,13 +1,13 @@
 import type { FaqItem } from "./services/types";
 
 // FAQ de la page d'accueil (section #faqs). Contenu repris de l'ancien site.
-// À revoir (Q34 de prompts/refonte/03-questions.md) : la réponse 1 évoque une
-// chaudière « au mazout », dont l'installation est interdite à Bruxelles.
+// Réponse 1 corrigée (Q34) : plus de « ou au mazout », renvoi vers la page
+// remplacement, sans citer de règle régionale.
 export const homeFaqs: FaqItem[] = [
     {
         id: 1,
         question: "Comment obtenir un devis pour l'installation d'une nouvelle chaudière ?",
-        answer: "Pour obtenir un devis pour l’installation d’une nouvelle chaudière, il vous suffit de nous contacter par email ou par appel téléphonique. Nous vous fournissons un devis détaillé, que ce soit pour une chaudière au gaz ou au mazout."
+        answer: "Pour obtenir un devis pour l’installation d’une nouvelle chaudière, il vous suffit de nous contacter par email ou par appel téléphonique. Nous vous fournissons un devis détaillé. Tout savoir sur le [remplacement de chaudière](/chauffage/remplacement-chaudiere)."
     },
     {
         id: 2,

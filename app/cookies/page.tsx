@@ -36,13 +36,21 @@ export default function CookiesPage() {
         head={["Nom", "Fournisseur", "Finalité", "Durée", "Accord requis"]}
         rows={[
           ["radialec_consent (stockage local)", company.name, "Mémoriser votre choix sur les cookies", "6 mois", "Non (nécessaire)"],
+          [
+            "radialec_attribution (stockage de session)",
+            company.name,
+            "Mémoriser la page d'arrivée et la campagne d'origine, jointes uniquement à une demande de devis ou de rappel que vous envoyez",
+            "Fin de la visite",
+            <MissingInfo key="at">à valider</MissingInfo>,
+          ],
           ["_ga", "Google Analytics", "Distinguer les visiteurs de façon anonyme", "13 mois", "Oui"],
           ["_ga_<identifiant>", "Google Analytics", "Conserver l'état de la visite", "13 mois", "Oui"],
           [
-            "Widget de discussion",
+            // causeriebot.com/confidentialite (08/10/2026) : stockage local, pas de cookie, durée non précisée.
+            "Identifiant de visiteur et conversations (stockage local)",
             "Causerie",
-            "Assistant de discussion en bas de page",
-            <MissingInfo key="d">à vérifier</MissingInfo>,
+            "Retrouver votre conversation d'une page à l'autre",
+            <MissingInfo key="d">durée non précisée par Causerie</MissingInfo>,
             <MissingInfo key="c">à vérifier auprès de Causerie</MissingInfo>,
           ],
           [

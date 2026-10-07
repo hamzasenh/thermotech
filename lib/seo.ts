@@ -120,16 +120,24 @@ export function localBusinessJsonLd(logoUrl: string) {
     image: logoUrl,
     telephone: company.phone.e164,
     email: company.email,
+    // Entreprise qui se déplace chez ses clients : commune du siège sans la rue,
+    // pour ne pas présenter le siège comme un lieu d'accueil (Q20).
     address: company.address
       ? {
           "@type": "PostalAddress",
-          streetAddress: company.address.street,
           postalCode: company.address.postalCode,
           addressLocality: company.address.city,
           addressCountry: "BE",
         }
       : { "@type": "PostalAddress", addressLocality: "Bruxelles", addressCountry: "BE" },
     areaServed,
+    // Appels pris tous les jours de 10h à 21h (Q20).
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "10:00",
+      closes: "21:00",
+    },
     knowsAbout: [
       "Chauffage",
       "Chaudière",

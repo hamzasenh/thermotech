@@ -1,3 +1,4 @@
+import { categoryOrder } from "./categories";
 import { pricingPolicy, resolvePrice, type PriceRef } from "./pricing";
 import { getServiceByRef, serviceHref } from "./services";
 import type { ServiceRef } from "./services/types";
@@ -174,7 +175,9 @@ export interface ResolvedGroup {
 }
 
 export function getTarifGroups(): ResolvedGroup[] {
-  return groups.map((group) => ({
+  // Même ordre que la navigation (priorité commerciale, Q13).
+  const rank = (id: string) => categoryOrder.indexOf(id as (typeof categoryOrder)[number]);
+  return [...groups].sort((a, b) => rank(a.id) - rank(b.id)).map((group) => ({
     id: group.id,
     label: group.label,
     shortLabel: group.shortLabel,
@@ -196,13 +199,19 @@ export function getTarifGroups(): ResolvedGroup[] {
 }
 
 /** Conditions générales affichées sous la carte. `value: null` = encore à confirmer. */
-export function getPolicyRows(): { label: string; value: string | null }[] {
-  return [
+/**
+ * Conditions affichées sous la carte des prix. Une condition encore non décidée
+ * (`null`) n'est pas affichée du tout : le site ne dit rien plutôt que « à
+ * confirmer » (04-reponses, Q22).
+ */
+export function getPolicyRows(): { label: string; value: string }[] {
+  const rows = [
     { label: "Dépannage au-delà de la 1ère heure", value: pricingPolicy.extraHour },
     { label: "Soir, week-end et jours fériés", value: pricingPolicy.surcharge },
     { label: "Déplacement (entretiens)", value: pricingPolicy.travel },
-    { label: "Taux de TVA", value: pricingPolicy.vatRate },
+    { label: "TVA réduite", value: pricingPolicy.vatRate },
     { label: "Paiement", value: pricingPolicy.payment },
-    { label: "Offre entretien gaz valable", value: pricingPolicy.promoValidity },
+    { label: "Offre entretien gaz", value: pricingPolicy.promoValidity },
   ];
+  return rows.flatMap((row) => (row.value ? [{ label: row.label, value: row.value }] : []));
 }

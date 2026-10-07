@@ -85,28 +85,57 @@ export default function ConfidentialitePage() {
         Nos techniciens et notre équipe administrative. Nous faisons aussi appel à des prestataires qui traitent
         certaines données pour notre compte&nbsp;:
       </p>
+      {/*
+        Localisations relevées le 08/10/2026 dans la politique de confidentialité de chaque prestataire :
+        resend.com/legal/privacy-policy (traitement aux États-Unis, mécanisme de transfert non précisé),
+        policies.google.com/privacy/frameworks (Google LLC certifiée EU-U.S. Data Privacy Framework),
+        causeriebot.com/confidentialite (hébergement UE, requêtes envoyées à des fournisseurs d'IA),
+        cal.com/privacy (États-Unis, DPF + clauses contractuelles types),
+        vercel.com/legal/privacy-policy (États-Unis et autres pays, DPF + clauses contractuelles types).
+      */}
       <LegalTable
         head={["Prestataire", "Rôle", "Localisation"]}
         rows={[
-          ["Resend", "Acheminement des demandes de devis et de rappel par e-mail", <MissingInfo key="r">à vérifier (États-Unis ?) et garanties de transfert</MissingInfo>],
-          ["Google (Gmail)", "Réception et stockage des e-mails de demande", <MissingInfo key="g">à vérifier selon le compte utilisé</MissingInfo>],
-          ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", <MissingInfo key="a">à vérifier (UE / États-Unis)</MissingInfo>],
-          ["Causerie", "Assistant de discussion du site", <MissingInfo key="c">à vérifier</MissingInfo>],
-          ["Cal.com", "Réservation de rendez-vous en ligne", <MissingInfo key="cal">à vérifier (États-Unis ?) et garanties de transfert</MissingInfo>],
-          [<OrMissing key="h" value={legal.host} what="hébergeur" />, "Hébergement du site", <MissingInfo key="hl">à vérifier</MissingInfo>],
+          [
+            "Resend",
+            "Acheminement des demandes de devis et de rappel par e-mail",
+            <span key="r">
+              États-Unis. <MissingInfo>garanties de transfert à vérifier dans le contrat de traitement de Resend</MissingInfo>
+            </span>,
+          ],
+          [
+            "Google (Gmail)",
+            "Réception et stockage des e-mails de demande",
+            <span key="g">
+              Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework.{" "}
+              <MissingInfo>à confirmer : boîte qui reçoit les demandes (Gmail ou info@radialec.be)</MissingInfo>
+            </span>,
+          ],
+          ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
+          [
+            "Causerie",
+            "Assistant de discussion du site",
+            "Hébergement dans l'Union européenne ; les messages sont transmis à des fournisseurs d'intelligence artificielle (notamment aux États-Unis) pour générer les réponses, sans servir à entraîner leurs modèles",
+          ],
+          ["Cal.com", "Réservation de rendez-vous en ligne", "Cal.com, Inc. (États-Unis), certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
+          [
+            <OrMissing key="h" value={legal.host} what="hébergeur" />,
+            "Hébergement du site",
+            "États-Unis et autres pays, certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types",
+          ],
         ]}
       />
       <p>
-        Lorsque des données sont transférées hors de l&apos;Union européenne, ces transferts doivent être encadrés
-        par des garanties appropriées (décision d&apos;adéquation, clauses contractuelles types).{" "}
-        <MissingInfo>À confirmer prestataire par prestataire.</MissingInfo>
+        Lorsque des données sont transférées hors de l&apos;Union européenne, ces transferts sont encadrés par le
+        cadre de protection des données UE–États-Unis (Data Privacy Framework) ou par des clauses contractuelles
+        types, selon le prestataire.
       </p>
 
       <h2>Combien de temps nous les conservons</h2>
       <ul>
         <li>
           Demande de devis non suivie d&apos;intervention&nbsp;:{" "}
-          <MissingInfo>durée à définir (pratique courante&nbsp;: 3 ans après le dernier contact)</MissingInfo>
+          <MissingInfo>24 mois après le dernier contact (proposition à valider)</MissingInfo>
         </li>
         <li>Données clients liées à une intervention&nbsp;: pendant la relation et la durée de la garantie, puis archivées.</li>
         <li>Factures et pièces comptables&nbsp;: pendant la durée imposée par la législation comptable et fiscale belge.</li>

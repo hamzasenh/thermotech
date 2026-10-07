@@ -271,3 +271,20 @@ Q29 : Non, en dehors de la ventilation, on ne retire aucun autre service
 - Q7 : la mascotte n'est plus utilisée (404 typographique). L'avatar du chat se change dans Causerie.
 - Q8 : rendus 3D retirés partout (accueil, tarifs, promo, devis, images de partage).
 - Q9 : Next.js passé de 15.0.3 à 15.5.27 (dernière 15.x), React 18 conservé. Build, pages et redirections vérifiés.
+
+### Suite donnée (8 octobre 2026, réponses du fichier 04)
+
+- Délais : le propriétaire garde les « sous 24h », « intervention en 24 heures » et le CTA du technicien qui court (revirement sur D5 et Q28).
+- Q20 : adresse du siège dans le pied de page (« Siège social ») et les mentions légales seulement ; plus d'adresse ni de carte sur /contact. Horaires 7j/7, 10h–21h. Données structurées : commune sans la rue, horaires d'ouverture.
+- Q22 : promo à 129 € sans prix barré, « prix de lancement jusqu'au 31 décembre 2026 ». Les conditions non décidées n'apparaissent plus sur /tarifs. Dépannage laissé à 149 € (140 € à reconfirmer).
+- Q23 : TVA 6 % annoncée seulement pour le remplacement de chaudière, avec la condition des 10 ans (FAQ de la page remplacement et conditions de /tarifs). Mentions de TVA 6 % sur les pompes à chaleur retirées.
+- Q24 : titres « Les marques que nous installons ». Q25 : agréments formulés au nom des techniciens (déjà le cas).
+- Q26 et Q46 : Thermo Tech Solutions SRL, BE 1008.693.201, créée en 2024 (vérifié sur la BCE publique). Hébergeur Vercel Inc. Prestataires de /confidentialite renseignés avec leurs sources. Restent à fournir : nom du gérant, numéros d'agrément, parcours du fondateur.
+- Q27 : rappel « sous 2 h, entre 10h et 21h ». Q45 : info@radialec.be partout.
+- Q33 : consignes gaz officielles et numéros d'urgence par région sur la page dépannage chaudière (formulation à valider par le technicien).
+- Q34 : FAQ de l'accueil sans « ou au mazout », avec un lien vers le remplacement. Q38 : condition de garantie lisible, juste sous la promesse.
+- Q42 : photos de licence inconnue retirées (ramonage, installation électrique, parlophonie), remplacées par des emplacements à fournir (P18, P22, P52).
+- Q13 : ordre chauffage, électricité, climatisation, plomberie partout ; dépannage, entretien, remplacement pour la chaudière.
+- Q19 : origine de la visite (UTM, gclid, page d'arrivée) mémorisée dès l'arrivée et jointe au devis comme au rappel.
+- D1, D2, D4 : plan SEO mis à jour (volumes réels, pas de pages communes sans contenu local, français uniquement).
+

@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Icon, type IconKey } from "@/components/site/Icon";
 import { MissingInfo } from "@/components/site/MissingInfo";
-import { ImagePlaceholder } from "@/components/site/ImageSlot";
 import { Stars } from "@/components/site/GoogleRating";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { company } from "../data/company";
@@ -24,14 +23,18 @@ function Row({ icon, label, children, tone }: { icon: IconKey; label: string; ch
   );
 }
 
-/** Coordonnées complètes (source : app/data/company.ts) + emplacement de carte. */
+/**
+ * Coordonnées (source : app/data/company.ts). Pas d'adresse ni de carte : le
+ * siège social n'accueille pas le public (Q20) ; il figure dans le pied de page
+ * et les mentions légales.
+ */
 export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
-  const { email, address, hours, google } = company;
+  const { email, hours, google } = company;
 
   return (
     <section className={cn("py-16 lg:py-24", toneBg[tone])} aria-labelledby="coordonnees">
       <div className="container">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div>
             <SectionHeading
               id="coordonnees"
@@ -40,7 +43,9 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
               align="left"
               size="md"
             />
-            <ul className="mt-8">
+          </div>
+          <div>
+            <ul className="lg:-mt-5">
               <Row tone={tone} icon="phone" label="Téléphone">
                 <PhoneButton variant="primary" className="mt-1 min-h-[48px] px-5 text-base" />
                 <p className="mt-2 text-sm text-night/60">
@@ -51,17 +56,6 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
                 <a href={`mailto:${email}`} className="font-semibold text-navy underline-offset-4 hover:underline">
                   {email}
                 </a>
-              </Row>
-              <Row tone={tone} icon="map" label="Adresse">
-                {address ? (
-                  <address className="not-italic">
-                    {address.street}
-                    <br />
-                    {address.postalCode} {address.city}
-                  </address>
-                ) : (
-                  <MissingInfo>À fournir : adresse du siège (rue, numéro, code postal, commune)</MissingInfo>
-                )}
               </Row>
               <Row tone={tone} icon="clock" label="Horaires">
                 <p className="font-semibold">Disponible {hours.summary}</p>
@@ -90,11 +84,6 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
             </ul>
           </div>
 
-          <ImagePlaceholder
-            label="Composant à intégrer"
-            description="Carte Google Maps (iframe « Embed ») centrée sur l'adresse de Radialec — ou, à défaut, carte de la zone d'intervention (Bruxelles + périphérie). À intégrer une fois l'adresse confirmée."
-            className="min-h-[320px] lg:h-full"
-          />
         </div>
       </div>
     </section>

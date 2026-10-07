@@ -175,9 +175,12 @@ export function HighlightV2({
                 <RichText text={paragraph} strongClassName={cn("font-semibold", light ? "text-night" : "text-white")} />
               </p>
             ))}
+            {/* Condition de la garantie : lisible et juste sous la promesse, jamais en petites lignes (Q38). */}
+            {note && (
+              <p className={cn("border-l-2 border-flame pl-4 text-base", light ? "text-night/80" : "text-white/80")}>{fr(note)}</p>
+            )}
           </div>
         </div>
-        {note && <p className={cn("mt-12 max-w-3xl text-[13px] leading-relaxed", light ? "text-night/55" : "text-white/50")}>{fr(note)}</p>}
       </div>
     </section>
   );

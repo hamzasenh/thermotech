@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { OrMissing } from "@/components/site/MissingInfo";
+import { MissingInfo, OrMissing } from "@/components/site/MissingInfo";
 import { pageMetadata } from "@/lib/seo";
 import { company } from "../data/company";
 import { LegalPage } from "../sections/LegalPage";
@@ -45,7 +45,11 @@ export default function MentionsLegalesPage() {
         </li>
         <li>
           <strong>Responsable de la publication&nbsp;:</strong>{" "}
-          <OrMissing value={legal.publisher} what="nom du responsable de la publication" />
+          {legal.publisher ?? (
+            <>
+              le gérant de {legal.companyName ?? company.name} <MissingInfo>À fournir : nom du gérant</MissingInfo>
+            </>
+          )}
         </li>
       </ul>
 

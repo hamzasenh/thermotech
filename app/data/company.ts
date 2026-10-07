@@ -7,7 +7,7 @@ export const company = {
   name: "Radialec",
   tagline: "Chauffage, électricité, plomberie et climatisation à Bruxelles",
   description:
-    "Chauffagiste, électricien et plombier à Bruxelles et ses environs : installation, entretien et dépannage 7j/7, de 10h à 21h, devis gratuit.",
+    "Chauffagiste, électricien et plombier à Bruxelles et ses environs : installation, entretien et dépannage 7j/7, intervention sous 24h, devis gratuit.",
 
   phone: {
     display: "+32 486 44 21 86",
@@ -20,10 +20,14 @@ export const company = {
   // Boîte @radialec active (Q45, 04-reponses) : remplace info@thermotechs.be.
   email: "info@radialec.be",
 
-  // À FOURNIR — aucune adresse postale n'existe dans le repo. Tant que c'est
-  // null, les pages affichent un placeholder et le JSON-LD n'expose que la
-  // zone desservie.
-  address: null as null | {
+  // Siège social, sans local ni accueil du public (Q20, 04-reponses). Affiché
+  // uniquement dans le pied de page (« Siège social ») et les pages légales :
+  // jamais comme adresse de visite (pas de carte, pas de « venez nous voir »).
+  address: {
+    street: "Lange Eikstraat 46",
+    postalCode: "1970",
+    city: "Wezembeek-Oppem",
+  } as null | {
     street: string;
     postalCode: string;
     city: string;
@@ -49,10 +53,9 @@ export const company = {
   },
 
   promises: {
-    // Aucun délai d'intervention promis (D5 / Q28, 04-reponses) : seulement les heures d'appel.
-    intervention: "De 10h à 21h",
+    intervention: "Intervention sous 24h",
     availability: "7j/7",
-    quote: "Devis gratuit",
+    quote: "Devis gratuit sous 24h",
     warranty: "Garantie 2 ans",
     clients: "+200 clients satisfaits",
     // Seul délai confirmé (Q27, 04-reponses) : rappel en journée.
@@ -63,14 +66,16 @@ export const company = {
   // confidentialité). Tant qu'une valeur est null, les pages légales affichent
   // un placeholder « À fournir ».
   legal: {
+    // Vérifié sur la BCE publique le 08/10/2026 (kbopub.economie.fgov.be, n° 1008.693.201) :
+    // entreprise active, SRL, siège à Wezembeek-Oppem, début le 23/04/2024, assujettie TVA.
     /** Dénomination sociale exacte (peut différer du nom commercial). */
-    companyName: null as string | null,
+    companyName: "Thermo Tech Solutions SRL" as string | null,
     /** Forme juridique, ex. « SRL ». */
-    legalForm: null as string | null,
+    legalForm: "Société à responsabilité limitée (SRL)" as string | null,
     /** Numéro d'entreprise BCE, ex. « BE 0123.456.789 ». */
-    enterpriseNumber: null as string | null,
-    /** Hébergeur du site : nom, adresse, contact. */
-    host: null as string | null,
+    enterpriseNumber: "BE 1008.693.201" as string | null,
+    /** Hébergeur du site : nom, adresse, contact (adresse : vercel.com/legal/privacy-policy, 08/10/2026). */
+    host: "Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis (vercel.com)" as string | null,
     /** Responsable de la publication (personne physique). */
     publisher: null as string | null,
     /** Numéros d'agrément (Bruxelles Environnement, VEKA, Wallonie). */

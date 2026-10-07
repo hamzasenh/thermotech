@@ -33,7 +33,7 @@ export const metadata = pageMetadata({
 const trust: Fact[] = [
   { icon: "users", stat: company.promises.clients, label: "Ils nous recommandent partout à Bruxelles." },
   { icon: "shield", stat: company.promises.warranty, label: "Toutes nos pièces et interventions couvertes." },
-  { icon: "clock", stat: company.promises.intervention, label: "Une urgence ? Appelez-nous, 7j/7." },
+  { icon: "clock", stat: company.promises.intervention, label: "Une urgence ? On est chez vous le jour même. 7/7" },
   { icon: "euro", stat: "Prix transparents", label: "Le prix annoncé est le prix payé, point final." },
 ];
 
@@ -63,16 +63,6 @@ const trades: { title: string; href: string; image: ImageSpec; links: { label: s
     ],
   },
   {
-    title: "Plomberie & sanitaire",
-    href: "/plomberie",
-    image: { asset: "P30", alt: "Plombier réparant un siphon sous un évier" },
-    links: [
-      { label: "Dépannage plomberie", href: "/plomberie/depannage" },
-      { label: "Détartrage", href: "/plomberie/detartrage" },
-      { label: "Débouchage", href: "/plomberie/debouchage" },
-    ],
-  },
-  {
     title: "Climatisation & pompes à chaleur",
     href: "/climatisation",
     image: { asset: "P43", alt: "Technicien posant une unité intérieure de climatisation" },
@@ -81,6 +71,16 @@ const trades: { title: string; href: string; image: ImageSpec; links: { label: s
       { label: "Entretien clim & PAC", href: "/climatisation/entretien-climatisation" },
       { label: "Dépannage clim & PAC", href: "/climatisation/depannage-climatisation" },
       { label: "Pompes à chaleur (PAC)", href: "/chauffage/pompe-a-chaleur" },
+    ],
+  },
+  {
+    title: "Plomberie & sanitaire",
+    href: "/plomberie",
+    image: { asset: "P30", alt: "Plombier réparant un siphon sous un évier" },
+    links: [
+      { label: "Dépannage plomberie", href: "/plomberie/depannage" },
+      { label: "Détartrage", href: "/plomberie/detartrage" },
+      { label: "Débouchage", href: "/plomberie/debouchage" },
     ],
   },
 ];
@@ -97,7 +97,8 @@ const pricing: PriceRef[] = [
   { key: "entretienPac" },
 ];
 
-const boilerServices = ["chauffage/entretien-chaudiere", "chauffage/depannage-chaudiere", "chauffage/remplacement-chaudiere"] as const;
+// Priorité commerciale (Q13) : dépannage, entretien, remplacement.
+const boilerServices = ["chauffage/depannage-chaudiere", "chauffage/entretien-chaudiere", "chauffage/remplacement-chaudiere"] as const;
 
 export default function Home() {
   const urgence = ctaDefaults.urgence;

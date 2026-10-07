@@ -14,11 +14,13 @@ import type {
 // app/sections/CategoryPage.tsx. NB : ne pas importer ./services (index) ici
 // — seulement des types — pour éviter une dépendance circulaire.
 
+// Ordre de priorité commerciale (Q13, 04-reponses) : chauffage, électricité,
+// climatisation et PAC, puis plomberie (complémentaire, à ne pas remonter).
 export const categoryOrder: ServiceCategory[] = [
   "chauffage",
   "electricite",
-  "plomberie",
   "climatisation",
+  "plomberie",
   "professionnels",
 ];
 
@@ -168,7 +170,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
         "Chaudière relativement récente, panne isolée (sonde, vanne, circulateur, carte électronique), entretien à jour : une réparation ciblée est généralement la solution la plus économique.",
         "## Quand envisager le remplacement",
         "Au-delà d'une quinzaine d'années, les pannes ont tendance à se répéter, certaines pièces deviennent difficiles à trouver et le rendement baisse — ce qui se paie sur chaque facture de gaz. Une chaudière à condensation récente consomme nettement moins qu'un ancien modèle.",
-        "Vous chauffez au mazout ? La Région bruxelloise n'autorise plus l'installation de nouvelles chaudières au mazout : le [remplacement](/chauffage/remplacement-chaudiere) se fera vers le gaz à condensation ou une [pompe à chaleur](/chauffage/pompe-a-chaleur), qui bénéficie d'une TVA réduite à 6% depuis janvier 2026.",
+        "Vous chauffez au mazout ? La Région bruxelloise n'autorise plus l'installation de nouvelles chaudières au mazout : le [remplacement](/chauffage/remplacement-chaudiere) se fera vers le gaz à condensation ou une [pompe à chaleur](/chauffage/pompe-a-chaleur).",
         "Dans tous les cas, notre devis est gratuit et détaillé : vous comparez réparation et remplacement en connaissance de cause. Pour les primes et obligations à jour, référez-vous à [environnement.brussels](https://environnement.brussels).",
       ],
     },
@@ -553,7 +555,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
         "## La pompe à chaleur air-eau",
         "Elle chauffe l'eau de vos radiateurs ou de votre chauffage par le sol, et souvent votre eau chaude sanitaire : elle remplace la chaudière. Elle donne le meilleur d'elle-même avec des émetteurs basse température et un logement bien isolé. Voir [pompe à chaleur](/chauffage/pompe-a-chaleur).",
         "## Ce qui change en 2026",
-        "La TVA réduite à 6% s'applique aux pompes à chaleur depuis janvier 2026 (conditions à vérifier selon l'appareil et le logement), tandis que les primes RENOLUTION pour le remplacement de chaudière sont actuellement suspendues. Consultez les informations à jour sur [environnement.brussels](https://environnement.brussels) — nous vous aidons à y voir clair lors de la visite.",
+        "Les primes RENOLUTION pour le remplacement de chaudière sont actuellement suspendues. Consultez les informations à jour sur [environnement.brussels](https://environnement.brussels) — nous vous aidons à y voir clair lors de la visite.",
       ],
     },
     faqTitle: "Questions fréquentes : climatisation et pompe à chaleur",

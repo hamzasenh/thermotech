@@ -1,5 +1,7 @@
 # Refonte Radialec, 05 · À faire (passation vers une session Claude Code cloud)
 
+> **Mise à jour du 8 octobre 2026 : ce fichier a été appliqué en local, il n'y a plus rien à en faire.** Exception voulue par le propriétaire : les sections 2.1 et 2.2 (retrait des délais « sous 24h », « intervention en 24 heures », « (presque) déjà en route », technicien qui court) **ne doivent pas être appliquées**. Les délais restent. Voir « Owner decisions » dans `CLAUDE.md` et la « Suite donnée » de `03-questions.md`.
+
 Rédigé le 6 octobre 2026 par la session locale. Destinataire : une autre instance de Claude Code, sans accès à la mémoire de la session locale. Tout ce qu'il faut savoir est ici, dans `CLAUDE.md` et dans les fichiers cités.
 
 ## 0. Avant de commencer

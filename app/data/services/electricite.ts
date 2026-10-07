@@ -1,5 +1,3 @@
-import installationElec from "@/assets/installation_elec.jpg";
-import parlophone from "@/assets/parlophone.jpeg";
 import type { Service } from "./types";
 
 // Pages service « Électricité » — /electricite/<slug>.
@@ -290,9 +288,10 @@ export const electriciteServices: Service[] = [
           "[Schéma unifilaire et plans de position](/electricite/schema-electrique) pour le contrôle",
         ],
         note: "Le choix de l'appareillage et des luminaires se fait avec vous, au moment du devis.",
+        // Ancienne photo retirée : licence inconnue (Q42). Emplacement P22 en attendant la vraie photo.
         image: {
-          src: installationElec,
-          alt: "Électricien raccordant une prise murale",
+          asset: "P22",
+          alt: "Testeur électrique sur une prise murale",
         },
       },
       {
@@ -861,9 +860,10 @@ export const electriciteServices: Service[] = [
           "Étiquetage des noms sur la platine",
           "Essais d'appel et d'ouverture depuis chaque combiné",
         ],
+        // Ancienne photo retirée : licence inconnue (Q42). Emplacement P52 en attendant la vraie photo.
         image: {
-          src: parlophone,
-          alt: "Platine de rue de parlophone à l'entrée d'un immeuble",
+          asset: "P52",
+          alt: "Platine de parlophone à l'entrée d'un immeuble",
         },
       },
       {

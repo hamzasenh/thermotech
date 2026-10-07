@@ -4,6 +4,7 @@ import "./globals.css";
 import logo from "@/assets/logo.png";
 import { ChatWidget } from "@/components/site/ChatWidget";
 import { ClickTracking } from "@/components/site/ClickTracking";
+import { AttributionCapture } from "@/components/site/useAttribution";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { JsonLd } from "@/components/site/JsonLd";
 import { MotionProvider } from "@/components/site/Motion";
@@ -68,6 +69,7 @@ export default function RootLayout({
         {/* Bandeau cookies + Google Analytics (chargé uniquement après consentement) */}
         <CookieConsent />
         <ClickTracking />
+        <AttributionCapture />
 
         {/* Chatbot Causerie (chargé après l'affichage, bulle d'accroche discrète) */}
         <ChatWidget />

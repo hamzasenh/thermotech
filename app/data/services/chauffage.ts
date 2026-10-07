@@ -2,7 +2,6 @@ import { prices } from "../pricing";
 import type { Service } from "./types";
 
 import boilerMaintenance from "@/assets/boiler-maintenance.png";
-import ramonagePhoto from "@/assets/entretienbIS.jpg";
 
 // Pages service de la catégorie chauffage (/chauffage/<slug>).
 // remplacement-chaudiere et entretien-chaudiere reprennent mot pour mot le
@@ -84,7 +83,7 @@ export const chauffageServices: Service[] = [
       },
       {
         type: "brands",
-        title: "Nos partenaires de confiance",
+        title: "Les marques que nous installons",
         intro:
           "Nous installons et entretenons les plus grandes marques de chaudières et de pompes à chaleur, pour un matériel fiable et des pièces disponibles sur le long terme.",
       },
@@ -92,13 +91,14 @@ export const chauffageServices: Service[] = [
         type: "callout",
         title: "Gaz, mazout ou pompe à chaleur : que choisir en 2026 ?",
         paragraphs: [
-          "La Région bruxelloise interdit désormais l'installation de nouvelles chaudières au mazout. Les primes RENOLUTION pour le remplacement de chaudière sont actuellement suspendues, mais la TVA réduite à 6% s'applique aux pompes à chaleur depuis janvier 2026. Nous vous conseillons sur la solution la plus adaptée à votre logement et vous orientons vers les informations à jour sur [environnement.brussels](https://environnement.brussels).",
+          "La Région bruxelloise interdit désormais l'installation de nouvelles chaudières au mazout. Les primes RENOLUTION pour le remplacement de chaudière sont actuellement suspendues. Nous vous conseillons sur la solution la plus adaptée à votre logement et vous orientons vers les informations à jour sur [environnement.brussels](https://environnement.brussels).",
         ],
         // Résumé visuel tiré uniquement du paragraphe ci-dessus et de la FAQ validée.
+        // Pas de TVA annoncée pour la PAC : seule la TVA 6 % du remplacement de chaudière est confirmée (Q23).
         verdicts: [
           { label: "Mazout", status: "Interdit", note: "Pour les nouvelles installations en Région bruxelloise", tone: "off" },
           { label: "Gaz à condensation", status: "Possible", note: "Une alternative au mazout pour remplacer votre chaudière", tone: "flame" },
-          { label: "Pompe à chaleur", status: "TVA 6 %", note: "Taux réduit applicable depuis janvier 2026", tone: "water" },
+          { label: "Pompe à chaleur", status: "À étudier", note: "Nous vous conseillons selon votre logement", tone: "water" },
         ],
       },
       // Repris mot pour mot de la réponse FAQ validée « Quelle garantie sur l'installation ? ».
@@ -122,6 +122,13 @@ export const chauffageServices: Service[] = [
         id: 1,
         question: "Combien de temps dure une installation de chaudière ?",
         answer: "Comptez 1 à 2 jours pour une installation standard.",
+      },
+      {
+        // Q23 (04-reponses) : toujours avec la condition, jamais « TVA 6 % » seule.
+        id: 7,
+        question: "La TVA à 6 % s'applique-t-elle au remplacement de ma chaudière ?",
+        answer:
+          "Oui, si votre logement a au moins 10 ans : le remplacement de votre chaudière est alors facturé avec une TVA de 6 %. Sinon, le taux normal de 21 % s'applique. Nous vérifions avec vous les conditions lors du devis.",
       },
       {
         id: 2,
@@ -275,7 +282,7 @@ export const chauffageServices: Service[] = [
       },
       {
         type: "brands",
-        title: "Nos partenaires de confiance",
+        title: "Les marques que nous installons",
         intro:
           "Nous entretenons toutes les marques de chaudières, quel que soit leur âge ou leur modèle.",
       },
@@ -435,9 +442,13 @@ export const chauffageServices: Service[] = [
         type: "alert",
         tone: "danger",
         title: "Odeur de gaz ? Les bons réflexes, dans cet ordre",
+        // Consignes officielles Sibelga / Fluvius et numéros vérifiés le 06/10/2026 (04-reponses, Q33) :
+        // sibelga.be, fluvius.be, ores.be. Formulation à faire valider mot pour mot par le technicien.
         paragraphs: [
-          "**Ne touchez à aucun interrupteur**, n'allumez aucune flamme et n'utilisez pas d'appareil électrique. Ouvrez portes et fenêtres, fermez si possible la vanne de gaz au compteur, puis **quittez le logement**.",
-          "Une fois dehors, **appelez le 112**. Quand la situation est sécurisée, contactez-nous pour contrôler et remettre votre installation en service.",
+          "**Ouvrez portes et fenêtres.** Aucune flamme ni étincelle : ne touchez à aucun interrupteur, n'allumez pas de lampe, n'utilisez ni appareil électrique ni téléphone dans le logement.",
+          "Si le robinet du compteur de gaz est accessible sans allumer la lumière, fermez-le. Puis **quittez le logement** et appelez depuis l'extérieur.",
+          "Numéros d'urgence gaz, gratuits : **Bruxelles** (Sibelga) **0800 19 400** · **Brabant flamand** (Fluvius) **0800 65 0 65** · **Brabant wallon** (ORES) **0800 87 087** · ou le **112**.",
+          "Quand la situation est sécurisée, contactez-nous pour contrôler et remettre votre installation en service.",
         ],
       },
       {
@@ -544,7 +555,7 @@ export const chauffageServices: Service[] = [
         id: 8,
         question: "Je sens une odeur de gaz, dois-je vous appeler ?",
         answer:
-          "Pas en premier : quittez immédiatement le logement sans toucher aux interrupteurs et appelez le 112. Contactez-nous ensuite, une fois la situation sécurisée.",
+          "Pas en premier : quittez immédiatement le logement sans toucher aux interrupteurs, puis appelez depuis l'extérieur le numéro d'urgence gaz de votre région (Sibelga **0800 19 400** à Bruxelles, Fluvius **0800 65 0 65** en Brabant flamand, ORES **0800 87 087** en Brabant wallon) ou le 112. Contactez-nous ensuite, une fois la situation sécurisée.",
       },
     ],
     related: [
@@ -1177,7 +1188,7 @@ export const chauffageServices: Service[] = [
     pageTitle: "Installation de pompe à chaleur à Bruxelles et ses environs",
     metaTitle: "Installation de pompe à chaleur à Bruxelles",
     metaDescription:
-      "Installation de pompe à chaleur air-eau à Bruxelles : étude, dimensionnement, pose et entretien. TVA 6% depuis 2026. Devis gratuit sous 24h.",
+      "Installation de pompe à chaleur air-eau à Bruxelles : étude, dimensionnement, pose et entretien. Devis gratuit sous 24h.",
     summary:
       "Remplacer votre chaudière par une PAC air-eau : étude du logement, dimensionnement, pose et suivi par un seul interlocuteur.",
     icon: "leaf",
@@ -1192,7 +1203,7 @@ export const chauffageServices: Service[] = [
       },
     },
     facts: [
-      { icon: "piggy", stat: "TVA 6%", label: "Sur les PAC depuis janvier 2026" },
+      { icon: "award", stat: "Dimensionnement", label: "Puissance calculée pour votre logement" },
       { icon: "euro", stat: "Devis gratuit", label: "Sous 24h" },
       { icon: "handshake", stat: "Un seul interlocuteur", label: "De l'étude à la mise en service" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Sur nos interventions" },
@@ -1206,11 +1217,6 @@ export const chauffageServices: Service[] = [
             icon: "leaf",
             title: "Moins d'énergie consommée",
             text: "Une PAC puise l'essentiel de son énergie dans l'air extérieur : en général, elle restitue 3 à 4 fois plus de chaleur qu'elle ne consomme d'électricité.",
-          },
-          {
-            icon: "piggy",
-            title: "TVA réduite à 6%",
-            text: "Depuis janvier 2026, la TVA réduite à 6% s'applique aux pompes à chaleur, ce qui allège le budget d'installation.",
           },
           {
             icon: "fire",
@@ -1315,7 +1321,7 @@ export const chauffageServices: Service[] = [
           },
           { key: "entretienPac" },
         ],
-        note: "Prix TVAC. Installation sur devis gratuit et détaillé : le prix annoncé est le prix payé. TVA à 6% sur les pompes à chaleur depuis janvier 2026.",
+        note: "Prix TVAC. Installation sur devis gratuit et détaillé : le prix annoncé est le prix payé.",
       },
     ],
     faqTitle: "Questions fréquentes sur la pompe à chaleur",
@@ -1330,7 +1336,7 @@ export const chauffageServices: Service[] = [
         id: 2,
         question: "Existe-t-il des primes pour une pompe à chaleur à Bruxelles ?",
         answer:
-          "Les primes RENOLUTION sont actuellement suspendues, mais la TVA réduite à 6% s'applique aux pompes à chaleur depuis janvier 2026. Consultez les informations à jour sur [environnement.brussels](https://environnement.brussels).",
+          "Les primes RENOLUTION sont actuellement suspendues. Consultez les informations à jour sur [environnement.brussels](https://environnement.brussels).",
       },
       {
         id: 3,
@@ -1400,8 +1406,9 @@ export const chauffageServices: Service[] = [
       eyebrow: "Sécurité · Entretien annuel",
       intro:
         "Feu ouvert, insert, poêle à bois ou chaudière au mazout : les suies qui tapissent vos conduits sont une cause majeure de feux de cheminée et d'intoxications. Nos techniciens ramonent et contrôlent vos conduits, au prix affiché.",
+      // Ancienne photo retirée : licence inconnue (Q42). Emplacement P18 en attendant la vraie photo.
       image: {
-        src: ramonagePhoto,
+        asset: "P18",
         alt: "Ramonage d'un conduit de fumée à l'aide d'un hérisson rotatif",
       },
     },

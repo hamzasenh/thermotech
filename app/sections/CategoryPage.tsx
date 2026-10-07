@@ -16,7 +16,7 @@ import { backgrounds } from "./v2/tones";
 
 // Services mis en avant en tête de la catégorie chauffage (le cœur de métier).
 const featuredByCategory: Partial<Record<ServiceCategory, ServiceRef[]>> = {
-  chauffage: ["chauffage/entretien-chaudiere", "chauffage/depannage-chaudiere", "chauffage/remplacement-chaudiere"],
+  chauffage: ["chauffage/depannage-chaudiere", "chauffage/entretien-chaudiere", "chauffage/remplacement-chaudiere"],
 };
 
 /**
