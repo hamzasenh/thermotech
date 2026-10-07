@@ -91,7 +91,7 @@ Ta recommandation (liste d'inscriptions gratuites, mêmes nom, adresse, téléph
 - Google : l'adresse sera masquée (entreprise qui se déplace chez ses clients, [guidelines Google](https://support.google.com/business/answer/3038177)). Mohammed le fait après la re-vérification de la fiche, pas avant.
 - Horaires : **7j/7, de 10h à 21h**, à renseigner dans `company.ts` (`hours.detail`). « Tous les jours » a été répondu : jours fériés inclus, à reconfirmer si besoin. Jamais « 24h/24 ».
 
-**Q21 ⏳ Prix « à partir de ».** Prix réellement pratiqués, TVAC. Les prix déjà dans `pricing.ts` (à jour au 5 octobre) restent la référence. À compléter : remplacement de chaudière gaz standard, pompe à chaleur, radiateur posé, schéma unifilaire, borne de recharge, parlophone et vidéophone, airco mono-split, contrat syndic, installation électrique, rénovation de tableau. Réponse :
+**Q21 ⏳ Prix « à partir de ».** Prix réellement pratiqués, TVAC. Les prix déjà dans `pricing.ts` (à jour au 5 octobre) restent la référence. À compléter : remplacement de chaudière gaz standard, pompe à chaleur, radiateur posé, schéma unifilaire, borne de recharge, parlophone et vidéophone, airco mono-split, contrat syndic, installation électrique, rénovation de tableau. Réponse (08/10) : ✅ sans prix confirmé, « sur devis » / demande de devis. C'est déjà le comportement du site.
 Sans prix confirmé, ne rien afficher plutôt que d'estimer.
 
 **Q22 ⏳ Conditions tarifaires (bloquant, `pricingPolicy`).**
@@ -109,20 +109,20 @@ Sans prix confirmé, ne rien afficher plutôt que d'estimer.
 - À écrire : « TVA 6 % si le logement a au moins 10 ans », jamais « TVA 6 % » sans condition. Pour les autres prestations, ne rien annoncer.
 
 **Q24 ⏳ Marques.**
-- Liste exacte des marques installées. Réponse :
-- Réparation et entretien de toutes les marques ? Réponse :
+- Liste exacte des marques installées. Réponse (08/10) : ✅ celles dont on a le logo : Vaillant, Bulex, Bosch, Buderus, Junkers, Viessmann, Chaffoteaux (`app/data/brands.ts`).
+- Réparation et entretien de toutes les marques ? Réponse (08/10) : ✅ on cite ces 7 marques, plus « toutes les marques » nulle part (`boilerBrandNames`).
 - Titre : écrire « Les marques que nous installons » (brief validé). Pas de « partenaires de confiance » sans partenariat officiel prouvé.
 
 **Q25 ⏳ Agréments.**
 - Les agréments (Bruxelles Environnement, VEKA, Awac) appartiennent aux techniciens, personnes physiques, jamais à l'entreprise. Écrire « nos techniciens sont agréés », jamais « Radialec est agréée ». Le pluriel est valable : les sous-traitants ont leurs propres agréments.
-- Intitulés exacts, catégories et numéros : Mohammed fournit les justificatifs. Réponse :
+- Intitulés exacts, catégories et numéros : Mohammed fournit les justificatifs. Réponse (08/10) : ✅ pas de numéros, on retire. La ligne « Numéros d'agrément » et le placeholder Q25 sont supprimés du site.
 - Sans justificatif, ne publier aucun intitulé ni numéro.
 
 **Q26 ⏳ L'entreprise.**
 - Connu : Thermo Tech Solutions SRL, créée en 2024, nom commercial Radialec. Le fondateur est technicien (formation en électricité puis en chauffage à Bruxelles). Le dirigeant digital développe l'entreprise avec lui.
 - Effectif : un technicien à plein temps cet hiver, plus des sous-traitants réguliers. Ne pas écrire « équipe de X techniciens » sans validation.
 - Ne pas mentionner l'autre employeur du technicien.
-- À compléter : prénom et parcours à publier, passage ThermoTech vers Radialec (version à publier), assurance RC professionnelle. Réponse :
+- À compléter : prénom et parcours à publier, passage ThermoTech vers Radialec (version à publier), assurance RC professionnelle. Réponse (08/10) : ✅ pas de parcours ni d'histoire publiés ; placeholder retiré de /a-propos.
 
 **Q27 ✅ Délai de rappel (`promises.callback`).** Rappel **sous 2 h en journée**, c'est-à-dire entre 10h et 21h. Libellé proposé : « Rappelé sous 2 h, entre 10h et 21h ». Une demande reçue après 21h : rappel le lendemain dès 10h (proposition, ne pas écrire autre chose).
 
@@ -141,23 +141,23 @@ Délais : ✅ aucun « sous 24h » sur le site, pour aucun niveau. Seul le rappe
 **Q30 ⏳ Contrats d'entretien.** Contrats annuels proposés (particuliers, syndics) ? Prix ? Réponse :
 Cette réponse compte aussi pour la rentabilité de la campagne Ads « entretien ».
 
-**Q31 ⏳ Contenu d'un entretien.** À faire décrire par le technicien : gaz, mazout, durée, attestation remise. Réponse :
+**Q31 ⏳ Contenu d'un entretien.** À faire décrire par le technicien : gaz, mazout, durée, attestation remise. Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : on garde le texte validé de la page entretien (contrôle complet : nettoyage, réglages, vérifications ; tests de sécurité : combustion, étanchéité, dispositifs de sécurité ; attestation remise sur place le jour même ; environ 45 min). Aucun ajout sur la différence gaz / mazout.
 
 **Q32 ⏳ Prix existants.**
-- Chauffe-eau à 129 € : quel type d'appareil ? Réponse :
-- Ramonage à 149 € : attestation incluse ? Réponse :
-- Débouchage à 200 € : colonne et égout inclus ? Réponse :
-- Entretien PAC à 180 € : airco au même tarif ? Réponse :
+- Chauffe-eau à 129 € : quel type d'appareil ? Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : libellé générique « Entretien chauffe-eau », sans préciser le type.
+- Ramonage à 149 € : attestation incluse ? Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : aucune attestation promise sur le site.
+- Débouchage à 200 € : colonne et égout inclus ? Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : non, 200 € pour canalisation, WC ou lavabo ; colonne et égout chiffrés avant l'intervention (déjà écrit ainsi).
+- Entretien PAC à 180 € : airco au même tarif ? Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : non annoncé ; l'entretien airco reste « selon le nombre d'unités ».
 
 **Q33 ✅ Consignes gaz.** Numéros d'urgence vérifiés sur les sites officiels (gratuits, 24h/24) :
 - Bruxelles, Sibelga : **0800 19 400** ou 112 ([Sibelga](https://www.sibelga.be/en/outages-streetworks/smell-of-gas)).
 - Flandre (communes du Brabant flamand), Fluvius : **0800 65 0 65** ([Fluvius](https://www.fluvius.be/nl/storingen-en-werken/storing-aardgas/veiligheidsvoorschriften-bij-gasgeur)).
 - Wallonie (Brabant wallon), ORES : **0800 87 087** ([ORES](https://www.ores.be/faq/gaz-naturel)).
-Afficher un bloc court par région plus le 112. Consignes officielles à reprendre (Sibelga et Fluvius) : ouvrir portes et fenêtres, pas de flamme ni d'étincelle (pas d'interrupteur, pas de lampe, pas d'appareil électrique, pas de téléphone dans le logement), fermer le robinet du compteur seulement s'il est accessible sans allumer de lumière, quitter le logement, puis appeler depuis l'extérieur. ⏳ Mohammed (technicien) valide la formulation mot pour mot, et vérifie que chaque commune de la liste dépend bien du gestionnaire indiqué. Réponse :
+Afficher un bloc court par région plus le 112. Consignes officielles à reprendre (Sibelga et Fluvius) : ouvrir portes et fenêtres, pas de flamme ni d'étincelle (pas d'interrupteur, pas de lampe, pas d'appareil électrique, pas de téléphone dans le logement), fermer le robinet du compteur seulement s'il est accessible sans allumer de lumière, quitter le logement, puis appeler depuis l'extérieur. ⏳ Mohammed (technicien) valide la formulation mot pour mot, et vérifie que chaque commune de la liste dépend bien du gestionnaire indiqué. Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : consignes officielles Sibelga / Fluvius publiées telles quelles sur la page dépannage chaudière ; gestionnaire par région (19 communes bruxelloises : Sibelga ; Brabant flamand : Fluvius ; Brabant wallon : ORES).
 
 **Q34 ✅ FAQ de l'accueil.** Oui, retirer « ou au mazout » et renvoyer vers la page remplacement. Ne pas écrire d'interdiction précise sans source officielle : les règles diffèrent selon la région.
 
-**Q35 ⏳ Garantie sur les dépannages.** Même garantie de 2 ans que les installations ? Même condition d'exclusivité ? Réponse :
+**Q35 ⏳ Garantie sur les dépannages.** Même garantie de 2 ans que les installations ? Même condition d'exclusivité ? Réponse (provisoire, Claude, 08/10 : à refaire avec les réponses de Mohammed) : on garde la promesse validée « Garantie 2 ans, pièces et interventions » ; la condition d'exclusivité n'est écrite que pour l'installation (page remplacement). Rien de nouveau publié.
 
 ---
 
@@ -204,6 +204,6 @@ Ta recommandation est ok : retirer toute image dont la licence n'est pas connue.
 **Q46 ⏳ Informations légales (bloquant).**
 - Dénomination : Thermo Tech Solutions SRL. TVA : BE 1008.693.201. Numéro BCE : en général les mêmes chiffres que le numéro de TVA, à vérifier sur la BCE. Réponse :
 - Hébergeur : Vercel (vérifié).
-- Responsable de la publication : ✅ le gérant de Thermo Tech Solutions. ⏳ Nom exact du gérant à fournir. Réponse :
-- Durée de conservation des demandes de devis : proposition de départ à valider, 24 mois après le dernier contact. Réponse :
+- Responsable de la publication : ✅ le gérant de Thermo Tech Solutions. Réponse (08/10) : ✅ Houdaifa Senhaji.
+- Durée de conservation des demandes de devis : proposition de départ à valider, 24 mois après le dernier contact. Réponse (08/10) : ✅ 24 mois.
 - Localisation des prestataires (Resend, Gmail, Google Analytics, Causerie, Cal.com) : à relever dans la politique de confidentialité de chacun. Mohammed n'a rien à fournir ici.

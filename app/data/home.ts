@@ -1,3 +1,4 @@
+import { boilerBrandNames } from "./brands";
 import type { FaqItem } from "./services/types";
 
 // FAQ de la page d'accueil (section #faqs). Contenu repris de l'ancien site.
@@ -12,7 +13,7 @@ export const homeFaqs: FaqItem[] = [
     {
         id: 2,
         question: "Sur quelles chaudières intervenez-vous ?",
-        answer: "Nos chauffagistes interviennent sur tout type de chaudières au gaz et au mazout, quelle que soit la marque : Bosch, Bulex, Vaillant, Viessmann, etc."
+        answer: `Nos chauffagistes interviennent sur les chaudières au gaz et au mazout des marques ${boilerBrandNames}.`
     },
     {
         id: 3,

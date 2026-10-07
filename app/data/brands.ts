@@ -17,8 +17,10 @@ export interface Logo {
   alt: string;
 }
 
-// Marques de chaudières installées et entretenues (logos réels du repo).
-// Aucun logo de marque de climatisation / électricité n'existe encore.
+// Marques de chaudières installées et entretenues (logos réels du repo). C'est
+// la liste officielle des marques du site (réponse Q24 du 08/10/2026 : « celles
+// qu'on a en logo ») : les textes la citent via `boilerBrandNames`, jamais
+// « toutes les marques ». Aucun logo de climatisation / électricité n'existe encore.
 export const boilerBrands: Logo[] = [
   { src: vaillant, alt: "Vaillant" },
   { src: bulex, alt: "Bulex" },
@@ -28,6 +30,12 @@ export const boilerBrands: Logo[] = [
   { src: viessmann, alt: "Viessmann" },
   { src: chaffoteaux, alt: "Chaffoteaux" },
 ];
+
+/** « Vaillant, Bulex, Bosch, Buderus, Junkers, Viessmann et Chaffoteaux ». */
+export const boilerBrandNames = (() => {
+  const names = boilerBrands.map((brand) => brand.alt);
+  return `${names.slice(0, -1).join(", ")} et ${names[names.length - 1]}`;
+})();
 
 // Agréments régionaux (Bruxelles, Flandre, Wallonie).
 export const certifications: Logo[] = [

@@ -1,3 +1,4 @@
+import { boilerBrandNames } from "../brands";
 import { prices } from "../pricing";
 import type { Service } from "./types";
 
@@ -284,7 +285,7 @@ export const chauffageServices: Service[] = [
         type: "brands",
         title: "Les marques que nous installons",
         intro:
-          "Nous entretenons toutes les marques de chaudières, quel que soit leur âge ou leur modèle.",
+          `Nous entretenons les chaudières ${boilerBrandNames}, quel que soit leur âge ou leur modèle.`,
       },
       {
         type: "pricing",
@@ -366,16 +367,16 @@ export const chauffageServices: Service[] = [
     pageTitle: "Dépannage et réparation de chaudière à Bruxelles, 7j/7",
     metaTitle: "Dépannage chaudière à Bruxelles – 7j/7, sous 24h",
     metaDescription:
-      "Chaudière en panne à Bruxelles ? Dépannage 7j/7, intervention sous 24h, toutes marques. 149€ TVAC déplacement + diagnostic + 1ère heure. Appelez-nous.",
+      "Chaudière en panne à Bruxelles ? Dépannage 7j/7, intervention sous 24h, Vaillant, Bulex, Bosch… 149€ TVAC déplacement + diagnostic + 1ère heure. Appelez-nous.",
     summary:
-      "Plus de chauffage ou d'eau chaude ? Diagnostic et réparation toutes marques, 7j/7, avec intervention sous 24h.",
+      "Plus de chauffage ou d'eau chaude ? Diagnostic et réparation des grandes marques (Vaillant, Bulex, Bosch…), 7j/7, avec intervention sous 24h.",
     icon: "wrench",
     intent: "urgence",
     price: { key: "depannage", label: "Dépannage chaudière" },
     hero: {
       eyebrow: "Dépannage 7j/7 · Sous 24h",
       intro:
-        "Plus de chauffage, plus d'eau chaude, chaudière en sécurité ? Nos techniciens agréés diagnostiquent et réparent toutes les marques, 7j/7, avec une intervention sous 24h. Le prix vous est annoncé avant toute réparation.",
+        `Plus de chauffage, plus d'eau chaude, chaudière en sécurité ? Nos techniciens agréés diagnostiquent et réparent les chaudières ${boilerBrandNames}, 7j/7, avec une intervention sous 24h. Le prix vous est annoncé avant toute réparation.`,
       image: {
         asset: "P09",
         alt: "Technicien diagnostiquant une chaudière en panne à l'aide d'un multimètre",
@@ -502,9 +503,8 @@ export const chauffageServices: Service[] = [
       },
       {
         type: "brands",
-        title: "Toutes marques de chaudières",
-        intro:
-          "Vaillant, Bulex, Bosch, Buderus, Junkers, Viessmann, Chaffoteaux : nos techniciens dépannent les chaudières gaz et mazout de toutes les grandes marques.",
+        title: "Les marques que nous dépannons",
+        intro: `${boilerBrandNames} : nos techniciens dépannent les chaudières gaz et mazout de ces marques.`,
       },
     ],
     faqTitle: "Questions fréquentes sur le dépannage de chaudière",
@@ -523,9 +523,8 @@ export const chauffageServices: Service[] = [
       },
       {
         id: 3,
-        question: "Réparez-vous toutes les marques de chaudières ?",
-        answer:
-          "Oui. Nous intervenons sur les chaudières gaz et mazout de toutes les grandes marques : Vaillant, Bulex, Bosch, Buderus, Junkers, Viessmann, Chaffoteaux…",
+        question: "Quelles marques de chaudières réparez-vous ?",
+        answer: `Nous intervenons sur les chaudières gaz et mazout des marques ${boilerBrandNames}.`,
       },
       {
         id: 4,

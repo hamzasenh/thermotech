@@ -135,7 +135,7 @@ export default function ConfidentialitePage() {
       <ul>
         <li>
           Demande de devis non suivie d&apos;intervention&nbsp;:{" "}
-          <MissingInfo>24 mois après le dernier contact (proposition à valider)</MissingInfo>
+          24 mois après le dernier contact.
         </li>
         <li>Données clients liées à une intervention&nbsp;: pendant la relation et la durée de la garantie, puis archivées.</li>
         <li>Factures et pièces comptables&nbsp;: pendant la durée imposée par la législation comptable et fiscale belge.</li>

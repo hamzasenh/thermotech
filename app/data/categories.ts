@@ -1,3 +1,4 @@
+import { boilerBrandNames } from "./brands";
 import { prices, type PriceRef } from "./pricing";
 import type {
   CtaContent,
@@ -93,13 +94,13 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
     label: "Chauffage",
     metaTitle: "Chauffagiste à Bruxelles – dépannage 7j/7",
     metaDescription:
-      "Chauffagiste à Bruxelles : installation, entretien et dépannage de chaudière 7j/7, intervention sous 24h, devis gratuit. Toutes marques, garantie 2 ans.",
+      "Chauffagiste à Bruxelles : installation, entretien et dépannage de chaudière 7j/7, intervention sous 24h, devis gratuit. Vaillant, Bulex, Bosch…, garantie 2 ans.",
     hero: {
       eyebrow: "Chauffagiste agréé · 7j/7",
       title: "Chauffagiste à Bruxelles : installation, entretien et dépannage",
       highlight: "Bruxelles",
       intro:
-        "Chaudière en panne, entretien obligatoire ou remplacement : nos techniciens agréés interviennent sous 24h, 7j/7, sur toutes les marques. Prix annoncé avant intervention, devis gratuit.",
+        `Chaudière en panne, entretien obligatoire ou remplacement : nos techniciens agréés interviennent sous 24h, 7j/7, sur les marques ${boilerBrandNames}. Prix annoncé avant intervention, devis gratuit.`,
       intent: "urgence",
     },
     facts: [
@@ -131,8 +132,8 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
         },
         {
           icon: "tools",
-          title: "Toutes marques",
-          text: "Vaillant, Bulex, Bosch, Buderus, Junkers, Viessmann, Chaffoteaux… nous connaissons votre chaudière, quel que soit son âge.",
+          title: "Les grandes marques",
+          text: `${boilerBrandNames} : nous connaissons votre chaudière, quel que soit son âge.`,
         },
         {
           icon: "euro",
@@ -192,7 +193,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
         id: 3,
         question: "Ma chaudière est ancienne : pouvez-vous encore la réparer ?",
         answer:
-          "Dans la plupart des cas, oui : nous intervenons sur toutes les marques, y compris les modèles anciens. Si les pièces ne sont plus disponibles ou si la réparation n'est plus rentable, nous vous le disons clairement et vous proposons un devis de [remplacement](/chauffage/remplacement-chaudiere) gratuit.",
+          `Dans la plupart des cas, oui : nous intervenons sur les marques ${boilerBrandNames}, y compris les modèles anciens. Si les pièces ne sont plus disponibles ou si la réparation n'est plus rentable, nous vous le disons clairement et vous proposons un devis de [remplacement](/chauffage/remplacement-chaudiere) gratuit.`,
       },
       {
         id: 4,

@@ -77,9 +77,7 @@ export const company = {
     /** Hébergeur du site : nom, adresse, contact (adresse : vercel.com/legal/privacy-policy, 08/10/2026). */
     host: "Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis (vercel.com)" as string | null,
     /** Responsable de la publication (personne physique). */
-    publisher: null as string | null,
-    /** Numéros d'agrément (Bruxelles Environnement, VEKA, Wallonie). */
-    approvals: null as string | null,
+    publisher: "Houdaifa Senhaji, gérant de Thermo Tech Solutions SRL" as string | null,
   },
 
   // Mesure d'audience — chargée uniquement après consentement (CookieConsent).

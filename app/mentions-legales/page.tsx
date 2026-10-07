@@ -58,10 +58,6 @@ export default function MentionsLegalesPage() {
         Nos techniciens sont agréés par Bruxelles Environnement, la VEKA (Vlaams Energie- en Klimaatagentschap) et
         la Wallonie.
       </p>
-      <p>
-        <strong>Numéros d&apos;agrément&nbsp;:</strong>{" "}
-        <OrMissing value={legal.approvals} what="numéros d'agrément de chaque région" />
-      </p>
 
       <h2>Hébergement</h2>
       <p>

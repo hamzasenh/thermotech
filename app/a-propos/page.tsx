@@ -1,4 +1,3 @@
-import { MissingInfo } from "@/components/site/MissingInfo";
 import { pageMetadata } from "@/lib/seo";
 import { fr } from "@/lib/typography";
 import { company } from "../data/company";
@@ -59,9 +58,6 @@ export default function AProposPage() {
                   `${company.name} est le nom commercial de ${company.legal.companyName ?? "notre société"}, créée en 2024. Chauffage, électricité, plomberie et climatisation : un seul interlocuteur, du premier appel à la fin de l'intervention.`
                 )}
               </p>
-              <MissingInfo>
-                À fournir (Q26) : prénom et parcours du fondateur à publier, histoire du passage de ThermoTech à Radialec.
-              </MissingInfo>
             </div>
           </div>
           <MediaSlot asset="P62" sizes="(min-width: 1024px) 45vw, 92vw" className="aspect-[3/2] rounded-[28px]" />
@@ -70,12 +66,7 @@ export default function AProposPage() {
 
       <TrustStripV2 items={engagements} eyebrow="Nos engagements" tone={tones.trust} />
 
-      <ProofV2
-        tone={tones.proof}
-        footnote={
-          <MissingInfo>À fournir (Q25) : intitulés exacts et numéros des agréments (Bruxelles Environnement, VEKA, AwAC).</MissingInfo>
-        }
-      />
+      <ProofV2 tone={tones.proof} />
 
       <ZonesV2 tone={tones.zones} />
       <FinalCtaV2
