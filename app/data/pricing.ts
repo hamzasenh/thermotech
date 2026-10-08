@@ -2,6 +2,9 @@
 // passe par ce fichier : modifier un tarif ici le met à jour partout
 // (homepage, pages service, /tarifs, données structurées).
 
+/** Supplément par unité intérieure pour l'entretien d'une airco (gestionnaire, 08/10/2026). */
+export const aircoPerIndoorUnit = 90;
+
 export interface PriceItem {
   label: string;
   /** Montant TVAC en euros. Absent = « Sur devis ». */
@@ -32,47 +35,72 @@ export const prices = {
     amount: 219,
     note: "Contrôle complet + attestation",
   },
+  // Prix confirmés par le gestionnaire le 08/10/2026 (chauffe-eau gaz 129 €, électrique 160 €).
   entretienChauffeEau: {
-    label: "Entretien chauffe-eau",
+    label: "Entretien chauffe-eau gaz",
     amount: 129,
   },
   entretienBoilerElectrique: {
     label: "Entretien boiler électrique",
-    amount: 149,
+    amount: 160,
   },
   debouchage: {
     label: "Débouchage canalisation / WC / lavabo",
     amount: 200,
+    note: "Colonne et égout chiffrés à part",
   },
   ramonage: {
     label: "Ramonage cheminée",
     amount: 149,
+    note: "Attestation de ramonage comprise",
   },
   entretienPac: {
     label: "Entretien pompe à chaleur",
     amount: 180,
+  },
+  // Ajouts du 08/10/2026 (réponses du gestionnaire).
+  entretienAirco: {
+    label: "Entretien climatisation (airco)",
+    amount: 240,
+    note: `+ ${aircoPerIndoorUnit} € par unité intérieure`,
+  },
+  detartrage: {
+    label: "Détartrage",
+    amount: 300,
+  },
+  miseEnConformite: {
+    label: "Mise en conformité électrique",
+    amount: 990,
+    note: "Repérage, schémas électriques et passage de l'organisme agréé, si aucune modification n'est nécessaire",
+  },
+  contratEntretien: {
+    label: "Contrat d'entretien chaudière (2 ans)",
+    amount: 130,
+    note: "Particuliers",
   },
 } satisfies Record<string, PriceItem>;
 
 export type PriceKey = keyof typeof prices;
 
 /**
- * Conditions tarifaires affichées sur le « ticket » de /tarifs.
- * À CONFIRMER par Radialec : tant qu'une valeur est null, le ticket affiche
- * « à confirmer » à la place. Renseigner la valeur (texte court, tel qu'il
- * doit apparaître) suffit à la publier partout.
+ * Conditions tarifaires affichées sous la carte de /tarifs (réponses du
+ * gestionnaire, 08/10/2026). Une valeur null n'est pas affichée du tout.
+ * Aucun pourcentage de TVA n'est publié (choix du propriétaire) : les prix sont TVAC.
  */
 export const pricingPolicy = {
   /** Tarif au-delà de la 1ère heure de dépannage. Ex. « 65€ TVAC / heure entamée » */
   extraHour: null as string | null,
-  /** Supplément soir / week-end / jours fériés. Ex. « Aucun — même prix 7j/7 » */
-  surcharge: null as string | null,
+  /** Suppléments (gestionnaire, 08/10/2026), un par ligne sur /tarifs. */
+  weekendSurcharge: "+20 €" as string | null,
+  holidaySurcharge: "+50 €" as string | null,
+  /** Urgence = intervention dans les 2 heures. */
+  urgentSurcharge: "+50 €" as string | null,
   /** Déplacement pour un entretien ou une installation. Ex. « Inclus dans toute la zone » */
-  travel: null as string | null,
-  /** Taux de TVA appliqué. Ex. « 6% (logement de plus de 10 ans), sinon 21% » */
-  vatRate: "6 % sur le remplacement de chaudière si le logement a au moins 10 ans" as string | null,
+  travel: "Compris jusqu'à 50 km, supplément au-delà" as string | null,
+  /** Taux de TVA : jamais publié (choix du propriétaire, 08/10/2026). Laisser null. */
+  vatRate: null as string | null,
   /** Moyens de paiement acceptés. Ex. « Bancontact, Payconiq, virement » */
-  payment: null as string | null,
+  payment: "Espèces ou application bancaire (Wero, Payconiq)" as string | null,
   /** Validité de l'offre entretien gaz (prix et ancien prix : entretienChaudiereGaz). Ex. « Jusqu'au 31/12/2026 » */
   promoValidity: null as string | null,
 };

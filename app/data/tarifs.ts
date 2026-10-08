@@ -7,12 +7,8 @@ import type { ServiceRef } from "./services/types";
 // page. Les MONTANTS viennent de pricing.ts ; les conditions générales
 // (heure supplémentaire, TVA, paiement…) de `pricingPolicy`.
 //
-// Questions encore ouvertes côté Radialec (à reporter dans les notes une fois
-// confirmées) :
-//   - chauffe-eau à 129€ : quel type d'appareil (gaz ?) ;
-//   - ramonage à 149€ : attestation incluse ? ;
-//   - débouchage à 200€ : colonne et égout inclus ? ;
-//   - entretien PAC à 180€ : l'airco (air-air) au même tarif ?
+// Questions sur les prix existants : répondues par le gestionnaire le 08/10/2026
+// (notes reportées dans pricing.ts).
 
 interface TarifLine {
   id: string;
@@ -37,6 +33,7 @@ const groups: TarifGroup[] = [
     lines: [
       { id: "entretien-gaz", price: { key: "entretienChaudiereGaz" }, service: "chauffage/entretien-chaudiere" },
       { id: "entretien-mazout", price: { key: "entretienChaudiereMazout" }, service: "chauffage/entretien-chaudiere" },
+      { id: "contrat-entretien", price: { key: "contratEntretien" }, service: "chauffage/entretien-chaudiere" },
       {
         id: "depannage-chaudiere",
         price: { key: "depannage", label: "Dépannage chaudière" },
@@ -77,7 +74,7 @@ const groups: TarifGroup[] = [
       { id: "debouchage", price: { key: "debouchage", label: "Débouchage" }, service: "plomberie/debouchage" },
       {
         id: "detartrage",
-        price: { label: "Détartrage", note: "Selon les équipements à traiter" },
+        price: { key: "detartrage" },
         service: "plomberie/detartrage",
       },
     ],
@@ -100,7 +97,7 @@ const groups: TarifGroup[] = [
       },
       {
         id: "conformite",
-        price: { label: "Mise en conformité RGIE", note: "Après diagnostic de l'installation" },
+        price: { key: "miseEnConformite", label: "Mise en conformité RGIE" },
         service: "electricite/mise-en-conformite-electrique",
       },
       {
@@ -149,7 +146,7 @@ const groups: TarifGroup[] = [
       },
       {
         id: "entretien-airco",
-        price: { label: "Entretien airco", note: "Selon le nombre d'unités" },
+        price: { key: "entretienAirco", label: "Entretien airco" },
         service: "climatisation/entretien-climatisation",
       },
     ],
@@ -207,9 +204,10 @@ export function getTarifGroups(): ResolvedGroup[] {
 export function getPolicyRows(): { label: string; value: string }[] {
   const rows = [
     { label: "Dépannage au-delà de la 1ère heure", value: pricingPolicy.extraHour },
-    { label: "Soir, week-end et jours fériés", value: pricingPolicy.surcharge },
-    { label: "Déplacement (entretiens)", value: pricingPolicy.travel },
-    { label: "TVA réduite", value: pricingPolicy.vatRate },
+    { label: "Week-end", value: pricingPolicy.weekendSurcharge },
+    { label: "Jours fériés", value: pricingPolicy.holidaySurcharge },
+    { label: "Urgence (intervention dans les 2 heures)", value: pricingPolicy.urgentSurcharge },
+    { label: "Déplacement", value: pricingPolicy.travel },
     { label: "Paiement", value: pricingPolicy.payment },
     { label: "Offre entretien gaz", value: pricingPolicy.promoValidity },
   ];

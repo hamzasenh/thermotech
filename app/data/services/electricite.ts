@@ -1,8 +1,9 @@
+import { prices } from "../pricing";
 import type { Service } from "./types";
 
 // Pages service « Électricité » — /electricite/<slug>.
-// Tous les textes sont des brouillons (draft: true) à relire par Radialec :
-// les points techniques et réglementaires (RGIE, contrôle, bornes) sont des
+// Textes validés par le gestionnaire le 08/10/2026 (draft: false). Les points
+// techniques et réglementaires (RGIE, contrôle, bornes) restent des
 // informations générales, pas des engagements commerciaux.
 export const electriciteServices: Service[] = [
   // --- Dépannage électrique -------------------------------------------------
@@ -14,7 +15,7 @@ export const electriciteServices: Service[] = [
     pageTitle: "Dépannage électrique à Bruxelles, 7j/7",
     metaTitle: "Dépannage électrique à Bruxelles – 7j/7",
     metaDescription:
-      "Électricien en urgence à Bruxelles : panne de courant, disjoncteur qui saute, prise HS. Intervention sous 24h, 7j/7, forfait 149€ TVAC. Appelez-nous.",
+      `Électricien en urgence à Bruxelles : panne de courant, disjoncteur qui saute, prise HS. Intervention sous 24h, 7j/7, forfait ${prices.depannage.amount}€ TVAC. Appelez-nous.`,
     summary:
       "Panne de courant, différentiel qui saute, prise ou interrupteur HS : un électricien chez vous sous 24h, 7j/7.",
     icon: "bolt",
@@ -30,7 +31,7 @@ export const electriciteServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "149€ TVAC", label: "Déplacement + diagnostic + 1ère heure" },
+      { icon: "euro", stat: `${prices.depannage.amount}€ TVAC`, label: "Déplacement + diagnostic + 1ère heure" },
       { icon: "clock", stat: "Sous 24h", label: "Intervention rapide" },
       { icon: "calendarCheck", stat: "7j/7", label: "Week-end compris" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Pièces et interventions" },
@@ -162,7 +163,7 @@ export const electriciteServices: Service[] = [
         id: 2,
         question: "Combien coûte un dépannage électrique à Bruxelles ?",
         answer:
-          "Le forfait dépannage est de **149€ TVAC** : il comprend le déplacement, le diagnostic et la première heure de travail. Si des pièces ou des travaux supplémentaires sont nécessaires, le prix vous est annoncé avant toute intervention. Voir [tous nos tarifs](/tarifs).",
+          `Le forfait dépannage est de **${prices.depannage.amount}€ TVAC** : il comprend le déplacement, le diagnostic et la première heure de travail. Si des pièces ou des travaux supplémentaires sont nécessaires, le prix vous est annoncé avant toute intervention. Voir [tous nos tarifs](/tarifs).`,
       },
       {
         id: 3,
@@ -193,6 +194,13 @@ export const electriciteServices: Service[] = [
         question: "Vos réparations sont-elles garanties ?",
         answer: "Oui, nos pièces et interventions bénéficient d'une garantie de 2 ans.",
       },
+      {
+        // Garantie 2 ans + même condition que l'installation (gestionnaire, 08/10/2026, Q35).
+        id: 8,
+        question: "Le dépannage est-il garanti ?",
+        answer:
+          "Oui, nos dépannages sont garantis 2 ans. Pendant cette période, aucune autre entreprise ne doit intervenir sur l'installation concernée, sous peine d'annulation de la garantie.",
+      },
     ],
     related: [
       "electricite/renovation",
@@ -205,7 +213,7 @@ export const electriciteServices: Service[] = [
       highlight: "(presque)",
       body: "Différentiel qui saute, circuit en panne, prise qui chauffe : ne restez pas dans le noir. Nos électriciens interviennent 7j/7 à Bruxelles et en périphérie, sous 24h, au prix annoncé avant intervention. Décrivez-nous la panne, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Installation électrique ----------------------------------------------
@@ -387,7 +395,7 @@ export const electriciteServices: Service[] = [
     cta: {
       body: "Construction, rénovation ou extension : un projet électrique ne s'improvise pas. Nos électriciens qualifiés interviennent à Bruxelles et dans toute la région, avec un seul interlocuteur du premier rendez-vous jusqu'à la mise en service. Décrivez votre projet, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Mise en conformité électrique ----------------------------------------
@@ -404,6 +412,7 @@ export const electriciteServices: Service[] = [
       "Vente de votre bien, rapport de contrôle négatif : nous réalisons les travaux et préparons les documents pour passer le contrôle RGIE.",
     icon: "shield",
     intent: "installation",
+    price: { key: "miseEnConformite" },
     hero: {
       eyebrow: "RGIE · Vente & contrôle",
       intro:
@@ -515,9 +524,10 @@ export const electriciteServices: Service[] = [
         type: "pricing",
         title: "Tarifs mise en conformité électrique",
         intro:
-          "Le coût dépend des remarques du rapport et de l'état de l'installation : nous le chiffrons précisément, gratuitement.",
+          "Un forfait si votre installation est déjà conforme. Si des travaux sont nécessaires, nous les chiffrons gratuitement, poste par poste.",
         items: [
-          { label: "Mise en conformité après rapport", note: "Devis gratuit, poste par poste" },
+          { key: "miseEnConformite" },
+          { label: "Travaux de mise en conformité après rapport", note: "Devis gratuit, poste par poste" },
           { label: "Schéma unifilaire + plans de position", note: "Sur devis selon la taille du logement" },
         ],
       },
@@ -546,7 +556,7 @@ export const electriciteServices: Service[] = [
         id: 4,
         question: "Combien coûte une mise en conformité électrique ?",
         answer:
-          "Tout dépend du nombre et de la nature des remarques : un différentiel à ajouter n'a rien à voir avec un tableau à remplacer. Nous établissons un devis gratuit, poste par poste, à partir du rapport.",
+          `Si aucune modification n'est nécessaire, comptez **${prices.miseEnConformite.amount}€ TVAC** : repérage de l'installation, schémas électriques et passage de l'organisme agréé pour l'attestation de conformité. Si des travaux sont à prévoir, tout dépend du nombre et de la nature des remarques : nous établissons un devis gratuit, poste par poste.`,
       },
       {
         id: 5,
@@ -571,7 +581,7 @@ export const electriciteServices: Service[] = [
       title: "Un contrôle à passer ? Votre devis, sans mauvaise surprise.",
       body: "Vente de votre bien, rapport négatif ou installation vieillissante : nos électriciens qualifiés analysent la situation, réalisent les corrections et préparent vos documents. Un seul interlocuteur jusqu'au nouveau passage de l'organisme agréé.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Borne de recharge ----------------------------------------------------
@@ -753,7 +763,7 @@ export const electriciteServices: Service[] = [
       title: "Une voiture électrique ? Votre borne, sans mauvaise surprise.",
       body: "Raccordement à vérifier, puissance à choisir, circuit à créer : une borne de recharge se prépare. Nos électriciens qualifiés étudient votre installation et vous remettent un devis clair sous 24h, à Bruxelles et dans toute la région.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Parlophonie ----------------------------------------------------------
@@ -920,7 +930,7 @@ export const electriciteServices: Service[] = [
         id: 3,
         question: "Mon ouvre-porte ne fonctionne plus, que faire ?",
         answer:
-          "La panne peut venir de la gâche électrique, de son alimentation ou du bouton du combiné. Un diagnostic permet de le savoir rapidement : c'est un [dépannage électrique](/electricite/depannage-electrique) au forfait de 149€ TVAC (déplacement + diagnostic + 1ère heure).",
+          `La panne peut venir de la gâche électrique, de son alimentation ou du bouton du combiné. Un diagnostic permet de le savoir rapidement : c'est un [dépannage électrique](/electricite/depannage-electrique) au forfait de ${prices.depannage.amount}€ TVAC (déplacement + diagnostic + 1ère heure).`,
       },
       {
         id: 4,
@@ -951,7 +961,7 @@ export const electriciteServices: Service[] = [
       title: "Un parlophone à remplacer ? Votre devis, sans mauvaise surprise.",
       body: "Maison ou immeuble, installation neuve ou remplacement : nos électriciens qualifiés vous conseillent le bon système et l'installent proprement, à Bruxelles et dans toute la région. Décrivez-nous votre porte d'entrée, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Vidéophonie ----------------------------------------------------------
@@ -1132,7 +1142,7 @@ export const electriciteServices: Service[] = [
       title: "Voir avant d'ouvrir ? Votre devis, sans mauvaise surprise.",
       body: "Maison ou immeuble, installation neuve ou remplacement d'un parlophone : nos électriciens qualifiés vous conseillent le bon système et l'installent proprement, à Bruxelles et dans toute la région. Décrivez-nous votre entrée, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Schéma électrique ----------------------------------------------------
@@ -1309,7 +1319,7 @@ export const electriciteServices: Service[] = [
       title: "Un contrôle électrique à préparer ? Votre devis, sans mauvaise surprise.",
       body: "Vente, rapport négatif ou travaux récents : nos électriciens qualifiés relèvent votre installation et établissent des documents clairs, prêts pour l'organisme agréé. Un seul interlocuteur, à Bruxelles et dans toute la région.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Rénovation électrique ------------------------------------------------
@@ -1521,6 +1531,6 @@ export const electriciteServices: Service[] = [
       title: "Une installation d'un autre âge ? Votre devis, sans mauvaise surprise.",
       body: "Tableau à fusibles, câbles fatigués, prises sans terre : ne laissez pas une installation vieillissante mettre votre sécurité en jeu. Nos électriciens qualifiés rénovent votre installation à Bruxelles et dans toute la région, avec un devis clair sous 24h.",
     },
-    draft: true,
+    draft: false,
   },
 ];

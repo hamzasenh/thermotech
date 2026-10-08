@@ -97,9 +97,10 @@ export default function ConfidentialitePage() {
         rows={[
           ["Resend", "Acheminement des demandes de devis et de rappel par e-mail", "États-Unis, certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
           [
-            "Messagerie info@radialec.be",
+            "Zoho Mail (info@radialec.be)",
             "Réception et stockage des e-mails de demande",
-            <MissingInfo key="m">hébergeur de la boîte à préciser</MissingInfo>,
+            // Zoho stocke les données dans le centre de la région du compte (zoho.eu = Union européenne).
+            <MissingInfo key="m">région du compte Zoho à préciser (Union européenne si le compte est sur zoho.eu)</MissingInfo>,
           ],
           ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
           ["Cal.com", "Réservation de rendez-vous en ligne", "Cal.com, Inc. (États-Unis), certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],

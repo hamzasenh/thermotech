@@ -207,3 +207,19 @@ Ta recommandation est ok : retirer toute image dont la licence n'est pas connue.
 - Responsable de la publication : ✅ le gérant de Thermo Tech Solutions. Réponse (08/10) : ✅ Houdaifa Senhaji.
 - Durée de conservation des demandes de devis : proposition de départ à valider, 24 mois après le dernier contact. Réponse (08/10) : ✅ 24 mois.
 - Localisation des prestataires (Resend, Gmail, Google Analytics, Causerie, Cal.com) : à relever dans la politique de confidentialité de chacun. Mohammed n'a rien à fournir ici.
+
+---
+
+## 9. Réponses du gestionnaire (8 octobre 2026), appliquées sur le site
+
+- Q22 : suppléments week-end +20 €, jours fériés +50 €, urgence (intervention dans les 2 heures) +50 € ; déplacement compris jusqu'à 50 km, supplément au-delà ; paiement en espèces ou par application bancaire (Wero, Payconiq). Dépannage (149 €) et heure supplémentaire : pas de nouvelle réponse, rien de changé.
+- TVA : **aucun pourcentage sur le site** (décision du propriétaire), prix affichés TVAC.
+- Q21 : tout sur devis, sauf détartrage 300 € TVAC et mise en conformité 990 € TVAC (repérage, schémas électriques, passage de l'organisme agréé et attestation de conformité, si aucune modification n'est nécessaire).
+- Q32 : chauffe-eau gaz 129 €, électrique (boiler) 160 € ; ramonage 149 € avec attestation de ramonage ; débouchage 200 €, colonne et égout chiffrés à part ; entretien PAC 180 €, airco 240 € + 90 € par unité intérieure.
+- Q30 : contrats d'entretien ; syndics sur devis, particuliers 130 € pour un contrat de 2 ans.
+- Q35 : dépannages garantis 2 ans, même condition d'exclusivité (FAQ ajoutée sur les 4 pages de dépannage).
+- Q31 : entretien gaz = nettoyage de la chambre de combustion et des composants électriques/électroniques, contrôle de l'absence de fuite et du vase d'expansion, analyse de combustion, contrôle de l'évacuation des gaz brûlés, attestation de conformité en PDF, environ 1 h. Mazout = nettoyage de la chambre de combustion, contrôle et nettoyage du moteur, contrôle de la pompe, réglage du gicleur, contrôle et nettoyage du filtre, contrôle de l'évacuation des fumées, attestation PDF, environ 1 h.
+- Q33 : pas encore de validation de la formulation des consignes gaz.
+- Q44 (Cal.com) : plus tard. Q45 : la boîte info@radialec.be est chez **Zoho Mail** (enregistrements MX absents au 08/10).
+- Relecture (Q17, Q36) : validé, les 21 pages de service et les 5 catégories ne sont plus en brouillon.
+

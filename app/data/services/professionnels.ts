@@ -197,6 +197,6 @@ export const professionnelsServices: Service[] = [
     },
     zonesIntro:
       "Nous intervenons pour les immeubles et copropriétés des 19 communes bruxelloises et de la périphérie, en Brabant flamand et en Brabant wallon.",
-    draft: true,
+    draft: false,
   },
 ];

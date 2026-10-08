@@ -220,7 +220,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
       highlight: "(presque)",
       body: "Chaudière en sécurité, radiateurs froids, plus d'eau chaude : nos chauffagistes agréés interviennent 7j/7 à Bruxelles et dans ses environs, sous 24h, au prix annoncé avant l'intervention. Décrivez-nous la panne, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // ---------------------------------------------------------------------------
@@ -352,7 +352,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
       highlight: "(presque)",
       body: "Différentiel qui saute, prise qui chauffe, coupure partielle : nos électriciens interviennent 7j/7 à Bruxelles et dans ses environs, sous 24h, au prix annoncé avant l'intervention. Et pour vos projets, le devis est gratuit.",
     },
-    draft: true,
+    draft: false,
   },
 
   // ---------------------------------------------------------------------------
@@ -473,7 +473,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
       highlight: "(presque)",
       body: "Fuite, WC bouché, évier qui déborde : nos plombiers interviennent 7j/7 à Bruxelles et dans ses environs, sous 24h, au prix annoncé avant l'intervention. Coupez l'eau, on s'occupe du reste.",
     },
-    draft: true,
+    draft: false,
   },
 
   // ---------------------------------------------------------------------------
@@ -603,7 +603,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
       title: "Un projet d'airco ou de pompe à chaleur ? Votre devis, sans mauvaise surprise.",
       body: "Rafraîchir les chambres, remplacer une vieille chaudière, réduire la facture : nous étudions votre logement, dimensionnons l'appareil et vous remettons un devis détaillé sous 24h. Un seul interlocuteur, de la visite technique à la mise en service.",
     },
-    draft: true,
+    draft: false,
   },
 
   // ---------------------------------------------------------------------------
@@ -720,7 +720,7 @@ export const categories: Record<ServiceCategory, CategoryContent> = {
       title: "Vous gérez un immeuble ? Parlons de vos installations.",
       body: "Chaufferie, colonnes, parlophonie, éclairage des communs : présentez-nous votre immeuble, nous vous remettons un devis clair et un interlocuteur unique pour la suite. Et pour les urgences, nous sommes là 7j/7.",
     },
-    draft: true,
+    draft: false,
   },
 };
 

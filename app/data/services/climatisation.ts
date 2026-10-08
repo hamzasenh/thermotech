@@ -1,3 +1,4 @@
+import { aircoPerIndoorUnit, prices } from "../pricing";
 import type { Service } from "./types";
 
 // Catégorie Climatisation & pompes à chaleur (air-air). La PAC air-eau
@@ -208,7 +209,7 @@ export const climatisationServices: Service[] = [
     },
     zonesIntro:
       "Nous installons votre climatisation dans les 19 communes de la Région bruxelloise et en périphérie, en Brabant flamand et en Brabant wallon.",
-    draft: true,
+    draft: false,
   },
 
   // --- Entretien ------------------------------------------------------------
@@ -220,7 +221,7 @@ export const climatisationServices: Service[] = [
     pageTitle: "Entretien de climatisation et de pompe à chaleur à Bruxelles",
     metaTitle: "Entretien climatisation et PAC à Bruxelles",
     metaDescription:
-      "Entretien d'airco et de pompe à chaleur à Bruxelles : nettoyage, désinfection, contrôle du circuit. Entretien PAC à 180€ TVAC, prix annoncé à l'avance.",
+      `Entretien d'airco et de pompe à chaleur à Bruxelles : nettoyage, désinfection, contrôle du circuit. Entretien PAC à ${prices.entretienPac.amount}€ TVAC, prix annoncé à l'avance.`,
     summary:
       "Nettoyage, désinfection et contrôle de votre airco ou pompe à chaleur, pour un air sain et une consommation maîtrisée.",
     icon: "fan",
@@ -236,7 +237,7 @@ export const climatisationServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "180€ TVAC", label: "Entretien pompe à chaleur" },
+      { icon: "euro", stat: `${prices.entretienPac.amount}€ TVAC`, label: "Entretien pompe à chaleur" },
       { icon: "calendar", stat: "1 fois par an", label: "Rythme généralement recommandé" },
       { icon: "leaf", stat: "Air plus sain", label: "Filtres et échangeur désinfectés" },
       { icon: "chart", stat: "Consommation maîtrisée", label: "Performances préservées" },
@@ -286,10 +287,10 @@ export const climatisationServices: Service[] = [
         type: "pricing",
         title: "Tarifs entretien climatisation et pompe à chaleur",
         intro:
-          "Un prix connu avant le rendez-vous. Pour une airco, le tarif dépend du nombre d'unités intérieures à entretenir.",
+          "Un prix connu avant le rendez-vous. Pour une airco, un forfait plus un montant par unité intérieure.",
         items: [
           { key: "entretienPac" },
-          { label: "Entretien climatisation (airco)", note: "Selon le nombre d'unités" },
+          { key: "entretienAirco" },
         ],
       },
       {
@@ -338,7 +339,7 @@ export const climatisationServices: Service[] = [
         id: 2,
         question: "Combien coûte l'entretien d'une pompe à chaleur ?",
         answer:
-          "L'entretien d'une pompe à chaleur est à **180€ TVAC**. Pour une climatisation (airco), le prix dépend du nombre d'unités : il vous est annoncé avant l'intervention.",
+          `L'entretien d'une pompe à chaleur est à **${prices.entretienPac.amount}€ TVAC**. Pour une climatisation (airco), comptez **${prices.entretienAirco.amount}€ TVAC**, plus ${aircoPerIndoorUnit} € par unité intérieure.`,
       },
       {
         id: 3,
@@ -380,7 +381,7 @@ export const climatisationServices: Service[] = [
     cta: {
       body: "Airco murale, multi-split ou pompe à chaleur : nos techniciens nettoient, désinfectent et contrôlent votre installation, puis vous expliquent ce qui a été fait. Un rendez-vous rapide, un prix connu d'avance et un air plus sain toute l'année.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Dépannage ------------------------------------------------------------
@@ -392,7 +393,7 @@ export const climatisationServices: Service[] = [
     pageTitle: "Dépannage de climatisation et de pompe à chaleur à Bruxelles",
     metaTitle: "Dépannage climatisation et PAC à Bruxelles",
     metaDescription:
-      "Airco ou pompe à chaleur en panne à Bruxelles ? Intervention sous 24h, 7j/7. Dépannage à 149€ TVAC : déplacement, diagnostic et 1ère heure compris.",
+      `Airco ou pompe à chaleur en panne à Bruxelles ? Intervention sous 24h, 7j/7. Dépannage à ${prices.depannage.amount}€ TVAC : déplacement, diagnostic et 1ère heure compris.`,
     summary:
       "Votre airco ne refroidit plus, fuit ou affiche un code erreur ? Diagnostic et réparation sous 24h, 7j/7.",
     icon: "tempHigh",
@@ -408,7 +409,7 @@ export const climatisationServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "149€ TVAC", label: "Déplacement + diagnostic + 1ère heure" },
+      { icon: "euro", stat: `${prices.depannage.amount}€ TVAC`, label: "Déplacement + diagnostic + 1ère heure" },
       { icon: "clock", stat: "Sous 24h", label: "Intervention rapide" },
       { icon: "calendarCheck", stat: "7j/7", label: "Week-end compris" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Sur nos interventions" },
@@ -519,7 +520,7 @@ export const climatisationServices: Service[] = [
         id: 1,
         question: "Combien coûte un dépannage de climatisation ?",
         answer:
-          "Le dépannage est à **149€ TVAC**, déplacement, diagnostic et première heure compris. Les pièces éventuelles vous sont annoncées avant la réparation.",
+          `Le dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Les pièces éventuelles vous sont annoncées avant la réparation.`,
       },
       {
         id: 2,
@@ -557,6 +558,13 @@ export const climatisationServices: Service[] = [
         answer:
           "Un [entretien annuel](/climatisation/entretien-climatisation) et des filtres dépoussiérés régulièrement évitent la plupart des pannes et des mauvaises odeurs.",
       },
+      {
+        // Garantie 2 ans + même condition que l'installation (gestionnaire, 08/10/2026, Q35).
+        id: 8,
+        question: "Le dépannage est-il garanti ?",
+        answer:
+          "Oui, nos dépannages sont garantis 2 ans. Pendant cette période, aucune autre entreprise ne doit intervenir sur l'installation concernée, sous peine d'annulation de la garantie.",
+      },
     ],
     related: [
       "climatisation/entretien-climatisation",
@@ -569,6 +577,6 @@ export const climatisationServices: Service[] = [
       highlight: "(presque)",
       body: "Canicule sans fraîcheur, pompe à chaleur à l'arrêt, eau qui coule sous l'unité : décrivez-nous la panne, on s'occupe du reste. Intervention sous 24h, 7j/7, à Bruxelles et en périphérie, au prix annoncé.",
     },
-    draft: true,
+    draft: false,
   },
 ];

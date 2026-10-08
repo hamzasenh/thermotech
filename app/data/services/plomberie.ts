@@ -1,3 +1,4 @@
+import { prices } from "../pricing";
 import type { Service } from "./types";
 
 // Catégorie Plomberie & sanitaire. Aucune photo dédiée n'existe encore :
@@ -13,7 +14,7 @@ export const plomberieServices: Service[] = [
     pageTitle: "Plombier en urgence à Bruxelles : dépannage de plomberie 7j/7",
     metaTitle: "Plombier en urgence à Bruxelles, 7j/7",
     metaDescription:
-      "Fuite d'eau, WC qui coule, canalisation percée à Bruxelles ? Plombier sous 24h, 7j/7. Dépannage à 149€ TVAC : déplacement, diagnostic et 1ère heure.",
+      `Fuite d'eau, WC qui coule, canalisation percée à Bruxelles ? Plombier sous 24h, 7j/7. Dépannage à ${prices.depannage.amount}€ TVAC : déplacement, diagnostic et 1ère heure.`,
     summary:
       "Fuite d'eau, WC qui coule, robinet ou canalisation percée : un plombier chez vous sous 24h, 7j/7, au prix annoncé.",
     icon: "faucet",
@@ -29,7 +30,7 @@ export const plomberieServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "149€ TVAC", label: "Déplacement + diagnostic + 1ère heure" },
+      { icon: "euro", stat: `${prices.depannage.amount}€ TVAC`, label: "Déplacement + diagnostic + 1ère heure" },
       { icon: "clock", stat: "Sous 24h", label: "Intervention rapide" },
       { icon: "calendarCheck", stat: "7j/7", label: "Week-end compris" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Sur nos interventions" },
@@ -137,7 +138,7 @@ export const plomberieServices: Service[] = [
         id: 1,
         question: "Combien coûte l'intervention d'un plombier en urgence ?",
         answer:
-          "Notre dépannage est à **149€ TVAC**, déplacement, diagnostic et première heure compris. Si des pièces ou du temps supplémentaire sont nécessaires, le prix vous est annoncé avant la réparation.",
+          `Notre dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Si des pièces ou du temps supplémentaire sont nécessaires, le prix vous est annoncé avant la réparation.`,
       },
       {
         id: 2,
@@ -174,6 +175,13 @@ export const plomberieServices: Service[] = [
         answer:
           "Le calcaire dans les mousseurs et pommeaux est une cause fréquente à Bruxelles, où l'eau est dure. Si toute la maison est concernée, une vanne, un réducteur de pression ou une fuite peut être en cause.",
       },
+      {
+        // Garantie 2 ans + même condition que l'installation (gestionnaire, 08/10/2026, Q35).
+        id: 8,
+        question: "Le dépannage est-il garanti ?",
+        answer:
+          "Oui, nos dépannages sont garantis 2 ans. Pendant cette période, aucune autre entreprise ne doit intervenir sur l'installation concernée, sous peine d'annulation de la garantie.",
+      },
     ],
     related: [
       "plomberie/debouchage",
@@ -186,7 +194,7 @@ export const plomberieServices: Service[] = [
       highlight: "(presque)",
       body: "Fuite sous l'évier, WC qui coule, tuyau percé : coupez l'eau, appelez-nous, on s'occupe du reste. Intervention sous 24h, 7j/7, à Bruxelles et en périphérie, au prix annoncé avant réparation.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Débouchage -----------------------------------------------------------
@@ -371,7 +379,7 @@ export const plomberieServices: Service[] = [
       highlight: "(presque)",
       body: "WC qui déborde, évier qui refoule, douche qui ne s'écoule plus : n'attendez pas le dégât des eaux. Intervention sous 24h, 7j/7, à Bruxelles et en périphérie, au prix annoncé.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Détartrage -----------------------------------------------------------
@@ -388,6 +396,7 @@ export const plomberieServices: Service[] = [
       "L'eau bruxelloise est calcaire : nous détartrons robinets, pommeaux, boiler et canalisations pour retrouver débit et eau chaude.",
     icon: "drop",
     intent: "entretien",
+    price: { key: "detartrage" },
     hero: {
       eyebrow: "Eau calcaire · Bruxelles",
       intro:
@@ -467,7 +476,7 @@ export const plomberieServices: Service[] = [
         intro:
           "Le prix du détartrage dépend des équipements à traiter. Il vous est toujours annoncé avant l'intervention.",
         items: [
-          { label: "Détartrage robinetterie et sanitaires", note: "Selon les équipements" },
+          { key: "detartrage" },
           { key: "entretienBoilerElectrique" },
           { key: "entretienChauffeEau" },
         ],
@@ -522,7 +531,7 @@ export const plomberieServices: Service[] = [
         id: 3,
         question: "Combien coûte un détartrage ?",
         answer:
-          "Le prix dépend des équipements à traiter et vous est annoncé avant l'intervention. L'entretien d'un boiler électrique est à **149€ TVAC** et celui d'un chauffe-eau à **129€ TVAC**.",
+          `Le prix dépend des équipements à traiter et vous est annoncé avant l'intervention. Le détartrage est à **${prices.detartrage.amount}€ TVAC**. L'entretien d'un boiler électrique est à **${prices.entretienBoilerElectrique.amount}€ TVAC** et celui d'un chauffe-eau gaz à **${prices.entretienChauffeEau.amount}€ TVAC**.`,
       },
       {
         id: 4,
@@ -553,6 +562,6 @@ export const plomberieServices: Service[] = [
       title: "Débit en berne, boiler entartré ? Prenons rendez-vous.",
       body: "Robinetterie, pommeaux, boiler, canalisations : nos techniciens traquent le calcaire là où il vous coûte le plus cher. Un rendez-vous rapide, un prix annoncé à l'avance et une eau qui coule à nouveau normalement.",
     },
-    draft: true,
+    draft: false,
   },
 ];

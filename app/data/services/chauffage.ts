@@ -6,8 +6,9 @@ import boilerMaintenance from "@/assets/boiler-maintenance.png";
 
 // Pages service de la catégorie chauffage (/chauffage/<slug>).
 // remplacement-chaudiere et entretien-chaudiere reprennent mot pour mot le
-// contenu validé des anciennes pages dédiées. Les autres pages sont des
-// brouillons (draft: true) à faire relire par Radialec.
+// contenu validé des anciennes pages dédiées. Les autres pages ont été validées
+// par le gestionnaire le 08/10/2026 (draft: false). Seule exception : la
+// formulation des consignes gaz (dépannage chaudière) attend encore sa relecture.
 export const chauffageServices: Service[] = [
   // --- Remplacement / installation — contenu validé (ancienne page dédiée) ---
   {
@@ -95,7 +96,7 @@ export const chauffageServices: Service[] = [
           "La Région bruxelloise interdit désormais l'installation de nouvelles chaudières au mazout. Les primes RENOLUTION pour le remplacement de chaudière sont actuellement suspendues. Nous vous conseillons sur la solution la plus adaptée à votre logement et vous orientons vers les informations à jour sur [environnement.brussels](https://environnement.brussels).",
         ],
         // Résumé visuel tiré uniquement du paragraphe ci-dessus et de la FAQ validée.
-        // Pas de TVA annoncée pour la PAC : seule la TVA 6 % du remplacement de chaudière est confirmée (Q23).
+        // Aucun pourcentage de TVA publié sur le site (choix du propriétaire, 08/10/2026).
         verdicts: [
           { label: "Mazout", status: "Interdit", note: "Pour les nouvelles installations en Région bruxelloise", tone: "off" },
           { label: "Gaz à condensation", status: "Possible", note: "Une alternative au mazout pour remplacer votre chaudière", tone: "flame" },
@@ -123,13 +124,6 @@ export const chauffageServices: Service[] = [
         id: 1,
         question: "Combien de temps dure une installation de chaudière ?",
         answer: "Comptez 1 à 2 jours pour une installation standard.",
-      },
-      {
-        // Q23 (04-reponses) : toujours avec la condition, jamais « TVA 6 % » seule.
-        id: 7,
-        question: "La TVA à 6 % s'applique-t-elle au remplacement de ma chaudière ?",
-        answer:
-          "Oui, si votre logement a au moins 10 ans : le remplacement de votre chaudière est alors facturé avec une TVA de 6 %. Sinon, le taux normal de 21 % s'applique. Nous vérifions avec vous les conditions lors du devis.",
       },
       {
         id: 2,
@@ -192,7 +186,7 @@ export const chauffageServices: Service[] = [
     },
     facts: [
       { icon: "euro", stat: `Dès ${prices.entretienChaudiereGaz.amount}€ TVAC`, label: "Entretien chaudière gaz" },
-      { icon: "clock", stat: "~45 min", label: "Intervention moyenne" },
+      { icon: "clock", stat: "~1 heure", label: "Intervention moyenne" },
       { icon: "clipboard", stat: "Attestation immédiate", label: "Remise le jour même" },
       { icon: "shield", stat: "Technicien agréé", label: "Contrôle sécurité inclus" },
     ],
@@ -224,17 +218,15 @@ export const chauffageServices: Service[] = [
       {
         type: "checklist",
         title: "Ce qui est inclus dans votre entretien",
+        // Contenu décrit par le gestionnaire le 08/10/2026 (Q31).
         items: [
-          "Contrôle et nettoyage du brûleur",
-          "Analyse de la combustion (taux de CO, rendement)",
-          "Vérification de l'étanchéité des raccordements gaz",
-          "Contrôle de la pression et du vase d'expansion",
-          "Test des sécurités (thermostat, pressostat, flamme)",
-          "Vérification de l'évacuation des fumées",
-          "Nettoyage des filtres et de l'échangeur si nécessaire",
-          "Conseils personnalisés pour optimiser votre consommation",
+          "Nettoyage de la chambre de combustion",
+          "**Chaudière gaz** : nettoyage des composants électriques et électroniques, contrôle de l'absence de fuite, contrôle du vase d'expansion, analyse de combustion",
+          "**Chaudière mazout** : contrôle et nettoyage du moteur, contrôle de la pompe, réglage du gicleur, contrôle et nettoyage du filtre",
+          "Contrôle de l'évacuation des gaz brûlés et des fumées",
+          "Attestation de conformité envoyée en PDF",
         ],
-        note: "Le tout consigné sur votre attestation officielle, remise en main propre à la fin de l'intervention.",
+        note: "Comptez environ une heure d'intervention, pour une chaudière gaz comme pour une chaudière mazout.",
         image: {
           asset: "P07",
           alt: "Analyseur de combustion branché sur une chaudière pendant l'entretien",
@@ -273,7 +265,7 @@ export const chauffageServices: Service[] = [
           {
             title: "Attestation remise",
             description:
-              "Votre attestation d'entretien officielle, remise sur place le jour même.",
+              "Votre attestation de conformité, envoyée en PDF le jour même.",
             image: {
               asset: "P08",
               alt: "Attestation d'entretien affichée sur un téléphone devant la chaudière",
@@ -291,7 +283,7 @@ export const chauffageServices: Service[] = [
         type: "pricing",
         eyebrow: "Des tarifs clairs, sans surprise",
         title: "Tarifs entretien de chaudière à Bruxelles",
-        items: [{ key: "entretienChaudiereGaz" }, { key: "entretienChaudiereMazout" }],
+        items: [{ key: "entretienChaudiereGaz" }, { key: "entretienChaudiereMazout" }, { key: "contratEntretien" }],
       },
     ],
     faqTitle: "FAQ Entretien de chaudière",
@@ -312,7 +304,7 @@ export const chauffageServices: Service[] = [
         id: 3,
         question: "Combien coûte un entretien de chaudière à Bruxelles ?",
         answer:
-          `Comptez ${prices.entretienChaudiereGaz.amount}€ TVAC pour l'entretien d'une chaudière au gaz, et ${prices.entretienChaudiereMazout.amount}€ TVAC pour une chaudière au mazout. Le prix inclut le contrôle complet, les tests de sécurité et la remise de votre attestation.`,
+          `Comptez ${prices.entretienChaudiereGaz.amount}€ TVAC pour l'entretien d'une chaudière au gaz, et ${prices.entretienChaudiereMazout.amount}€ TVAC pour une chaudière au mazout. Le prix inclut le contrôle complet, les tests de sécurité et votre attestation de conformité. Les particuliers peuvent aussi choisir un contrat d'entretien de 2 ans à ${prices.contratEntretien.amount}€ TVAC.`,
       },
       {
         id: 4,
@@ -330,13 +322,13 @@ export const chauffageServices: Service[] = [
         id: 6,
         question: "Combien de temps dure un entretien ?",
         answer:
-          "Comptez environ 45 minutes pour un entretien standard, selon l'état et l'accessibilité de votre chaudière.",
+          "Comptez environ une heure, pour une chaudière gaz comme pour une chaudière mazout.",
       },
       {
         id: 7,
         question: "Recevrai-je une attestation après l'entretien ?",
         answer:
-          "Oui, votre attestation d'entretien officielle vous est remise directement sur place, le jour même de l'intervention.",
+          "Oui, votre attestation de conformité vous est envoyée en PDF, le jour même de l'intervention.",
       },
       {
         id: 8,
@@ -367,7 +359,7 @@ export const chauffageServices: Service[] = [
     pageTitle: "Dépannage et réparation de chaudière à Bruxelles, 7j/7",
     metaTitle: "Dépannage chaudière à Bruxelles – 7j/7, sous 24h",
     metaDescription:
-      "Chaudière en panne à Bruxelles ? Dépannage 7j/7, intervention sous 24h, Vaillant, Bulex, Bosch… 149€ TVAC déplacement + diagnostic + 1ère heure. Appelez-nous.",
+      `Chaudière en panne à Bruxelles ? Dépannage 7j/7, intervention sous 24h, Vaillant, Bulex, Bosch… ${prices.depannage.amount}€ TVAC déplacement + diagnostic + 1ère heure. Appelez-nous.`,
     summary:
       "Plus de chauffage ou d'eau chaude ? Diagnostic et réparation des grandes marques (Vaillant, Bulex, Bosch…), 7j/7, avec intervention sous 24h.",
     icon: "wrench",
@@ -383,7 +375,7 @@ export const chauffageServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "149€ TVAC", label: "Déplacement + diagnostic + 1ère heure" },
+      { icon: "euro", stat: `${prices.depannage.amount}€ TVAC`, label: "Déplacement + diagnostic + 1ère heure" },
       { icon: "clock", stat: "Sous 24h", label: "Intervention rapide" },
       { icon: "calendar", stat: "7j/7", label: "Week-end compris" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Pièces et interventions" },
@@ -473,7 +465,7 @@ export const chauffageServices: Service[] = [
           {
             title: "Diagnostic sur place",
             description:
-              "Votre technicien identifie la cause exacte de la panne. Déplacement, diagnostic et première heure : 149€ TVAC.",
+              `Votre technicien identifie la cause exacte de la panne. Déplacement, diagnostic et première heure : ${prices.depannage.amount}€ TVAC.`,
           },
           {
             title: "Prix annoncé, puis réparation",
@@ -513,7 +505,7 @@ export const chauffageServices: Service[] = [
         id: 1,
         question: "Combien coûte un dépannage de chaudière à Bruxelles ?",
         answer:
-          "Le dépannage est facturé **149€ TVAC**, déplacement, diagnostic et première heure de travail compris. Si une pièce doit être remplacée, nous vous communiquons son prix avant la réparation.",
+          `Le dépannage est facturé **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure de travail compris. Si une pièce doit être remplacée, nous vous communiquons son prix avant la réparation.`,
       },
       {
         id: 2,
@@ -556,6 +548,13 @@ export const chauffageServices: Service[] = [
         answer:
           "Pas en premier : quittez immédiatement le logement sans toucher aux interrupteurs, puis appelez depuis l'extérieur le numéro d'urgence gaz de votre région (Sibelga **0800 19 400** à Bruxelles, Fluvius **0800 65 0 65** en Brabant flamand, ORES **0800 87 087** en Brabant wallon) ou le 112. Contactez-nous ensuite, une fois la situation sécurisée.",
       },
+      {
+        // Garantie 2 ans + même condition que l'installation (gestionnaire, 08/10/2026, Q35).
+        id: 9,
+        question: "Le dépannage est-il garanti ?",
+        answer:
+          "Oui, nos dépannages sont garantis 2 ans. Pendant cette période, aucune autre entreprise ne doit intervenir sur l'installation concernée, sous peine d'annulation de la garantie.",
+      },
     ],
     related: [
       "chauffage/entretien-chaudiere",
@@ -570,7 +569,7 @@ export const chauffageServices: Service[] = [
     },
     zonesIntro:
       "Dépannage de chaudière sous 24h dans les 19 communes bruxelloises et en périphérie, en Brabant flamand et en Brabant wallon.",
-    draft: true,
+    draft: false,
   },
 
   // --- Chauffe-eau & boiler ---
@@ -582,7 +581,7 @@ export const chauffageServices: Service[] = [
     pageTitle: "Entretien de chauffe-eau et de boiler à Bruxelles",
     metaTitle: "Entretien chauffe-eau et boiler à Bruxelles",
     metaDescription:
-      "Entretien de chauffe-eau et de boiler électrique à Bruxelles : détartrage, anode, groupe de sécurité. Dès 129€ TVAC, prix affiché. Prenez rendez-vous.",
+      `Entretien de chauffe-eau et de boiler électrique à Bruxelles : détartrage, anode, groupe de sécurité. Dès ${prices.entretienChauffeEau.amount}€ TVAC, prix affiché. Prenez rendez-vous.`,
     summary:
       "Détartrage, contrôle de l'anode et du groupe de sécurité : une eau chaude fiable et un appareil qui dure plus longtemps.",
     icon: "drop",
@@ -598,7 +597,7 @@ export const chauffageServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "Dès 129€ TVAC", label: "Entretien chauffe-eau" },
+      { icon: "euro", stat: `Dès ${prices.entretienChauffeEau.amount}€ TVAC`, label: "Entretien chauffe-eau" },
       { icon: "calendarCheck", stat: "Créneau rapide", label: "Généralement sous 24h" },
       { icon: "tools", stat: "Tous types", label: "Boiler électrique, ballon, chaudière mixte" },
       { icon: "shield", stat: "Garantie 2 ans", label: "Sur nos interventions" },
@@ -728,7 +727,7 @@ export const chauffageServices: Service[] = [
         id: 1,
         question: "Combien coûte l'entretien d'un boiler à Bruxelles ?",
         answer:
-          "L'entretien d'un chauffe-eau est à **129€ TVAC** et celui d'un boiler électrique à **149€ TVAC**. Si une pièce doit être remplacée, son prix vous est annoncé avant l'intervention.",
+          `L'entretien d'un chauffe-eau gaz est à **${prices.entretienChauffeEau.amount}€ TVAC** et celui d'un boiler électrique à **${prices.entretienBoilerElectrique.amount}€ TVAC**. Si une pièce doit être remplacée, son prix vous est annoncé avant l'intervention.`,
       },
       {
         id: 2,
@@ -778,7 +777,7 @@ export const chauffageServices: Service[] = [
       highlight: "(avant)",
       body: "Boiler électrique, ballon couplé à la chaudière ou chaudière mixte : nos techniciens détartrent, contrôlent et remettent votre production d'eau chaude en ordre. Un rendez-vous rapide, un prix connu à l'avance.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Désembouage ---
@@ -982,7 +981,7 @@ export const chauffageServices: Service[] = [
       highlight: "(enfin)",
       body: "Radiateurs froids en bas, bruits, chaudière qui peine : décrivez-nous les symptômes. Nous vous proposons la méthode de désembouage adaptée, avec un devis gratuit et détaillé sous 24h.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Radiateurs ---
@@ -1174,7 +1173,7 @@ export const chauffageServices: Service[] = [
     cta: {
       body: "Radiateur à remplacer, pièce à chauffer, salle de bain à rénover : décrivez-nous votre projet. Nous vous conseillons le bon modèle et vous remettons un devis clair sous 24h, pose et raccordement compris.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Pompe à chaleur ---
@@ -1359,7 +1358,7 @@ export const chauffageServices: Service[] = [
         id: 6,
         question: "Faut-il entretenir une pompe à chaleur ?",
         answer:
-          "Oui : un entretien régulier préserve ses performances et sa durée de vie, et la plupart des fabricants le recommandent chaque année. L'[entretien d'une pompe à chaleur](/climatisation/entretien-climatisation) est à **180€ TVAC**.",
+          `Oui : un entretien régulier préserve ses performances et sa durée de vie, et la plupart des fabricants le recommandent chaque année. L'[entretien d'une pompe à chaleur](/climatisation/entretien-climatisation) est à **${prices.entretienPac.amount}€ TVAC**.`,
       },
       {
         id: 7,
@@ -1383,7 +1382,7 @@ export const chauffageServices: Service[] = [
     cta: {
       body: "Sortir du mazout, remplacer une chaudière en fin de vie, réduire votre facture : un projet de pompe à chaleur ne s'improvise pas. Nous étudions votre logement et vous remettons un devis clair sous 24h, avec un seul interlocuteur jusqu'à la mise en service.",
     },
-    draft: true,
+    draft: false,
   },
 
   // --- Ramonage ---
@@ -1393,9 +1392,9 @@ export const chauffageServices: Service[] = [
     title: "Ramonage",
     name: "Ramonage de cheminée et de conduits",
     pageTitle: "Ramonage de cheminée et de conduits à Bruxelles",
-    metaTitle: "Ramonage de cheminée à Bruxelles – 149€ TVAC",
+    metaTitle: `Ramonage de cheminée à Bruxelles – ${prices.ramonage.amount}€ TVAC`,
     metaDescription:
-      "Ramonage de cheminée, poêle, insert et conduit de chaudière mazout à Bruxelles et environs. 149€ TVAC, prix annoncé à l'avance. Prenez rendez-vous.",
+      `Ramonage de cheminée, poêle, insert et conduit de chaudière mazout à Bruxelles et environs. ${prices.ramonage.amount}€ TVAC, prix annoncé à l'avance. Prenez rendez-vous.`,
     summary:
       "Cheminée, poêle, insert ou conduit de chaudière mazout : un ramonage régulier limite les risques d'incendie et d'intoxication.",
     icon: "broom",
@@ -1411,7 +1410,7 @@ export const chauffageServices: Service[] = [
       },
     },
     facts: [
-      { icon: "euro", stat: "149€ TVAC", label: "Ramonage cheminée" },
+      { icon: "euro", stat: `${prices.ramonage.amount}€ TVAC`, label: "Ramonage cheminée" },
       { icon: "calendar", stat: "1 fois par an", label: "Fréquence généralement recommandée" },
       { icon: "shield", stat: "Moins de risques", label: "Feu de cheminée et monoxyde de carbone" },
       { icon: "calendarCheck", stat: "Créneau rapide", label: "Généralement sous 24h" },
@@ -1527,7 +1526,7 @@ export const chauffageServices: Service[] = [
         id: 2,
         question: "Combien coûte un ramonage de cheminée à Bruxelles ?",
         answer:
-          "Le ramonage d'une cheminée est à **149€ TVAC**. Le prix vous est annoncé avant l'intervention : pas de mauvaise surprise.",
+          `Le ramonage d'une cheminée est à **${prices.ramonage.amount}€ TVAC**. L'attestation de ramonage est comprise et le prix vous est annoncé avant l'intervention : pas de mauvaise surprise.`,
       },
       {
         id: 3,
@@ -1571,6 +1570,6 @@ export const chauffageServices: Service[] = [
       highlight: "(bientôt)",
       body: "Cheminée, insert, poêle ou chaudière au mazout : prenez rendez-vous avant la saison de chauffe. Un ramonage au prix affiché, et vous profitez de vos flambées en toute sérénité.",
     },
-    draft: true,
+    draft: false,
   },
 ];
