@@ -138,7 +138,7 @@ export const plomberieServices: Service[] = [
         id: 1,
         question: "Combien coûte l'intervention d'un plombier en urgence ?",
         answer:
-          `Notre dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Si des pièces ou du temps supplémentaire sont nécessaires, le prix vous est annoncé avant la réparation.`,
+          `Notre dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Au-delà de la première heure, chaque heure supplémentaire est facturée **${prices.heureSupplementaire.amount}€ TVAC**. Si des pièces ou du temps supplémentaire sont nécessaires, le prix vous est annoncé avant la réparation.`,
       },
       {
         id: 2,

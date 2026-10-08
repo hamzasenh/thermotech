@@ -221,5 +221,5 @@ Ta recommandation est ok : retirer toute image dont la licence n'est pas connue.
 - Q31 : entretien gaz = nettoyage de la chambre de combustion et des composants électriques/électroniques, contrôle de l'absence de fuite et du vase d'expansion, analyse de combustion, contrôle de l'évacuation des gaz brûlés, attestation de conformité en PDF, environ 1 h. Mazout = nettoyage de la chambre de combustion, contrôle et nettoyage du moteur, contrôle de la pompe, réglage du gicleur, contrôle et nettoyage du filtre, contrôle de l'évacuation des fumées, attestation PDF, environ 1 h.
 - Q33 : pas encore de validation de la formulation des consignes gaz.
 - Q44 (Cal.com) : plus tard. Q45 : la boîte info@radialec.be est chez **Zoho Mail** (enregistrements MX absents au 08/10).
-- Relecture (Q17, Q36) : validé, les 21 pages de service et les 5 catégories ne sont plus en brouillon.
+- Relecture (Q17, Q36) : validé, les 21 pages de service et les 5 catégories ne sont plus en brouillon.- Compléments du 8 octobre (soir) : dépannage confirmé à 149 € TVAC ; heure supplémentaire 60 € TVAC de l'heure (conditions de /tarifs et FAQ des 4 pages de dépannage) ; consignes gaz validées (Q33). Enregistrements Zoho annoncés comme en place, mais le DNS de Hostinger ne renvoyait encore aucun MX ni SPF pour radialec.be à 08/10 (vérifié sur le serveur qui fait autorité).
 

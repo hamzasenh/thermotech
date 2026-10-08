@@ -163,7 +163,7 @@ export const electriciteServices: Service[] = [
         id: 2,
         question: "Combien coûte un dépannage électrique à Bruxelles ?",
         answer:
-          `Le forfait dépannage est de **${prices.depannage.amount}€ TVAC** : il comprend le déplacement, le diagnostic et la première heure de travail. Si des pièces ou des travaux supplémentaires sont nécessaires, le prix vous est annoncé avant toute intervention. Voir [tous nos tarifs](/tarifs).`,
+          `Le forfait dépannage est de **${prices.depannage.amount}€ TVAC** : il comprend le déplacement, le diagnostic et la première heure de travail. Au-delà de la première heure, chaque heure supplémentaire est facturée **${prices.heureSupplementaire.amount}€ TVAC**. Si des pièces ou des travaux supplémentaires sont nécessaires, le prix vous est annoncé avant toute intervention. Voir [tous nos tarifs](/tarifs).`,
       },
       {
         id: 3,

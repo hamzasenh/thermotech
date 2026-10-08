@@ -25,6 +25,7 @@ export const prices = {
     note: "Contrôle complet + attestation",
     popular: true,
   },
+  // Dépannage 149 € et heure supplémentaire 60 € TVAC : confirmés par le gestionnaire le 08/10/2026.
   depannage: {
     label: "Dépannage (chaudière, sanitaire, électrique, clim/PAC)",
     amount: 149,
@@ -59,6 +60,10 @@ export const prices = {
     amount: 180,
   },
   // Ajouts du 08/10/2026 (réponses du gestionnaire).
+  heureSupplementaire: {
+    label: "Heure supplémentaire (dépannage)",
+    amount: 60,
+  },
   entretienAirco: {
     label: "Entretien climatisation (airco)",
     amount: 240,
@@ -89,7 +94,7 @@ export type PriceKey = keyof typeof prices;
  */
 export const pricingPolicy = {
   /** Tarif au-delà de la 1ère heure de dépannage. Ex. « 65€ TVAC / heure entamée » */
-  extraHour: null as string | null,
+  extraHour: `${prices.heureSupplementaire.amount} € TVAC de l'heure` as string | null,
   /** Suppléments (gestionnaire, 08/10/2026), un par ligne sur /tarifs. */
   weekendSurcharge: "+20 €" as string | null,
   holidaySurcharge: "+50 €" as string | null,

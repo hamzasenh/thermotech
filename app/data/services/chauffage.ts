@@ -7,8 +7,7 @@ import boilerMaintenance from "@/assets/boiler-maintenance.png";
 // Pages service de la catégorie chauffage (/chauffage/<slug>).
 // remplacement-chaudiere et entretien-chaudiere reprennent mot pour mot le
 // contenu validé des anciennes pages dédiées. Les autres pages ont été validées
-// par le gestionnaire le 08/10/2026 (draft: false). Seule exception : la
-// formulation des consignes gaz (dépannage chaudière) attend encore sa relecture.
+// par le gestionnaire le 08/10/2026 (draft: false), consignes gaz comprises.
 export const chauffageServices: Service[] = [
   // --- Remplacement / installation — contenu validé (ancienne page dédiée) ---
   {
@@ -435,8 +434,8 @@ export const chauffageServices: Service[] = [
         type: "alert",
         tone: "danger",
         title: "Odeur de gaz ? Les bons réflexes, dans cet ordre",
-        // Consignes officielles Sibelga / Fluvius et numéros vérifiés le 06/10/2026 (04-reponses, Q33) :
-        // sibelga.be, fluvius.be, ores.be. Formulation à faire valider mot pour mot par le technicien.
+        // Consignes officielles Sibelga / Fluvius et numéros vérifiés le 06/10/2026 (sibelga.be, fluvius.be,
+        // ores.be). Formulation validée par le gestionnaire le 08/10/2026 (Q33) : ne pas la modifier sans lui.
         paragraphs: [
           "**Ouvrez portes et fenêtres.** Aucune flamme ni étincelle : ne touchez à aucun interrupteur, n'allumez pas de lampe, n'utilisez ni appareil électrique ni téléphone dans le logement.",
           "Si le robinet du compteur de gaz est accessible sans allumer la lumière, fermez-le. Puis **quittez le logement** et appelez depuis l'extérieur.",
@@ -505,7 +504,7 @@ export const chauffageServices: Service[] = [
         id: 1,
         question: "Combien coûte un dépannage de chaudière à Bruxelles ?",
         answer:
-          `Le dépannage est facturé **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure de travail compris. Si une pièce doit être remplacée, nous vous communiquons son prix avant la réparation.`,
+          `Le dépannage est facturé **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure de travail compris. Au-delà de la première heure, chaque heure supplémentaire est facturée **${prices.heureSupplementaire.amount}€ TVAC**. Si une pièce doit être remplacée, nous vous communiquons son prix avant la réparation.`,
       },
       {
         id: 2,

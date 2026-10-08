@@ -520,7 +520,7 @@ export const climatisationServices: Service[] = [
         id: 1,
         question: "Combien coûte un dépannage de climatisation ?",
         answer:
-          `Le dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Les pièces éventuelles vous sont annoncées avant la réparation.`,
+          `Le dépannage est à **${prices.depannage.amount}€ TVAC**, déplacement, diagnostic et première heure compris. Au-delà de la première heure, chaque heure supplémentaire est facturée **${prices.heureSupplementaire.amount}€ TVAC**. Les pièces éventuelles vous sont annoncées avant la réparation.`,
       },
       {
         id: 2,
