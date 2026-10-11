@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { MotionProvider } from "@/components/site/Motion";
 import { localBusinessJsonLd } from "@/lib/seo";
 import { company } from "./data/company";
-import { getNavGroups } from "./data/navigation";
+import { getNavGroups, getPageActions } from "./data/navigation";
 import { FooterV2 } from "./sections/v2/chrome";
 import { archivo } from "./sections/v2/fonts";
 import { HeaderV2 } from "./sections/v2/HeaderV2";
@@ -60,7 +60,7 @@ export default function RootLayout({
           <HeaderV2 groups={getNavGroups()} />
           <main id="contenu">{children}</main>
           <FooterV2 />
-          <MobileActionBar />
+          <MobileActionBar actions={getPageActions()} />
         </MotionProvider>
 
         <JsonLd data={localBusinessJsonLd(`${company.siteUrl}${logo.src}`)} />

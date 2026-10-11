@@ -8,7 +8,8 @@ import { fr } from "@/lib/typography";
 import { company, contactActionHref } from "@/app/data/company";
 import { getNavGroups, type NavGroup } from "@/app/data/navigation";
 import { cn } from "@/lib/utils";
-import { ButtonLink, Eyebrow, PhoneButton, type Surface } from "./ui";
+import type { FinalCtaSecondary } from "./cta";
+import { ButtonLink, Eyebrow, PhoneButton, WhatsAppButton, type Surface } from "./ui";
 
 /* ------------------------------------------------------------------ */
 /* Appel à l'action final                                              */
@@ -36,6 +37,7 @@ export function FinalCtaV2({
   image,
   imageAlt,
   context,
+  topic,
   tone = "lavender",
   secondary = "devis",
 }: {
@@ -47,15 +49,19 @@ export function FinalCtaV2({
   imageAlt: string;
   /** Page d'origine transmise au devis / rendez-vous (absente sur les pages générales). */
   context?: string;
+  /** Sujet du message WhatsApp pré-rempli. */
+  topic?: string;
   /** lavender : toutes les pages depuis le 2026-10-05 · flame : aplat rouge, conservé mais plus utilisé. */
   tone?: "flame" | "lavender";
-  secondary?: "devis" | "rendezVous";
+  secondary?: FinalCtaSecondary;
 }) {
   const flame = tone === "flame";
+  const whatsapp = secondary === "whatsapp";
   const second =
     secondary === "rendezVous"
       ? { href: contactActionHref("rendezVous", context), label: "Prendre rendez-vous" }
       : { href: contactActionHref("devis", context), label: "Demander un devis gratuit" };
+  const linkClass = cn("font-semibold underline underline-offset-4 hover:no-underline", flame ? "text-white" : "text-night");
   return (
     <section
       className={cn("relative isolate overflow-hidden", flame ? "v2-flame-solid text-white" : "bg-lavender text-night")}
@@ -79,18 +85,29 @@ export function FinalCtaV2({
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             {/* Sur l'aplat orange : appel en blanc (texte noir), 2e action en noir. */}
             <PhoneButton variant={flame ? "light" : "primary"} className="min-h-[56px] px-7 text-base font-bold" />
-            <ButtonLink href={second.href} variant={flame ? "dark" : "light"} arrow className="min-h-[56px] px-7 text-base">
-              {second.label}
-            </ButtonLink>
+            {whatsapp ? (
+              <WhatsAppButton topic={topic} variant="light" className="min-h-[56px] px-7 text-base">
+                Envoyer une photo
+              </WhatsAppButton>
+            ) : (
+              <ButtonLink href={second.href} variant={flame ? "dark" : "light"} arrow className="min-h-[56px] px-7 text-base">
+                {second.label}
+              </ButtonLink>
+            )}
           </div>
           <p className={cn("mt-5 text-sm font-medium", flame ? "text-white" : "text-night/70")}>
             Pas le temps maintenant ?{" "}
-            <Link
-              href={contactActionHref("rappel", context)}
-              className={cn("font-semibold underline underline-offset-4 hover:no-underline", flame ? "text-white" : "text-night")}
-            >
+            <Link href={contactActionHref("rappel", context)} className={linkClass}>
               Être rappelé
             </Link>
+            {!whatsapp && (
+              <>
+                {" · "}
+                <WhatsAppButton topic={topic} kind="link" className={cn(linkClass, "align-middle")}>
+                  Écrire sur WhatsApp
+                </WhatsAppButton>
+              </>
+            )}
           </p>
         </div>
         <div className="relative mx-auto h-[340px] w-[260px] sm:h-[420px] sm:w-[320px] lg:h-[540px] lg:w-full">
@@ -173,7 +190,10 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
             <p className={cn("mt-3", light ? "text-night/55" : "text-white/50")}>
               {company.promises.availability} · {company.promises.intervention.toLowerCase()}
             </p>
-            <a href={`mailto:${company.email}`} className={cn("mt-5 inline-flex items-center gap-3", muted)}>
+            <WhatsAppButton kind="link" className={cn("mt-5 flex w-fit gap-3 font-normal", muted)}>
+              WhatsApp · {company.phone.display}
+            </WhatsAppButton>
+            <a href={`mailto:${company.email}`} className={cn("mt-3 flex w-fit items-center gap-3", muted)}>
               <FaEnvelope className="h-3.5 w-3.5" aria-hidden="true" />
               {company.email}
             </a>
@@ -197,7 +217,7 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
                   <FaStar key={i} className="h-3 w-3" />
                 ))}
               </span>
-              {company.google.rating}/5 sur Google
+              {`${company.google.rating}/5 sur Google · plus de ${company.google.reviewsFloor} avis`}
             </a>
           </div>
 

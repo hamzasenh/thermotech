@@ -1,11 +1,12 @@
 "use client";
+import Link from "next/link";
 import { useId, useState } from "react";
 import { RichText } from "@/components/site/RichText";
 import { cn } from "@/lib/utils";
 import { fr } from "@/lib/typography";
 import type { FaqItem } from "@/app/data/services/types";
 import { cardBg, toneBg, type Tone } from "./tones";
-import { ButtonLink, Eyebrow } from "./ui";
+import { Eyebrow, WhatsAppButton } from "./ui";
 
 /**
  * FAQ refondue : une question ouverte à la fois. Les réponses restent dans le
@@ -15,12 +16,15 @@ export function FaqV2({
   faqs,
   title,
   rappelHref,
+  topic,
   id,
   tone = "white",
 }: {
   faqs: FaqItem[];
   title: string;
   rappelHref: string;
+  /** Sujet du message WhatsApp pré-rempli. */
+  topic?: string;
   id?: string;
   tone?: Tone;
 }) {
@@ -35,10 +39,17 @@ export function FaqV2({
           <h2 id="faq-titre" className="v2-title mt-5 text-[1.9rem] sm:text-[2.3rem] lg:text-[2.5rem]">
             {fr(title)}
           </h2>
-          <p className="mt-5 max-w-sm text-night/70">{fr("Votre question n'y est pas ? Laissez votre numéro, nous vous rappelons.")}</p>
-          <ButtonLink href={rappelHref} variant="outline" arrow className="mt-6">
-            Être rappelé
-          </ButtonLink>
+          <p className="mt-5 max-w-sm text-night/70">
+            {fr("Votre question n'y est pas ? Posez-la sur WhatsApp, photo à l'appui si besoin, ou laissez votre numéro : nous vous rappelons.")}
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <WhatsAppButton topic={topic} variant="outline">
+              Poser ma question
+            </WhatsAppButton>
+            <Link href={rappelHref} className="font-semibold text-night underline underline-offset-4 hover:no-underline">
+              Être rappelé
+            </Link>
+          </div>
         </div>
 
         <div className="border-t border-night/10">

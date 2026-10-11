@@ -11,7 +11,7 @@ import { company, contactActionHref } from "@/app/data/company";
 import type { AssetId } from "@/app/data/assets-needed";
 import type { Fact, ImageSpec, ServiceIntent } from "@/app/data/services/types";
 import { MediaSlot, resolvePhoto } from "./media";
-import { ButtonLink, Eyebrow, PhoneButton, type Surface } from "./ui";
+import { ButtonLink, Eyebrow, PhoneButton, WhatsAppButton, type Surface } from "./ui";
 
 /** Raccourcis discrets sous les boutons (pastilles), jamais posés sur le visuel. */
 export interface HeroShortcuts {
@@ -40,6 +40,8 @@ interface ServiceHeroV2Props {
   intent?: ServiceIntent;
   /** Vidéo facultative qui peut remplacer la photo (emplacement réservé). */
   video?: AssetId;
+  /** Sujet du message WhatsApp pré-rempli (nom du service ou du métier). */
+  topic?: string;
 }
 
 /**
@@ -61,14 +63,15 @@ export function ServiceHeroV2({
   surface = "lavender",
   intent = "installation",
   video,
+  topic,
 }: ServiceHeroV2Props) {
   const light = surface === "lavender";
+  // 2e action selon l'intention (prompts/refonte/06) : urgence = WhatsApp (photo de la
+  // panne), entretien = rendez-vous, projet = devis.
   const secondary =
     intent === "entretien"
       ? { href: contactActionHref("rendezVous", context), label: "Prendre rendez-vous" }
-      : intent === "urgence"
-        ? { href: contactActionHref("rappel", context), label: "Être rappelé" }
-        : { href: contactActionHref("devis", context), label: "Demander un devis gratuit" };
+      : { href: contactActionHref("devis", context), label: "Demander un devis gratuit" };
   // Devis express : la première question du devis (chauffage actuel), ouvre /devis pré-rempli.
   const quick: HeroShortcuts | undefined = quickStart
     ? {
@@ -125,9 +128,19 @@ export function ServiceHeroV2({
             {/* Le téléphone est l'action n°1 du site ; la 2e action dépend de l'intention de la page. */}
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <PhoneButton variant="primary" className="min-h-[56px] px-7 text-base" />
-              <ButtonLink href={secondary.href} variant="light" arrow className="min-h-[56px] px-7 text-base">
-                {secondary.label}
-              </ButtonLink>
+              {intent === "urgence" ? (
+                <WhatsAppButton topic={topic} variant="light" className="min-h-[56px] px-7 text-base">
+                  Envoyer une photo
+                </WhatsAppButton>
+              ) : (
+                <>
+                  <ButtonLink href={secondary.href} variant="light" arrow className="min-h-[56px] px-7 text-base">
+                    {secondary.label}
+                  </ButtonLink>
+                  {/* Mobile : WhatsApp est déjà dans la barre d'actions du bas. */}
+                  <WhatsAppButton topic={topic} kind="icon" variant="light" className="hidden h-[56px] w-[56px] lg:inline-flex" />
+                </>
+              )}
             </div>
 
             <ul className={cn("mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm", light ? "text-night/80" : "text-white/80")}>

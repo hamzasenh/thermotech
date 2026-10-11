@@ -13,16 +13,16 @@ Quick reference so you don't have to open every file. Keep it in sync whenever a
 ## Design components (`v2/`)
 | File | Notes |
 |---|---|
-| `ui.tsx` | `ButtonLink`, `PhoneButton` (the call button: number + icon, homepage-hero flame style), `Eyebrow`, `SectionTitle`, `btn(variant)`, `Surface` type. |
+| `ui.tsx` | `ButtonLink`, `PhoneButton` (the call button: number + icon, homepage-hero flame style), `WhatsAppButton` (white, green glyph; `kind` button / icon / link; `topic` pre-fills the message), `Eyebrow`, `SectionTitle`, `btn(variant)`, `Surface` type. CTA hierarchy per intent: `prompts/refonte/06-cta-whatsapp-avis.md`. |
 | `media.tsx` | `MediaSlot`: graded photo (`src`, or the delivered photo for `asset` via `resolvePhoto()` / `app/data/photos.ts`), or a dashed placeholder showing the asset ID / file / subject from `app/data/assets-needed.ts`. |
-| `ServiceHeroV2.tsx` | Lavender hero (surface prop), breadcrumbs (skipped when only one crumb), intent-aware CTAs, right column = `MediaSlot` or `panel`, `shortcuts` / `quickStart` as pills under the buttons (never over the visual), facts strip. |
+| `ServiceHeroV2.tsx` | Lavender hero (surface prop), breadcrumbs (skipped when only one crumb), intent-aware CTAs (urgence: phone + WhatsApp « Envoyer une photo »; else phone + rdv/devis + WhatsApp icon on lg; `topic` = page name), right column = `MediaSlot` or `panel`, `shortcuts` / `quickStart` as pills under the buttons (never over the visual), facts strip. |
 | `aside.tsx` | `ServicesPanel` — category hero right column: services + starting price. |
 | `tones.ts` | `Tone` (white/chalk), `toneBg`, `cardBg` (cards = opposite tone), `backgrounds()` sequencer (`next`, `card`, `attach`, `lavender`). |
-| `StepsV2.tsx` (client) | Sticky photo + energy rail when steps have images; compact single column otherwise. |
-| `content.tsx` | `FeaturesV2`, `ChecklistV2`, `OptionsV2`, `PricingV2`, `AlertV2`, `GuideV2`, `ServiceGridV2` / `FeaturedServiceCard` / `ServiceCardV2`, `TrustStripV2`. |
-| `blocks.tsx` | `BrandsV2`, `CalloutV2` (verdicts), `HighlightV2`, `CallBandV2` (copy by intent, boiler copy on chauffage), `ProofV2`, `ZonesV2`, `RelatedV2`. |
-| `FaqV2.tsx` (client) | One open at a time; answers stay in the HTML (SEO). Optional `id` (`/#faqs`). |
-| `chrome.tsx` | `FinalCtaV2` (lavender by default; flame variant unused), `FooterV2` (night by default). |
+| `StepsV2.tsx` (client) | Sticky photo + energy rail when steps have images; compact single column otherwise. `cta` is a server-rendered node (phone on urgence pages, else devis / rendez-vous). |
+| `content.tsx` | `FeaturesV2`, `ChecklistV2`, `OptionsV2`, `PricingV2` (`intent`: entretien → rendez-vous, urgence → phone, else devis), `AlertV2`, `GuideV2`, `ServiceGridV2` / `FeaturedServiceCard` / `ServiceCardV2`, `TrustStripV2`. |
+| `blocks.tsx` | `BrandsV2`, `CalloutV2` (verdicts), `HighlightV2`, `CallBandV2` (copy by intent, boiler copy on chauffage; phone + WhatsApp, entretien: phone + rdv; rappel as a link), `ProofV2` (« 5,0 » + « plus de 30 avis Google » + 3 real reviews from `pickReviews(context)`, horizontal scroll-snap on mobile, then certifications), `ZonesV2`, `RelatedV2`. |
+| `FaqV2.tsx` (client) | One open at a time; answers stay in the HTML (SEO). Optional `id` (`/#faqs`). Sidebar: WhatsApp « Poser ma question » + « Être rappelé » link. |
+| `chrome.tsx` | `FinalCtaV2` (lavender by default; flame variant unused; `secondary` devis / rendezVous / whatsapp, rappel + WhatsApp links under the buttons), `FooterV2` (night by default, WhatsApp line under the phone). |
 | `HeaderV2.tsx` (client), `MobileActionBar.tsx` (client) | Global chrome, mounted in `app/layout.tsx`. |
 | `cta.ts` | Final CTA technician visual + 2nd action per intent. `fonts.ts`: Archivo. |
 

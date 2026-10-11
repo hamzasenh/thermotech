@@ -74,7 +74,7 @@ export default function RendezVousPage() {
         </div>
       </section>
 
-      <ProofV2 tone={bg.next()} />
+      <ProofV2 tone={bg.next()} context={{ intent: "entretien" }} />
       <ZonesV2 tone={bg.next()} />
     </>
   );

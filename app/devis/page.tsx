@@ -5,6 +5,7 @@ import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { fr } from "@/lib/typography";
 import { company } from "../data/company";
 import { categories } from "../data/categories";
+import { reviewDate, shortReview } from "../data/reviews";
 import { prices, resolvePrice } from "../data/pricing";
 import { getServiceByRef, type ServiceCategory } from "../data/services";
 import type { FaqItem } from "../data/services/types";
@@ -124,6 +125,7 @@ const faqs: FaqItem[] = [
 
 export default function DevisPage() {
   // Fonds blanc / beige en alternance, dans l'ordre des sections (voir sections/v2/tones.ts).
+  const review = shortReview();
   const bg = backgrounds();
   const tones = { how: bg.next(), related: bg.next(), proof: bg.next(), faq: bg.next(), zones: bg.next() };
 
@@ -167,6 +169,13 @@ export default function DevisPage() {
                     <li>{company.promises.clients}</li>
                     <li>{company.promises.warranty}</li>
                   </ul>
+                  {/* Desktop : un avis court au moment où l'on hésite à envoyer (mobile : la section avis plus bas). */}
+                  <figure className="mt-8 hidden max-w-md border-l-2 border-night/15 pl-5 lg:block">
+                    <blockquote className="text-[15px] leading-relaxed text-night/75">« {fr(review.text)} »</blockquote>
+                    <figcaption className="mt-2 text-xs text-night/50">
+                      <span className="font-semibold text-night">{review.author}</span> · Avis Google, {reviewDate(review.date)}
+                    </figcaption>
+                  </figure>
                 </div>
               </div>
             }
@@ -193,7 +202,8 @@ export default function DevisPage() {
         ]}
         tone={tones.related}
       />
-      <ProofV2 tone={tones.proof} />
+      {/* Avis de dépannage : l'avis court du haut de page n'y est pas répété. */}
+      <ProofV2 tone={tones.proof} context={{ intent: "urgence" }} />
       <FaqV2 faqs={faqs} title="Questions fréquentes sur nos devis" rappelHref="/contact#formulaire-rappel" tone={tones.faq} />
       <ZonesV2 tone={tones.zones} />
     </>

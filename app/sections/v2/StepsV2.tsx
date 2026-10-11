@@ -1,12 +1,12 @@
 "use client";
 import { AnimatePresence, motion, useInView, useScroll, useSpring } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { fr } from "@/lib/typography";
 import type { Step } from "@/app/data/services/types";
 import { MediaSlot } from "./media";
 import { cardBg, toneBg, type Tone } from "./tones";
-import { ButtonLink, SectionTitle } from "./ui";
+import { SectionTitle } from "./ui";
 
 /**
  * Process en étapes. Desktop : visuel collant à gauche qui suit l'étape lue,
@@ -18,16 +18,15 @@ export function StepsV2({
   title,
   intro,
   steps,
-  ctaHref,
-  ctaLabel,
+  cta,
   tone = "white",
 }: {
   eyebrow?: string;
   title: string;
   intro?: string;
   steps: Step[];
-  ctaHref: string;
-  ctaLabel: string;
+  /** Action sous les étapes (rendue côté serveur : appel, devis ou rendez-vous selon l'intention). */
+  cta: ReactNode;
   tone?: Tone;
 }) {
   const [active, setActive] = useState(0);
@@ -94,9 +93,7 @@ export function StepsV2({
             </ol>
 
             <div className="mt-12 pl-14 lg:mt-4 lg:pl-[76px]">
-              <ButtonLink href={ctaHref} variant="dark" arrow>
-                {ctaLabel}
-              </ButtonLink>
+              {cta}
             </div>
           </div>
         </div>

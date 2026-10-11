@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { company } from "../data/company";
 import { cn } from "@/lib/utils";
 import { cardBg, toneBg, type Tone } from "./v2/tones";
-import { PhoneButton } from "./v2/ui";
+import { PhoneButton, WhatsAppButton } from "./v2/ui";
 
 function Row({ icon, label, children, tone }: { icon: IconKey; label: string; children: ReactNode; tone: Tone }) {
   return (
@@ -50,6 +50,14 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
                 <PhoneButton variant="primary" className="mt-1 min-h-[48px] px-5 text-base" />
                 <p className="mt-2 text-sm text-night/60">
                   {company.promises.availability} · {company.promises.intervention.toLowerCase()}
+                </p>
+              </Row>
+              <Row tone={tone} icon="whatsapp" label="WhatsApp">
+                <WhatsAppButton kind="link" className="text-navy">
+                  {company.phone.display}
+                </WhatsAppButton>
+                <p className="mt-1 text-sm text-night/60">
+                  Écrivez-nous ou envoyez une photo de la panne ({company.whatsapp.hours}).
                 </p>
               </Row>
               <Row tone={tone} icon="envelope" label="E-mail">

@@ -12,7 +12,7 @@ import { FaqV2 } from "./FaqV2";
 import { ServiceHeroV2 } from "./ServiceHeroV2";
 import { StepsV2 } from "./StepsV2";
 import { backgrounds } from "./tones";
-import type { Surface } from "./ui";
+import { ButtonLink, PhoneButton, type Surface } from "./ui";
 
 /** Garantit la présence du bandeau d'appel : inséré après le 2e bloc s'il n'est pas placé explicitement. */
 function withCallBand(blocks: Block[]): Block[] {
@@ -57,8 +57,16 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
             title={block.title}
             intro={block.intro}
             steps={block.steps}
-            ctaHref={contactActionHref(primaryAction, context)}
-            ctaLabel={primaryAction === "devis" ? "Demander un devis gratuit" : "Prendre rendez-vous"}
+            cta={
+              // Dépannage : on finit sur l'appel, pas sur un devis (prompts/refonte/06).
+              service.intent === "urgence" ? (
+                <PhoneButton variant="primary" />
+              ) : (
+                <ButtonLink href={contactActionHref(primaryAction, context)} variant="dark" arrow>
+                  {primaryAction === "devis" ? "Demander un devis gratuit" : "Prendre rendez-vous"}
+                </ButtonLink>
+              )
+            }
           />
         );
       case "features":
@@ -68,7 +76,7 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
       case "options":
         return <OptionsV2 key={key} {...block} tone={bg.next()} />;
       case "pricing":
-        return <PricingV2 key={key} {...block} context={context} tone={bg.next()} />;
+        return <PricingV2 key={key} {...block} context={context} intent={service.intent} tone={bg.next()} />;
       case "alert": {
         const { tone, attached } = bg.attach();
         return <AlertV2 key={key} {...block} bg={tone} attached={attached} />;
@@ -86,6 +94,7 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
           <CallBandV2
             key={key}
             context={context}
+            topic={service.name}
             surface={surface}
             intent={service.intent}
             title={block.title}
@@ -112,17 +121,19 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
         facts={service.facts}
         context={context}
         intent={service.intent}
+        topic={service.name}
         quickStart={service.category === "chauffage" && service.intent === "installation"}
         surface={surface}
       />
 
       {withCallBand(service.blocks).map(renderBlock)}
 
-      <ProofV2 tone={bg.next()} />
+      <ProofV2 tone={bg.next()} context={{ intent: service.intent, category: service.category }} />
       <FaqV2
         faqs={service.faqs}
         title={service.faqTitle ?? "Questions fréquentes"}
         rappelHref={contactActionHref("rappel", context)}
+        topic={service.name}
         tone={bg.next()}
       />
       <ZonesV2 intro={service.zonesIntro} tone={bg.next()} />
@@ -140,6 +151,7 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
         imageAlt={visual.alt}
         secondary={visual.secondary}
         context={context}
+        topic={service.name}
       />
     </>
   );

@@ -12,10 +12,11 @@ import { fr } from "@/lib/typography";
 import { boilerBrands, certifications } from "@/app/data/brands";
 import { categoryLabels } from "@/app/data/categories";
 import { company, contactActionHref } from "@/app/data/company";
+import { pickReviews, reviewDate, type ReviewContext } from "@/app/data/reviews";
 import { getServiceByRef, serviceHref, type ServiceIntent, type ServiceRef, type Verdict } from "@/app/data/services";
 import { zonesIntervention } from "@/app/data/zones-intervention";
 import { cardBg, toneBg, type Tone } from "./tones";
-import { ButtonLink, Eyebrow, PhoneButton, SectionTitle, type Surface } from "./ui";
+import { ButtonLink, Eyebrow, PhoneButton, SectionTitle, WhatsAppButton, type Surface } from "./ui";
 
 /* ------------------------------------------------------------------ */
 /* Marques                                                             */
@@ -217,6 +218,7 @@ const callBandCopy: Record<ServiceIntent | "chaudiere", { eyebrow: string; title
 
 export function CallBandV2({
   context,
+  topic,
   surface = "lavender",
   intent = "installation",
   title,
@@ -226,6 +228,8 @@ export function CallBandV2({
 }: {
   /** Page d'origine transmise au rappel / rendez-vous (absente sur /contact). */
   context?: string;
+  /** Sujet du message WhatsApp pré-rempli. */
+  topic?: string;
   surface?: Surface;
   intent?: ServiceIntent;
   /** Surcharges venant des données (bloc `callBand`). */
@@ -238,10 +242,10 @@ export function CallBandV2({
 }) {
   const light = surface === "lavender";
   const copy = callBandCopy[context?.startsWith("chauffage") ? "chaudiere" : intent];
-  const second =
-    intent === "entretien"
-      ? { href: contactActionHref("rendezVous", context), label: "Prendre rendez-vous" }
-      : { href: contactActionHref("rappel", context), label: "Être rappelé" };
+  // Entretien : le rendez-vous reste la 2e action, WhatsApp passe en lien. Ailleurs :
+  // WhatsApp (photo de la panne ou du projet), le rappel en repli (prompts/refonte/06).
+  const entretien = intent === "entretien";
+  const linkClass = cn("font-semibold underline underline-offset-4 hover:no-underline", light ? "text-night" : "text-white");
   return (
     // Pas de fond propre : la section reprend celui de la section qu'elle prolonge, seule la carte lavande se voit.
     <section className={cn(toneBg[tone], attached ? "pb-16 lg:pb-28" : "py-16 lg:py-24")} aria-label="Parler à un technicien">
@@ -260,10 +264,30 @@ export function CallBandV2({
               <p className={cn("mt-4 max-w-xl", light ? "text-night/70" : "text-white/70")}>{fr(text ?? copy.text)}</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <PhoneButton variant="primary" className="min-h-[56px] px-7 text-base" />
-                <ButtonLink href={second.href} variant="light" className="min-h-[56px]">
-                  {second.label}
-                </ButtonLink>
+                {entretien ? (
+                  <ButtonLink href={contactActionHref("rendezVous", context)} variant="light" className="min-h-[56px]">
+                    Prendre rendez-vous
+                  </ButtonLink>
+                ) : (
+                  <WhatsAppButton topic={topic} variant="light" className="min-h-[56px]">
+                    Écrire sur WhatsApp
+                  </WhatsAppButton>
+                )}
               </div>
+              <p className={cn("mt-5 text-sm font-medium", light ? "text-night/70" : "text-white/70")}>
+                {entretien ? "Une question avant de réserver ? " : "Vous préférez qu'on vous appelle ? "}
+                {entretien && (
+                  <>
+                    <WhatsAppButton topic={topic} kind="link" className={linkClass}>
+                      WhatsApp
+                    </WhatsAppButton>
+                    {" · "}
+                  </>
+                )}
+                <Link href={contactActionHref("rappel", context)} className={linkClass}>
+                  Être rappelé
+                </Link>
+              </p>
             </div>
             <div className="relative mx-auto mt-10 h-[280px] w-[240px] sm:h-[340px] sm:w-[290px] lg:mt-0 lg:h-[400px] lg:w-full">
               <Image
@@ -282,72 +306,110 @@ export function CallBandV2({
 }
 
 /* ------------------------------------------------------------------ */
-/* Preuve : note Google + agréments                                    */
+/* Preuve : avis Google + agréments                                    */
 /* ------------------------------------------------------------------ */
 
-export function ProofV2({ tone = "white", footnote }: { tone?: Tone; /** Note sous la section (ex. info à fournir). */ footnote?: React.ReactNode }) {
-  const { rating, url } = company.google;
+function Stars({ className }: { className?: string }) {
+  return (
+    <span className={cn("flex text-bolt drop-shadow-[0_1px_0_rgba(11,18,34,0.25)]", className)} aria-hidden="true">
+      {Array.from({ length: 5 }, (_, i) => (
+        <FaStar key={i} className="h-full w-auto" />
+      ))}
+    </span>
+  );
+}
+
+/**
+ * « Ils nous font confiance » : la note Google, trois avis réels choisis pour la
+ * page (même prestation, puis même métier, puis les plus récents : `pickReviews`),
+ * puis les agréments en ligne compacte. Mobile : les avis défilent à l'horizontale
+ * pour ne pas allonger la page (prompts/refonte/06).
+ */
+export function ProofV2({
+  tone = "white",
+  context,
+  footnote,
+}: {
+  tone?: Tone;
+  /** Prestation de la page : choisit les avis les plus parlants. */
+  context?: ReviewContext;
+  /** Note sous la section (ex. info à fournir). */
+  footnote?: React.ReactNode;
+}) {
+  const { rating, reviewsFloor, url } = company.google;
+  const picked = pickReviews(context);
   return (
     <section className={cn("py-20 lg:py-28", toneBg[tone])} aria-labelledby="confiance-titre">
-      <div className="container grid gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
-          <Eyebrow>Ils nous font confiance</Eyebrow>
-          <h2 id="confiance-titre" className="sr-only">
-            Ils nous font confiance
-          </h2>
-          <div className="mt-6 flex items-end gap-5">
-            <p className="v2-wide font-display text-[5.5rem] font-extrabold leading-none tracking-[-0.04em] text-night lg:text-[7rem]">
-              {rating}/5
+      <div className="container">
+        <div className="lg:flex lg:items-end lg:justify-between lg:gap-16">
+          <div className="max-w-xl">
+            <Eyebrow>Ils nous font confiance</Eyebrow>
+            <h2 id="confiance-titre" className="v2-title mt-5 text-[1.9rem] sm:text-[2.3rem] lg:text-[2.6rem]">
+              {fr("Ce que disent nos clients.")}
+            </h2>
+          </div>
+          <div className="mt-8 flex items-center gap-5 lg:mt-0">
+            <p className="v2-wide font-display text-[4rem] font-extrabold leading-none tracking-[-0.04em] text-night lg:text-[5rem]">
+              {rating.toLocaleString("fr-BE", { minimumFractionDigits: 1 })}
             </p>
-            <div className="pb-3">
-              <span className="flex text-bolt drop-shadow-[0_1px_0_rgba(11,18,34,0.25)]" aria-hidden="true">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <FaStar key={i} className="h-5 w-5" />
-                ))}
-              </span>
-              <p className="mt-1.5 text-sm font-semibold text-night">Note sur Google</p>
+            <div>
+              <Stars className="h-5" />
+              <p className="mt-1.5 text-sm font-semibold text-night">{`Plus de ${reviewsFloor} avis Google`}</p>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-night/70 underline decoration-night/20 underline-offset-4 transition-colors hover:text-night hover:decoration-flame"
+              >
+                Lire tous les avis
+                <BsArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </a>
             </div>
           </div>
-          <p className="mt-6 max-w-md text-[17px] leading-relaxed text-night/70">
-            {fr(`${company.promises.clients} à Bruxelles et en périphérie. Leurs avis sont publics : lisez-les avant de nous appeler.`)}
-          </p>
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-6 inline-flex items-center gap-2 font-semibold text-night underline decoration-night/20 underline-offset-[6px] transition-colors hover:decoration-flame"
-          >
-            Lire les avis sur Google
-            <BsArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-          </a>
         </div>
 
-        <div className="lg:pt-12">
-          <p className="v2-semi font-display text-xl font-bold text-night">Techniciens agréés dans les trois régions</p>
-          <p className="mt-2 text-night/65">
-            {fr("Des interventions conformes aux normes en vigueur, à Bruxelles, en Flandre et en Wallonie.")}
-          </p>
-          <ul className="mt-8 grid grid-cols-3 gap-3">
-            {certifications.map((logo) => (
-              <li key={logo.alt} className={cn("flex h-24 items-center justify-center rounded-2xl p-4", cardBg[tone])}>
-                <Image src={logo.src} alt={logo.alt} sizes="160px" className="max-h-full w-auto object-contain" />
-              </li>
-            ))}
-          </ul>
-          <ul className="mt-8 space-y-3 text-night/75">
-            {[
-              // Repris du texte validé de la page (intro, CTA).
-              "Devis détaillé sous 24 heures",
-              "Normes en vigueur respectées (PEB, RGIE)",
-              "Un seul interlocuteur, du premier rendez-vous à la mise en service",
-            ].map(
-              (point) => (
+        <ul
+          className="-mx-5 mt-10 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:scroll-px-0 sm:px-0 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+          aria-label="Avis Google de nos clients"
+        >
+          {picked.map((review) => (
+            <li
+              key={review.author}
+              className={cn("flex w-[85%] flex-shrink-0 snap-start flex-col rounded-[28px] p-7 sm:w-[62%] lg:w-auto lg:p-8", cardBg[tone])}
+            >
+              <Stars className="h-4" />
+              <blockquote className="mb-6 mt-5 text-[16px] leading-relaxed text-night/80 lg:text-[17px]">« {fr(review.text)} »</blockquote>
+              <p className="mt-auto border-t border-night/10 pt-5">
+                <span className="v2-semi block font-display font-bold text-night">{review.author}</span>
+                <span className="mt-0.5 block text-xs text-night/50">Avis Google · {reviewDate(review.date)}</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-14 grid gap-8 border-t border-night/10 pt-10 lg:mt-20 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
+          <div>
+            <p className="v2-semi font-display text-xl font-bold text-night">Techniciens agréés dans les trois régions</p>
+            <ul className="mt-4 flex flex-col gap-x-8 gap-y-2.5 text-night/75 sm:flex-row sm:flex-wrap">
+              {[
+                // Repris du texte validé de la page (intro, CTA).
+                "Devis détaillé sous 24 heures",
+                "Normes en vigueur respectées (PEB, RGIE)",
+                "Un seul interlocuteur, du premier rendez-vous à la mise en service",
+              ].map((point) => (
                 <li key={point} className="flex items-start gap-3">
                   <FaCheck className="mt-1 h-3.5 w-3.5 flex-shrink-0 text-flame" aria-hidden="true" />
                   {point}
                 </li>
-              )
-            )}
+              ))}
+            </ul>
+          </div>
+          <ul className="grid grid-cols-3 gap-3 lg:w-[420px]">
+            {certifications.map((logo) => (
+              <li key={logo.alt} className={cn("flex h-20 items-center justify-center rounded-2xl p-4", cardBg[tone])}>
+                <Image src={logo.src} alt={logo.alt} sizes="140px" className="max-h-full w-auto object-contain" />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

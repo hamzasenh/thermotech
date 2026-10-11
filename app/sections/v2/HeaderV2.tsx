@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { company, contactActionHref } from "@/app/data/company";
 import type { NavGroup } from "@/app/data/navigation";
 import type { ServiceCategory } from "@/app/data/services/types";
-import { btn } from "./ui";
+import { btn, WhatsAppButton } from "./ui";
 
 interface NavLink {
   label: string;
@@ -285,6 +285,9 @@ export function HeaderV2({ groups }: { groups: NavGroup[] }) {
                   <Link href={contactActionHref("devis")} onClick={closeAll} className={btn("dark", "w-full")}>
                     Demander un devis gratuit
                   </Link>
+                  <WhatsAppButton variant="outline" className="w-full sm:col-span-2">
+                    Écrire sur WhatsApp
+                  </WhatsAppButton>
                 </div>
               </div>
             </motion.nav>

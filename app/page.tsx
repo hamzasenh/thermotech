@@ -204,7 +204,8 @@ export default function Home() {
         body="Chaudière en panne, fuite d'eau, coupure de courant : une urgence technique ne prévient jamais. Nos techniciens agréés interviennent 7j/7 à Bruxelles et dans toute la région, avec un délai garanti sous 24h. Décrivez votre problème, on s'occupe du reste."
         image={visual.image}
         imageAlt={visual.alt}
-        secondary={visual.secondary}
+        // Page générale : le devis reste la 2e action (WhatsApp en lien sous les boutons).
+        secondary="devis"
         context="chauffage"
       />
     </>

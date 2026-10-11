@@ -60,7 +60,11 @@ export default function ConfidentialitePage() {
         enregistrés par Cal.com et nous sont transmis pour organiser l&apos;intervention.
       </p>
       <h3>Quand vous nous appelez ou nous écrivez</h3>
-      <p>Les informations que vous nous communiquez pour organiser l&apos;intervention.</p>
+      <p>
+        Les informations que vous nous communiquez pour organiser l&apos;intervention. Si vous nous écrivez sur
+        WhatsApp, vos messages, photos et votre numéro transitent par WhatsApp, que vous avez choisi
+        d&apos;utiliser&nbsp;; le message pré-rempli indique la page d&apos;où vous nous contactez.
+      </p>
       <h3>Quand vous naviguez sur le site</h3>
       <p>
         Uniquement si vous l&apos;acceptez&nbsp;: des statistiques de visite via Google Analytics (pages vues, type
@@ -90,6 +94,8 @@ export default function ConfidentialitePage() {
         resend.com/legal/privacy-policy et resend.com/legal/dpa (États-Unis, DPF + clauses contractuelles types),
         policies.google.com/privacy/frameworks (Google LLC certifiée EU-U.S. Data Privacy Framework),
         cal.com/privacy (États-Unis, DPF + clauses contractuelles types),
+        whatsapp.com/legal/privacy-policy-eea et business-data-transfer-addendum (WhatsApp Ireland Limited ;
+        transferts vers WhatsApp LLC et Meta Platforms, Inc. sous DPF, clauses contractuelles types en repli),
         vercel.com/legal/privacy-policy (États-Unis et autres pays, DPF + clauses contractuelles types).
       */}
       <LegalTable
@@ -103,6 +109,11 @@ export default function ConfidentialitePage() {
             <MissingInfo key="m">région du compte Zoho à préciser (Union européenne si le compte est sur zoho.eu)</MissingInfo>,
           ],
           ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
+          [
+            "WhatsApp",
+            "Messagerie, si vous choisissez de nous écrire sur WhatsApp",
+            "WhatsApp Ireland Limited (Irlande), transferts vers les États-Unis (WhatsApp LLC, Meta Platforms, Inc.) encadrés par le EU-U.S. Data Privacy Framework",
+          ],
           ["Cal.com", "Réservation de rendez-vous en ligne", "Cal.com, Inc. (États-Unis), certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
           [
             <OrMissing key="h" value={legal.host} what="hébergeur" />,

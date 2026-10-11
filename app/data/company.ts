@@ -17,6 +17,14 @@ export const company = {
     e164: "+32486442186",
   },
 
+  // WhatsApp sur le numéro principal (analyse : prompts/refonte/06-cta-whatsapp-avis.md).
+  // À CONFIRMER : WhatsApp (Business) doit être actif sur ce numéro.
+  whatsapp: {
+    /** Numéro au format international, sans « + » ni espaces (lien wa.me). */
+    number: "32486442186",
+    hours: "7j/7, de 10h à 21h",
+  },
+
   // Boîte @radialec active (Q45, 04-reponses) : remplace info@thermotechs.be.
   email: "info@radialec.be",
 
@@ -40,8 +48,10 @@ export const company = {
   },
 
   google: {
-    // Pas de nombre d'avis en dur (D5, 04-reponses) : il change, on ne l'affiche plus.
+    // Pas de nombre exact en dur (D5) : il change. « Plus de 30 » reste vrai quand il
+    // augmente (31 avis le 11/10/2026).
     rating: 5,
+    reviewsFloor: 30,
     url: "https://share.google/2lcgT4FuqMHlxXEqc",
   },
 
@@ -113,6 +123,17 @@ export const contactActions: Record<
     href: "/contact#formulaire-rappel",
   },
 };
+
+/**
+ * Lien WhatsApp avec un message pré-rempli : le client n'a plus qu'à décrire son
+ * besoin, Radialec sait de quelle page il vient.
+ */
+export function whatsappHref(topic?: string): string {
+  const text = topic
+    ? `Bonjour Radialec, je vous contacte au sujet de : ${topic}.`
+    : "Bonjour Radialec, j'aimerais un renseignement.";
+  return `https://wa.me/${company.whatsapp.number}?text=${encodeURIComponent(text)}`;
+}
 
 /**
  * `context` = service (« chauffage/pompe-a-chaleur ») ou catégorie

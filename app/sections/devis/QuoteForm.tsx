@@ -27,7 +27,7 @@ import {
 } from "@/lib/quote/schema";
 import type { ServiceIntent } from "../../data/services/types";
 import { ErrorText, FieldLabel, inputClass, OptionCard, Pill, TextField } from "@/components/site/FormFields";
-import { btn, PhoneButton } from "../v2/ui";
+import { btn, PhoneButton, WhatsAppButton } from "../v2/ui";
 import { PhotoPicker } from "./PhotoPicker";
 import { QuoteSuccess } from "./QuoteSuccess";
 import { QuoteSummary } from "./QuoteSummary";
@@ -683,6 +683,9 @@ export function QuoteForm({
           <p className="v2-semi font-display text-lg font-bold">Une panne en cours&nbsp;?</p>
           <p className="-mt-2 text-sm text-white/65">N&apos;attendez pas le devis : appelez-nous directement.</p>
           <PhoneButton variant="primary" className="min-h-[52px] w-full text-base" />
+          <WhatsAppButton variant="outlineLight" className="-mt-1.5 min-h-[48px] w-full text-sm">
+            Envoyer une photo sur WhatsApp
+          </WhatsAppButton>
         </div>
       </div>
     </div>

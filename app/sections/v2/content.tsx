@@ -7,11 +7,11 @@ import { fr } from "@/lib/typography";
 import { contactActionHref } from "@/app/data/company";
 import { resolvePrice, type PriceRef } from "@/app/data/pricing";
 import { categoryLabels } from "@/app/data/categories";
-import { serviceHref, type Feature, type Fact, type ImageSpec, type Option, type Service } from "@/app/data/services";
+import { serviceHref, type Feature, type Fact, type ImageSpec, type Option, type Service, type ServiceIntent } from "@/app/data/services";
 import type { AssetId } from "@/app/data/assets-needed";
 import { MediaSlot } from "./media";
 import { cardBg, toneBg, type Tone } from "./tones";
-import { ButtonLink, Eyebrow, SectionTitle } from "./ui";
+import { ButtonLink, Eyebrow, PhoneButton, SectionTitle } from "./ui";
 
 // Blocs de contenu du design refondu (pages service et catégorie).
 
@@ -207,6 +207,7 @@ export function PricingV2({
   items,
   note,
   context,
+  intent,
   tone = "white",
 }: {
   eyebrow?: string;
@@ -215,6 +216,8 @@ export function PricingV2({
   items: PriceRef[];
   note?: string;
   context?: string;
+  /** Fiche service : le prix est affiché, l'action suit l'intention (rendez-vous, appel). Sinon : devis. */
+  intent?: ServiceIntent;
   tone?: Tone;
 }) {
   const resolved = items.map(resolvePrice);
@@ -227,9 +230,17 @@ export function PricingV2({
             <RichText text={note ?? "Prix TVAC. Devis gratuit et prix annoncé avant toute intervention : le prix annoncé est le prix payé."} />
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <ButtonLink href={contactActionHref("devis", context)} variant="dark" arrow>
-              Demander un devis gratuit
-            </ButtonLink>
+            {intent === "urgence" ? (
+              <PhoneButton variant="primary" />
+            ) : intent === "entretien" ? (
+              <ButtonLink href={contactActionHref("rendezVous", context)} variant="dark" arrow>
+                Prendre rendez-vous
+              </ButtonLink>
+            ) : (
+              <ButtonLink href={contactActionHref("devis", context)} variant="dark" arrow>
+                Demander un devis gratuit
+              </ButtonLink>
+            )}
             <Link href="/tarifs" className="group inline-flex items-center gap-1.5 px-2 py-3 font-semibold text-night hover:text-flame">
               Voir tous nos tarifs
               <BsArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />

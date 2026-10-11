@@ -12,7 +12,7 @@ import { CallBandV2, ZonesV2 } from "../sections/v2/blocks";
 import { FaqV2 } from "../sections/v2/FaqV2";
 import { cn } from "@/lib/utils";
 import { backgrounds, toneBg } from "../sections/v2/tones";
-import { PhoneButton } from "../sections/v2/ui";
+import { PhoneButton, WhatsAppButton } from "../sections/v2/ui";
 
 export const metadata = pageMetadata({
   title: "Contact et devis gratuit à Bruxelles",
@@ -77,6 +77,9 @@ export default function ContactPage() {
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <PhoneButton variant="primary" className="min-h-[60px] px-8 text-lg" />
+          <WhatsAppButton variant="light" className="min-h-[60px] px-7 text-base">
+            Écrire sur WhatsApp
+          </WhatsAppButton>
           <p className="text-sm text-night/60">
             {company.promises.availability} · {company.promises.intervention.toLowerCase()}
           </p>

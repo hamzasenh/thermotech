@@ -60,6 +60,7 @@ export function CategoryPage({ category }: { category: ServiceCategory }) {
         facts={content.facts}
         context={category}
         intent={content.hero.intent}
+        topic={content.label}
       />
 
       <ServiceGridV2
@@ -72,14 +73,14 @@ export function CategoryPage({ category }: { category: ServiceCategory }) {
         othersTitle={featured.length ? "Le reste de votre chauffage" : undefined}
         tone={grid}
       />
-      <CallBandV2 context={category} intent={content.hero.intent} tone={band.tone} attached={band.attached} />
+      <CallBandV2 context={category} topic={content.label} intent={content.hero.intent} tone={band.tone} attached={band.attached} />
       {content.why && <FeaturesV2 {...content.why} tone={why} />}
       {content.pricing && <PricingV2 {...content.pricing} context={category} tone={pricing} />}
       {content.brands && <BrandsV2 {...content.brands} tone={brands} />}
       {content.guide && <GuideV2 {...content.guide} tone={guide} />}
-      <ProofV2 tone={proof} />
+      <ProofV2 tone={proof} context={{ intent: content.hero.intent, category }} />
       <ZonesV2 tone={zones} />
-      <FaqV2 faqs={content.faqs} title={content.faqTitle} rappelHref={contactActionHref("rappel", category)} tone={faq} />
+      <FaqV2 faqs={content.faqs} title={content.faqTitle} rappelHref={contactActionHref("rappel", category)} topic={content.label} tone={faq} />
       <FinalCtaV2
         eyebrow={cta.eyebrow}
         title={cta.title}
@@ -87,8 +88,10 @@ export function CategoryPage({ category }: { category: ServiceCategory }) {
         body={cta.body}
         image={visual.image}
         imageAlt={visual.alt}
-        secondary={visual.secondary}
+        // Page carrefour (pannes et projets) : le devis reste la 2e action, WhatsApp passe en lien.
+        secondary={visual.secondary === "whatsapp" ? "devis" : visual.secondary}
         context={category}
+        topic={content.label}
       />
     </>
   );

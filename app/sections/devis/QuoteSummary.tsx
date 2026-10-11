@@ -3,7 +3,7 @@ import { FaCheck, FaStar } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { company } from "@/app/data/company";
 import { properties, requestTypes, timings, type QuoteRequest } from "@/lib/quote/schema";
-import { Eyebrow, PhoneButton } from "../v2/ui";
+import { Eyebrow, PhoneButton, WhatsAppButton } from "../v2/ui";
 
 interface QuoteSummaryProps {
   quote: QuoteRequest;
@@ -68,6 +68,9 @@ export function QuoteSummary({ quote, categoryLabel, serviceLabel, amount, photo
           N&apos;attendez pas le devis : un technicien intervient sous 24h, {company.promises.availability}.
         </p>
         <PhoneButton variant="primary" className="mt-5 min-h-[52px] w-full text-base" />
+        <WhatsAppButton variant="outlineLight" className="mt-2.5 min-h-[48px] w-full text-sm">
+          Envoyer une photo sur WhatsApp
+        </WhatsAppButton>
         <a
           href={company.google.url}
           target="_blank"

@@ -1,5 +1,6 @@
 import type { IconType } from "react-icons";
 import {
+  FaWhatsapp,
   FaAward,
   FaBalanceScale,
   FaBell,
@@ -128,6 +129,7 @@ export const icons = {
   stopwatch: FaStopwatch,
   sync: FaSyncAlt,
   tempHigh: FaTemperatureHigh,
+  whatsapp: FaWhatsapp,
   tempLow: FaTemperatureLow,
   thermometer: FaThermometerHalf,
   toilet: FaToilet,

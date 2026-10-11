@@ -5,9 +5,12 @@ import technicienCourant from "@/assets/technicien_courant_avec_boite_outils_en_
 import type { ServiceIntent } from "@/app/data/services/types";
 
 // Visuel et 2e action du CTA final selon l'intention de la page. Le fond est
-// lavande partout (2026-10-05).
-export const finalCtaVisual: Record<ServiceIntent, { image: StaticImageData; alt: string; secondary: "devis" | "rendezVous" }> = {
+// lavande partout (2026-10-05). Urgence : WhatsApp (photo de la panne) plutôt
+// qu'un devis (prompts/refonte/06).
+export type FinalCtaSecondary = "devis" | "rendezVous" | "whatsapp";
+
+export const finalCtaVisual: Record<ServiceIntent, { image: StaticImageData; alt: string; secondary: FinalCtaSecondary }> = {
   installation: { image: technicienBrasCroises, alt: "Technicien Radialec, bras croisés", secondary: "devis" },
   entretien: { image: technicienHanches, alt: "Technicien Radialec souriant", secondary: "rendezVous" },
-  urgence: { image: technicienCourant, alt: "Technicien Radialec en route avec sa caisse à outils", secondary: "devis" },
+  urgence: { image: technicienCourant, alt: "Technicien Radialec en route avec sa caisse à outils", secondary: "whatsapp" },
 };
