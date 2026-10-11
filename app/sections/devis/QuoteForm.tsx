@@ -85,7 +85,7 @@ export function QuoteForm({
   const [photos, setPhotos] = useState<File[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState<string>();
-  const [result, setResult] = useState<{ reference: string; delivered?: boolean }>();
+  const [result, setResult] = useState<{ reference: string; delivered?: boolean; confirmed?: boolean }>();
   const startedAt = useRef(0);
   const attribution = useAttribution();
   const honeypot = useRef<HTMLInputElement>(null);
@@ -194,11 +194,12 @@ export function QuoteForm({
         ok: boolean;
         reference?: string;
         delivered?: boolean;
+        confirmed?: boolean;
         errors?: QuoteErrors;
         message?: string;
       };
       if (response.ok && data.ok && data.reference) {
-        setResult({ reference: data.reference, delivered: data.delivered });
+        setResult({ reference: data.reference, delivered: data.delivered, confirmed: data.confirmed });
         setStatus("success");
         trackLead(
           "devis",
@@ -274,7 +275,7 @@ export function QuoteForm({
           className="scroll-mt-28 rounded-[32px] bg-white p-5 shadow-[0_40px_80px_-48px_rgba(11,18,34,0.45)] ring-1 ring-night/[0.06] sm:p-8 lg:p-10"
         >
           {status === "success" && result ? (
-            <QuoteSuccess quote={quote} reference={result.reference} delivered={result.delivered} />
+            <QuoteSuccess quote={quote} reference={result.reference} delivered={result.delivered} confirmed={result.confirmed} />
           ) : (
             <form noValidate onSubmit={handleSubmit} aria-labelledby="quote-step-title">
               {/* Progression : étapes cliquables une fois franchies, filet aux trois énergies */}

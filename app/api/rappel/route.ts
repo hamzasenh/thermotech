@@ -10,7 +10,8 @@ import {
   type CallbackRequest,
 } from "@/lib/quote/callback";
 import { LIMITS, parseAttribution } from "@/lib/quote/schema";
-import { QuoteDeliveryError, quoteRecipient, sendQuoteEmail } from "@/lib/quote/send";
+import { buildCallbackConfirmation } from "@/lib/quote/confirmation";
+import { QuoteDeliveryError, quoteRecipient, sendCustomerConfirmation, sendQuoteEmail } from "@/lib/quote/send";
 import { attributionLine, escapeTelegram as e, sendTelegramAlert } from "@/lib/quote/telegram";
 
 export const runtime = "nodejs";
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
     reference,
     name: callback.name,
     phone: callback.phone,
+    email: callback.email || undefined,
     blocks: [
       {
         title: "La demande",
@@ -88,6 +90,7 @@ export async function POST(request: Request) {
         rows: [
           ["Nom", callback.name],
           ["Téléphone", callback.phone, `tel:${callback.phone.replace(/[^\d+]/g, "")}`],
+          ...(callback.email ? [["E-mail", callback.email, `mailto:${callback.email}`]] : []),
         ],
       },
       { title: "Origine du client", rows: attributionRows(attribution) },
@@ -101,6 +104,7 @@ export async function POST(request: Request) {
     "",
     `👤 ${e(callback.name)}`,
     `📞 ${e(callback.phone)}`,
+    ...(callback.email ? [`✉️ ${e(callback.email)}`] : []),
     [topic, origin && `depuis « ${origin} »`].filter(Boolean).map((part) => e(part as string)).join(" · ") || "Sujet non précisé",
     ...(callback.message ? [`💬 <i>${e(callback.message)}</i>`] : []),
     "",
@@ -113,6 +117,7 @@ export async function POST(request: Request) {
     (async () =>
       sendQuoteEmail({
         to: quoteRecipient(),
+        replyTo: callback.email || undefined,
         reference,
         subject: `📞 ${rendezVous ? "Rendez-vous à fixer" : "À rappeler"} ${when.toLowerCase()} · ${origin ?? topic ?? "Rappel"} — ${
           callback.name
@@ -134,5 +139,10 @@ export async function POST(request: Request) {
   }
 
   const delivered = (email.status === "fulfilled" && email.value.delivered) || alerted;
-  return NextResponse.json({ ok: true, reference, delivered });
+
+  // Demande bien reçue : confirmation au client s'il a laissé son e-mail (jamais bloquant).
+  const confirmed = callback.email
+    ? await sendCustomerConfirmation({ to: callback.email, reference, ...buildCallbackConfirmation({ callback, reference, topic, origin }) })
+    : false;
+  return NextResponse.json({ ok: true, reference, delivered, confirmed });
 }

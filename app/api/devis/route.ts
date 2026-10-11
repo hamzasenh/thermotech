@@ -12,7 +12,8 @@ import {
   validateQuote,
   type QuoteRequest,
 } from "@/lib/quote/schema";
-import { QuoteDeliveryError, quoteRecipient, sendQuoteEmail } from "@/lib/quote/send";
+import { buildQuoteConfirmation } from "@/lib/quote/confirmation";
+import { QuoteDeliveryError, quoteRecipient, sendCustomerConfirmation, sendQuoteEmail } from "@/lib/quote/send";
 import { quoteAlertHtml, sendTelegramAlert } from "@/lib/quote/telegram";
 
 export const runtime = "nodejs";
@@ -107,5 +108,8 @@ export async function POST(request: Request) {
 
   // `delivered: false` n'arrive qu'en développement sans Resend ni Telegram (voir lib/quote/send.ts).
   const delivered = (email.status === "fulfilled" && email.value.delivered) || alerted;
-  return NextResponse.json({ ok: true, reference, delivered });
+
+  // Demande bien reçue : confirmation et récapitulatif au client (jamais bloquant).
+  const confirmed = await sendCustomerConfirmation({ to: quote.email, reference, ...buildQuoteConfirmation(emailInput) });
+  return NextResponse.json({ ok: true, reference, delivered, confirmed });
 }

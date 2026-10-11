@@ -1,7 +1,7 @@
 // « Être rappelé » : schéma et validation partagés entre le formulaire
 // (client) et /api/rappel (serveur). Aucune dépendance serveur.
 
-import { isValidPhone, LIMITS } from "./schema";
+import { isValidEmail, isValidPhone, LIMITS } from "./schema";
 
 export const callbackTopics = {
   chauffage: "Chauffage",
@@ -26,6 +26,8 @@ export type CallbackTime = keyof typeof callbackTimes;
 export interface CallbackRequest {
   name: string;
   phone: string;
+  /** Facultatif : pour recevoir la confirmation par e-mail. */
+  email: string;
   time: CallbackTime;
   topic: CallbackTopic | "";
   /** Facultatif : la question ou le besoin, en quelques mots. */
@@ -39,6 +41,7 @@ export interface CallbackRequest {
 export const emptyCallback: CallbackRequest = {
   name: "",
   phone: "",
+  email: "",
   time: "asap",
   topic: "",
   message: "",
@@ -59,6 +62,7 @@ export function validateCallback(data: CallbackRequest): CallbackErrors {
   const errors: CallbackErrors = {};
   if (data.name.trim().length < 2 || data.name.length > LIMITS.name) errors.name = "Indiquez votre nom.";
   if (!isValidPhone(data.phone)) errors.phone = "Numéro invalide (ex. 0486 12 34 56).";
+  if (data.email && (data.email.length > 120 || !isValidEmail(data.email))) errors.email = "Adresse e-mail invalide.";
   if (!has(callbackTimes, data.time)) errors.time = "Choisissez un moment.";
   if (data.topic && !has(callbackTopics, data.topic)) errors.topic = "Sujet invalide.";
   if (data.purpose && data.purpose !== "rendez-vous") errors.purpose = "Motif invalide.";

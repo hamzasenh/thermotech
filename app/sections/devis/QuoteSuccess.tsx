@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 import { FaCheck } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import { fr } from "@/lib/typography";
-import { callbackSlots, type QuoteRequest } from "@/lib/quote/schema";
+import { company } from "@/app/data/company";
+import { quoteNextSteps } from "@/lib/quote/messages";
+import type { QuoteRequest } from "@/lib/quote/schema";
 import { PhoneButton } from "../v2/ui";
 
 interface QuoteSuccessProps {
@@ -13,31 +15,19 @@ interface QuoteSuccessProps {
   reference: string;
   /** false = mode développement, e-mail pas encore réellement envoyé. */
   delivered?: boolean;
+  /** true = récapitulatif envoyé au client par e-mail. */
+  confirmed?: boolean;
 }
 
-export function QuoteSuccess({ quote, reference, delivered }: QuoteSuccessProps) {
+export function QuoteSuccess({ quote, reference, delivered, confirmed }: QuoteSuccessProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstName = quote.name.trim().split(/\s+/)[0];
-  const slot = quote.callbackSlot === "indifferent" ? "" : ` (${callbackSlots[quote.callbackSlot].toLowerCase()})`;
 
   useEffect(() => {
     headingRef.current?.focus();
   }, []);
 
-  const next = [
-    {
-      title: quote.contactPreference === "email" ? "Nous vous écrivons sous 24h" : `Nous vous rappelons sous 24h${slot}`,
-      text: "Un technicien relit votre demande et vous contacte pour préciser ce qui doit l'être.",
-    },
-    {
-      title: "Visite technique si nécessaire",
-      text: "Pour certains projets, un passage sur place permet de chiffrer au plus juste.",
-    },
-    {
-      title: "Votre devis détaillé, gratuit",
-      text: "Vous décidez ensuite, sans pression et sans engagement.",
-    },
-  ];
+  const next = quoteNextSteps(quote);
 
   return (
     <div className="py-2 sm:py-4">
@@ -68,6 +58,11 @@ export function QuoteSuccess({ quote, reference, delivered }: QuoteSuccessProps)
         <span className="text-xs font-semibold uppercase tracking-[0.18em] text-night/45">Référence</span>
         <span className="v2-semi font-display text-lg font-bold tracking-wider text-night">{reference}</span>
       </p>
+      {confirmed && (
+        <p className="mt-3 text-sm text-night/60">
+          Récapitulatif envoyé à <strong className="font-semibold text-night">{quote.email}</strong>.
+        </p>
+      )}
 
       <ol className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-3">
         {next.map((step, index) => (
@@ -80,7 +75,7 @@ export function QuoteSuccess({ quote, reference, delivered }: QuoteSuccessProps)
       </ol>
 
       <div className="mt-10 flex flex-col gap-3 border-t border-night/[0.08] pt-7 sm:flex-row sm:items-center">
-        <span className="text-sm text-night/55 sm:mr-1">Une urgence ?</span>
+        <span className="text-sm text-night/55 sm:mr-1">Une urgence&nbsp;? Appelez-nous {company.promises.emergency}</span>
         <PhoneButton variant="primary" className="min-h-[52px] px-6" />
         <Link href="/tarifs" className="group inline-flex items-center justify-center gap-1.5 px-3 py-3 font-semibold text-night hover:text-flame">
           Voir nos tarifs

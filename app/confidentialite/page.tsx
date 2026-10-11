@@ -53,7 +53,7 @@ export default function ConfidentialitePage() {
       <h3>Quand vous demandez à être rappelé</h3>
       <ul>
         <li>vos nom et téléphone, le moment où vous souhaitez être rappelé ;</li>
-        <li>si vous les indiquez, le sujet et votre message ;</li>
+        <li>si vous les indiquez, le sujet, votre message et votre adresse e-mail (pour vous envoyer la confirmation) ;</li>
         <li>la page d&apos;où part votre demande et la provenance de votre visite, comme pour un devis.</li>
       </ul>
       <h3>Quand vous réservez un rendez-vous en ligne</h3>
@@ -125,7 +125,7 @@ export default function ConfidentialitePage() {
       <LegalTable
         head={["Prestataire", "Rôle", "Localisation"]}
         rows={[
-          ["Resend", "Acheminement des demandes de devis et de rappel par e-mail", "États-Unis, certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
+          ["Resend", "Acheminement des demandes de devis et de rappel par e-mail, et des e-mails de confirmation qui vous sont envoyés", "États-Unis, certifiée EU-U.S. Data Privacy Framework, clauses contractuelles types"],
           [
             "Zoho Mail (info@radialec.be)",
             "Réception et stockage des e-mails de demande",

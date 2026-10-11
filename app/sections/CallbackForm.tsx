@@ -9,6 +9,8 @@ import { ErrorText, FieldLabel, inputClass, Pill, TextField } from "@/components
 import { PhoneLink } from "@/components/site/Actions";
 import { useAttribution } from "@/components/site/useAttribution";
 import { trackLead } from "@/lib/tracking";
+import { company } from "@/app/data/company";
+import { callbackWhen } from "@/lib/quote/messages";
 import { LIMITS } from "@/lib/quote/schema";
 import {
   callbackTimes,
@@ -36,7 +38,7 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
   const [errors, setErrors] = useState<CallbackErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState<string>();
-  const [result, setResult] = useState<{ reference: string; delivered?: boolean }>();
+  const [result, setResult] = useState<{ reference: string; delivered?: boolean; confirmed?: boolean }>();
   const startedAt = useRef(0);
   const honeypot = useRef<HTMLInputElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
@@ -58,7 +60,7 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
   };
 
   const focusFirstError = (found: CallbackErrors) => {
-    const field = (["name", "phone", "message"] as CallbackField[]).find((f) => found[f]);
+    const field = (["name", "phone", "email", "message"] as CallbackField[]).find((f) => found[f]);
     if (field) requestAnimationFrame(() => document.getElementById(`field-${field}`)?.focus());
   };
 
@@ -85,11 +87,12 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
         ok: boolean;
         reference?: string;
         delivered?: boolean;
+        confirmed?: boolean;
         errors?: CallbackErrors;
         message?: string;
       };
       if (response.ok && data.ok && data.reference) {
-        setResult({ reference: data.reference, delivered: data.delivered });
+        setResult({ reference: data.reference, delivered: data.delivered, confirmed: data.confirmed });
         setStatus("success");
         trackLead(
           "rappel",
@@ -133,14 +136,18 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
           C&apos;est noté, {firstName}&nbsp;!
         </h3>
         <p className="mx-auto mt-3 max-w-sm text-ink/75">
-          Nous vous rappelons au <strong className="whitespace-nowrap text-ink">{callback.phone}</strong>,{" "}
-          {callbackTimes[callback.time].toLowerCase()}.
+          Nous vous rappelons {callbackWhen(callback)}, au <strong className="whitespace-nowrap text-ink">{callback.phone}</strong>.
         </p>
         <p className="mx-auto mt-4 inline-block rounded-xl bg-lavender px-3 py-1.5 font-mono text-sm font-bold tracking-wider text-navy">
           {result.reference}
         </p>
+        {result.confirmed && (
+          <p className="mx-auto mt-3 max-w-sm text-sm text-ink/60">
+            Confirmation envoyée à <strong className="font-semibold text-ink">{callback.email}</strong>.
+          </p>
+        )}
         <p className="mx-auto mt-6 flex max-w-sm flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-ink/70">
-          C&apos;est urgent ?
+          Une urgence&nbsp;? Appelez-nous {company.promises.emergency}
           <PhoneLink variant="secondary" className="btn-sm" />
         </p>
       </div>
@@ -172,6 +179,20 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
           value={callback.phone}
           onChange={(e) => set("phone", e.target.value)}
           error={errors.phone}
+        />
+        <TextField
+          name="email"
+          label="E-mail"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          optional
+          hint="Pour recevoir la confirmation de votre demande."
+          value={callback.email}
+          onChange={(e) => set("email", e.target.value)}
+          error={errors.email}
+          maxLength={120}
+          className="sm:col-span-2"
         />
       </div>
 

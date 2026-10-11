@@ -35,6 +35,59 @@ export function quoteRecipient(): string {
   return to;
 }
 
+/**
+ * Confirmation envoyée au client (devis, rappel). Exige un expéditeur sur un
+ * domaine vérifié dans Resend (QUOTE_FROM_EMAIL) : l'expéditeur de test ne peut
+ * écrire qu'au titulaire du compte. Réponse du client → boîte qui reçoit les
+ * demandes (QUOTE_TO_EMAIL). Ne lève jamais d'erreur : une confirmation qui
+ * échoue ne doit pas faire échouer la demande. Renvoie true si elle est partie.
+ */
+export async function sendCustomerConfirmation(email: {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  reference: string;
+}): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.QUOTE_FROM_EMAIL;
+  if (!apiKey || !from) {
+    console.info(
+      `[confirmation] ${email.reference} non envoyée à ${email.to} : ${!apiKey ? "RESEND_API_KEY" : "QUOTE_FROM_EMAIL (domaine vérifié)"} manquant.`
+    );
+    return false;
+  }
+  try {
+    const response = await fetch(RESEND_ENDPOINT, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "Idempotency-Key": `${email.reference}-confirmation`,
+      },
+      body: JSON.stringify({
+        from,
+        to: [email.to],
+        ...(process.env.QUOTE_TO_EMAIL ? { reply_to: process.env.QUOTE_TO_EMAIL } : {}),
+        subject: email.subject,
+        html: email.html,
+        text: email.text,
+        tags: [{ name: "type", value: "confirmation" }],
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      console.error(`[confirmation] ${email.reference} refusée par Resend (${response.status}) : ${detail.slice(0, 300)}`);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error(`[confirmation] ${email.reference} : Resend injoignable (${(error as Error).message})`);
+    return false;
+  }
+}
+
 export async function sendQuoteEmail(email: QuoteEmail): Promise<{ delivered: boolean }> {
   const apiKey = process.env.RESEND_API_KEY;
 
