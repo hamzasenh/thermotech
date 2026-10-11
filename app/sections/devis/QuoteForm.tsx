@@ -120,22 +120,29 @@ export function QuoteForm({
   };
 
   const chooseCategory = (id: string) => {
-    setQuote((q) => ({
-      ...q,
-      category: id,
-      service: id === "autre" ? OTHER_SERVICE : q.category === id ? q.service : "",
-    }));
+    setQuote((q) => {
+      const sameCategory = q.category === id;
+      return {
+        ...q,
+        category: id,
+        service: id === "autre" ? OTHER_SERVICE : sameCategory ? q.service : "",
+        // La nature de la demande suit la prestation : nouvelle catégorie = à redéduire.
+        requestType: sameCategory ? q.requestType : "",
+      };
+    });
     setErrors((e) => ({ ...e, category: undefined, service: undefined }));
   };
 
+  // Une prestation précise dit déjà s'il s'agit d'une installation, d'un entretien
+  // ou d'un dépannage : la nature est déduite et la question n'est plus posée.
   const chooseService = (ref: string) => {
     const option = services.find((s) => s.ref === ref);
     setQuote((q) => ({
       ...q,
       service: ref,
-      requestType: q.requestType || (option ? intentToType[option.intent] : q.requestType),
+      requestType: option ? intentToType[option.intent] : q.service === OTHER_SERVICE ? q.requestType : "",
     }));
-    setErrors((e) => ({ ...e, service: undefined }));
+    setErrors((e) => ({ ...e, service: undefined, requestType: undefined }));
   };
 
   const scrollToCard = () => {
@@ -233,6 +240,8 @@ export function QuoteForm({
   };
 
   const err = (field: QuoteField) => (errors[field] ? `field-${field}-error` : undefined);
+  // Nature déduite de la prestation choisie : seulement demandée pour « Autre / je ne sais pas ».
+  const requestTypeKnown = Boolean(service);
   const sending = status === "sending";
   const progress = status === "success" ? 100 : ((step + 1) / steps.length) * 100;
 
@@ -391,23 +400,38 @@ export function QuoteForm({
 
                     {step === 1 && (
                       <>
-                        <fieldset>
-                          <FieldLabel as="legend">Nature de la demande</FieldLabel>
-                          <div className="grid grid-cols-2 gap-3">
-                            {(Object.keys(requestTypes) as RequestType[]).map((key) => (
-                              <OptionCard
-                                key={key}
-                                name="requestType"
-                                value={key}
-                                checked={quote.requestType === key}
-                                onChange={(v) => set("requestType", v as RequestType)}
-                                label={requestTypes[key]}
-                                describedBy={err("requestType")}
-                              />
-                            ))}
+                        {requestTypeKnown && service ? (
+                          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl bg-chalk px-5 py-4">
+                            <p className="text-[15px] text-night/70">
+                              Pour : <strong className="v2-semi font-display font-bold text-night">{service.label}</strong>
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => goTo(0)}
+                              className="text-sm font-semibold text-night underline underline-offset-4 hover:text-flame"
+                            >
+                              Modifier
+                            </button>
                           </div>
-                          <ErrorText id="field-requestType-error">{errors.requestType}</ErrorText>
-                        </fieldset>
+                        ) : (
+                          <fieldset>
+                            <FieldLabel as="legend">Nature de la demande</FieldLabel>
+                            <div className="grid grid-cols-2 gap-3">
+                              {(Object.keys(requestTypes) as RequestType[]).map((key) => (
+                                <OptionCard
+                                  key={key}
+                                  name="requestType"
+                                  value={key}
+                                  checked={quote.requestType === key}
+                                  onChange={(v) => set("requestType", v as RequestType)}
+                                  label={requestTypes[key]}
+                                  describedBy={err("requestType")}
+                                />
+                              ))}
+                            </div>
+                            <ErrorText id="field-requestType-error">{errors.requestType}</ErrorText>
+                          </fieldset>
+                        )}
 
                         <fieldset>
                           <FieldLabel as="legend">Délai souhaité</FieldLabel>
