@@ -11,6 +11,7 @@ import {
 } from "@/lib/quote/callback";
 import { LIMITS, parseAttribution } from "@/lib/quote/schema";
 import { QuoteDeliveryError, quoteRecipient, sendQuoteEmail } from "@/lib/quote/send";
+import { attributionLine, escapeTelegram as e, sendTelegramAlert } from "@/lib/quote/telegram";
 
 export const runtime = "nodejs";
 
@@ -59,9 +60,11 @@ export async function POST(request: Request) {
   const topic = callback.topic ? callbackTopics[callback.topic] : undefined;
   const origin = originLabel(callback.service);
   const when = callbackTimes[callback.time];
+  const attribution = parseAttribution(form.get("attribution"));
+  const rendezVous = callback.purpose === "rendez-vous";
   const date = receivedAt.toLocaleString("fr-BE", { timeZone: "Europe/Brussels", dateStyle: "full", timeStyle: "short" });
   const { html, text } = renderEmail({
-    kicker: `${callback.purpose === "rendez-vous" ? "Rendez-vous à fixer" : "Rappel demandé"}${
+    kicker: `${rendezVous ? "Rendez-vous à fixer" : "Rappel demandé"}${
       callback.time === "asap" ? " · Dès que possible" : ""
     }`,
     title: `Rappeler ${callback.name} · ${when.toLowerCase()}`,
@@ -74,7 +77,7 @@ export async function POST(request: Request) {
         rows: [
           ["Référence", reference],
           ["Reçue le", date],
-          ["Motif", callback.purpose === "rendez-vous" ? "Prendre rendez-vous" : "Être rappelé"],
+          ["Motif", rendezVous ? "Prendre rendez-vous" : "Être rappelé"],
           ["À rappeler", when],
           ["Sujet", topic ?? "Non précisé"],
           ...(origin ? [["Depuis la page", origin]] : []),
@@ -87,34 +90,49 @@ export async function POST(request: Request) {
           ["Téléphone", callback.phone, `tel:${callback.phone.replace(/[^\d+]/g, "")}`],
         ],
       },
-      { title: "Origine du client", rows: attributionRows(parseAttribution(form.get("attribution"))) },
+      { title: "Origine du client", rows: attributionRows(attribution) },
     ],
     messageTitle: "Son message",
     message: callback.message,
   });
 
-  let delivered: boolean;
-  try {
-    ({ delivered } = await sendQuoteEmail({
-      to: quoteRecipient(),
-      reference,
-      subject: `📞 ${callback.purpose === "rendez-vous" ? "Rendez-vous à fixer" : "À rappeler"} ${when.toLowerCase()} · ${
-        origin ?? topic ?? "Rappel"
-      } — ${callback.name} · ${callback.phone}`,
-      html,
-      text,
-      attachments: [],
-    }));
-  } catch (error) {
-    if (error instanceof QuoteDeliveryError) {
-      console.error(`[rappel] ${reference} non envoyé : ${error.message}`);
-      return NextResponse.json(
-        { ok: false, message: "L'envoi a échoué de notre côté. Appelez-nous directement." },
-        { status: 503 }
-      );
+  const alertHtml = [
+    `📞 <b>${rendezVous ? "Rendez-vous à fixer" : "À rappeler"} · ${e(when.toLowerCase())}</b>`,
+    "",
+    `👤 ${e(callback.name)}`,
+    `📞 ${e(callback.phone)}`,
+    [topic, origin && `depuis « ${origin} »`].filter(Boolean).map((part) => e(part as string)).join(" · ") || "Sujet non précisé",
+    ...(callback.message ? [`💬 <i>${e(callback.message)}</i>`] : []),
+    "",
+    `Origine : ${e(attributionLine(attribution))}`,
+    `Réf. <code>${e(reference)}</code>`,
+  ].join("\n");
+
+  // E-mail (trace) et alerte Telegram (instantanée) en parallèle.
+  const [email, alert] = await Promise.allSettled([
+    (async () =>
+      sendQuoteEmail({
+        to: quoteRecipient(),
+        reference,
+        subject: `📞 ${rendezVous ? "Rendez-vous à fixer" : "À rappeler"} ${when.toLowerCase()} · ${origin ?? topic ?? "Rappel"} — ${
+          callback.name
+        } · ${callback.phone}`,
+        html,
+        text,
+        attachments: [],
+      }))(),
+    sendTelegramAlert({ html: alertHtml, phone: callback.phone, reference }),
+  ]);
+  const alerted = alert.status === "fulfilled" && alert.value;
+
+  if (email.status === "rejected") {
+    if (!(email.reason instanceof QuoteDeliveryError)) throw email.reason;
+    console.error(`[rappel] ${reference} e-mail non envoyé : ${email.reason.message}${alerted ? " (alerte Telegram reçue)" : ""}`);
+    if (!alerted) {
+      return NextResponse.json({ ok: false, message: "L'envoi a échoué de notre côté. Appelez-nous directement." }, { status: 503 });
     }
-    throw error;
   }
 
+  const delivered = (email.status === "fulfilled" && email.value.delivered) || alerted;
   return NextResponse.json({ ok: true, reference, delivered });
 }

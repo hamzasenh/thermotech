@@ -13,6 +13,7 @@ import {
   type QuoteRequest,
 } from "@/lib/quote/schema";
 import { QuoteDeliveryError, quoteRecipient, sendQuoteEmail } from "@/lib/quote/send";
+import { quoteAlertHtml, sendTelegramAlert } from "@/lib/quote/telegram";
 
 export const runtime = "nodejs";
 
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
   const service = quote.service === OTHER_SERVICE ? undefined : getServiceByRef(quote.service as ServiceRef);
   const price = service?.price ? resolvePrice(service.price) : undefined;
 
-  const { subject, html, text } = buildQuoteEmail({
+  const emailInput = {
     quote,
     reference,
     receivedAt,
@@ -75,36 +76,36 @@ export async function POST(request: Request) {
     displayedPrice: price?.amount !== undefined ? `${formatAmount(price)} TVAC` : undefined,
     photoCount: files.length,
     attribution: parseAttribution(form.get("attribution")),
-  });
+  };
+  const { subject, html, text } = buildQuoteEmail(emailInput);
+  const attachments = await Promise.all(
+    files.map(async (file, index) => ({
+      filename: `${reference}-photo-${index + 1}.${file.type.split("/")[1] ?? "jpg"}`,
+      content: Buffer.from(await file.arrayBuffer()),
+      contentType: file.type,
+    }))
+  );
 
-  let delivered: boolean;
-  try {
-    ({ delivered } = await sendQuoteEmail({
-      to: quoteRecipient(),
-      replyTo: quote.email,
-      reference,
-      subject,
-      html,
-      text,
-      attachments: await Promise.all(
-        files.map(async (file, index) => ({
-          filename: `${reference}-photo-${index + 1}.${file.type.split("/")[1] ?? "jpg"}`,
-          content: Buffer.from(await file.arrayBuffer()),
-          contentType: file.type,
-        }))
-      ),
-    }));
-  } catch (error) {
-    if (error instanceof QuoteDeliveryError) {
-      console.error(`[devis] ${reference} non envoyée : ${error.message}`);
+  // E-mail (référence, pièces jointes) et alerte Telegram (instantanée) en parallèle.
+  const [email, alert] = await Promise.allSettled([
+    (async () => sendQuoteEmail({ to: quoteRecipient(), replyTo: quote.email, reference, subject, html, text, attachments }))(),
+    sendTelegramAlert({ html: quoteAlertHtml(emailInput), phone: quote.phone, photos: attachments, reference }),
+  ]);
+  const alerted = alert.status === "fulfilled" && alert.value;
+
+  if (email.status === "rejected") {
+    if (!(email.reason instanceof QuoteDeliveryError)) throw email.reason;
+    console.error(`[devis] ${reference} e-mail non envoyé : ${email.reason.message}${alerted ? " (alerte Telegram reçue)" : ""}`);
+    // Personne n'a reçu la demande : on le dit au client plutôt que d'afficher un faux succès.
+    if (!alerted) {
       return NextResponse.json(
         { ok: false, message: "L'envoi a échoué de notre côté. Appelez-nous, nous traitons votre demande tout de suite." },
         { status: 503 }
       );
     }
-    throw error;
   }
 
-  // `delivered: false` n'arrive qu'en développement sans Resend (voir lib/quote/send.ts).
+  // `delivered: false` n'arrive qu'en développement sans Resend ni Telegram (voir lib/quote/send.ts).
+  const delivered = (email.status === "fulfilled" && email.value.delivered) || alerted;
   return NextResponse.json({ ok: true, reference, delivered });
 }

@@ -26,7 +26,7 @@ export interface QuoteEmailInput {
 const escape = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-const label = <T extends Record<string, string>>(map: T, key: string) => (key in map ? map[key as keyof T] : key || "—");
+export const label = <T extends Record<string, string>>(map: T, key: string) => (key in map ? map[key as keyof T] : key || "—");
 
 const attributionLabels: Record<keyof QuoteAttribution, string> = {
   landing: "Page d'arrivée",
@@ -42,7 +42,7 @@ const attributionLabels: Record<keyof QuoteAttribution, string> = {
 const PAID_MEDIUMS = ["cpc", "ppc", "paid", "paidsearch", "display", "paid_social"];
 
 /** Résumé lisible de la provenance du client, à partir des paramètres bruts. */
-function channel(a: QuoteAttribution): string {
+export function attributionChannel(a: QuoteAttribution): string {
   const medium = a.utm_medium?.toLowerCase() ?? "";
   if (a.gclid) return "Publicité Google Ads";
   if (PAID_MEDIUMS.includes(medium)) return `Publicité${a.utm_source ? ` (${a.utm_source})` : ""}`;
@@ -72,7 +72,7 @@ export function attributionRows(a: QuoteAttribution): string[][] {
     ["gclid", a.gclid],
   ];
   return [
-    ["Canal", channel(a)],
+    ["Canal", attributionChannel(a)],
     ...details.filter(([, value]) => value).map(([key, value]) => [attributionLabels[key], value as string]),
   ];
 }

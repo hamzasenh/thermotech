@@ -94,6 +94,8 @@ export default function ConfidentialitePage() {
         resend.com/legal/privacy-policy et resend.com/legal/dpa (États-Unis, DPF + clauses contractuelles types),
         policies.google.com/privacy/frameworks (Google LLC certifiée EU-U.S. Data Privacy Framework),
         cal.com/privacy (États-Unis, DPF + clauses contractuelles types),
+        telegram.org/privacy (comptes ouverts depuis l'EEE : données stockées aux Pays-Bas ; représentant RGPD
+        dans l'UE : European Data Protection Office, EDPO),
         whatsapp.com/legal/privacy-policy-eea et business-data-transfer-addendum (WhatsApp Ireland Limited ;
         transferts vers WhatsApp LLC et Meta Platforms, Inc. sous DPF, clauses contractuelles types en repli),
         vercel.com/legal/privacy-policy (États-Unis et autres pays, DPF + clauses contractuelles types).
@@ -107,6 +109,11 @@ export default function ConfidentialitePage() {
             "Réception et stockage des e-mails de demande",
             // Zoho stocke les données dans le centre de la région du compte (zoho.eu = Union européenne).
             <MissingInfo key="m">région du compte Zoho à préciser (Union européenne si le compte est sur zoho.eu)</MissingInfo>,
+          ],
+          [
+            "Telegram",
+            "Alerte instantanée à nos techniciens à chaque demande de devis ou de rappel (copie de la demande, photos comprises)",
+            "Données stockées aux Pays-Bas (comptes ouverts dans l'Union européenne) ; société établie hors UE, représentée dans l'UE par l'EDPO",
           ],
           ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
           [
