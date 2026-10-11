@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { ErrorText, FieldLabel, inputClass, Pill, TextField } from "@/components/site/FormFields";
 import { PhoneLink } from "@/components/site/Actions";
 import { useAttribution } from "@/components/site/useAttribution";
+import { trackLead } from "@/lib/tracking";
 import { LIMITS } from "@/lib/quote/schema";
 import {
   callbackTimes,
@@ -90,11 +91,11 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
       if (response.ok && data.ok && data.reference) {
         setResult({ reference: data.reference, delivered: data.delivered });
         setStatus("success");
-        window.gtag?.("event", "generate_lead", {
-          form_name: "rappel",
-          topic: callback.topic || "autre",
-          callback_time: callback.time,
-        });
+        trackLead(
+          "rappel",
+          { topic: callback.topic || "autre", callback_time: callback.time },
+          { reference: data.reference, phone: callback.phone }
+        );
         return;
       }
       if (data.errors) {
@@ -114,7 +115,7 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
   if (status === "success" && result) {
     const firstName = callback.name.trim().split(/\s+/)[0];
     return (
-      <div className="py-6 text-center">
+      <div data-clarity-mask="true" className="py-6 text-center">
         {result.delivered === false && (
           <p className="mx-auto mb-6 max-w-sm rounded-xl border border-dashed border-flame/50 bg-flame/[0.05] px-4 py-2 text-xs text-flame">
             Mode développement : l&apos;e-mail n&apos;a pas été envoyé (voir la console du serveur).
@@ -149,7 +150,8 @@ export function CallbackForm({ context, purpose = "" }: { context?: string; purp
   const sending = status === "sending";
 
   return (
-    <form noValidate onSubmit={handleSubmit} className="space-y-6">
+    // data-clarity-mask : les données saisies n'apparaissent jamais dans Microsoft Clarity.
+    <form noValidate onSubmit={handleSubmit} data-clarity-mask="true" className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <TextField
           name="name"

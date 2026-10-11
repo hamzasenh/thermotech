@@ -1,11 +1,12 @@
 "use client";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
+import { trackLead } from "@/lib/tracking";
 
 /**
  * Agenda Cal.com intégré (vue mois). Chargé uniquement sur /rendez-vous, à la
  * demande du visiteur. Une réservation confirmée envoie `generate_lead`
- * (form_name « rendez-vous ») à Google Analytics — si le visiteur a consenti.
+ * (form_name « rendez-vous ») et la conversion Google Ads — si le visiteur a consenti.
  */
 export function CalBooker({ calLink, label, brandColor }: { calLink: string; label: string; brandColor: string }) {
   const namespace = calLink.split("/").pop() ?? "rendez-vous";
@@ -13,7 +14,7 @@ export function CalBooker({ calLink, label, brandColor }: { calLink: string; lab
   useEffect(() => {
     let active = true;
     let cal: Awaited<ReturnType<typeof getCalApi>> | undefined;
-    const onBooked = () => window.gtag?.("event", "generate_lead", { form_name: "rendez-vous", booking_type: label });
+    const onBooked = () => trackLead("rendez-vous", { booking_type: label });
 
     getCalApi({ namespace }).then((api) => {
       if (!active) return;

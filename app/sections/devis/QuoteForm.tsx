@@ -28,6 +28,7 @@ import {
 import type { ServiceIntent } from "../../data/services/types";
 import { ErrorText, FieldLabel, inputClass, OptionCard, Pill, TextField } from "@/components/site/FormFields";
 import { btn, PhoneButton, WhatsAppButton } from "../v2/ui";
+import { trackLead } from "@/lib/tracking";
 import { PhotoPicker } from "./PhotoPicker";
 import { QuoteSuccess } from "./QuoteSuccess";
 import { QuoteSummary } from "./QuoteSummary";
@@ -199,12 +200,11 @@ export function QuoteForm({
       if (response.ok && data.ok && data.reference) {
         setResult({ reference: data.reference, delivered: data.delivered });
         setStatus("success");
-        window.gtag?.("event", "generate_lead", {
-          form_name: "devis",
-          service: quote.service,
-          category: quote.category,
-          request_type: quote.requestType,
-        });
+        trackLead(
+          "devis",
+          { service: quote.service, category: quote.category, request_type: quote.requestType },
+          { reference: data.reference, email: quote.email, phone: quote.phone }
+        );
         scrollToCard();
         return;
       }
@@ -246,7 +246,11 @@ export function QuoteForm({
   const progress = status === "success" ? 100 : ((step + 1) / steps.length) * 100;
 
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-10 xl:gap-x-20">
+    // data-clarity-mask : rien de ce que le client saisit ou relit (récapitulatif) n'apparaît dans Microsoft Clarity.
+    <div
+      data-clarity-mask="true"
+      className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-10 xl:gap-x-20"
+    >
       {/* Présentation (serveur) */}
       <div className="min-w-0 lg:col-start-1 lg:row-start-1">{intro}</div>
 

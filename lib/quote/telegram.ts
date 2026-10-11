@@ -11,7 +11,15 @@
 // Une alerte qui échoue ne fait jamais échouer la demande : elle est seulement journalisée.
 
 import { attributionChannel, label, type QuoteEmailInput } from "./email";
-import { callbackSlots, contactPreferences, properties, requestTypes, timings, type QuoteAttribution } from "./schema";
+import {
+  callbackSlots,
+  contactPreferences,
+  internationalDigits,
+  properties,
+  requestTypes,
+  timings,
+  type QuoteAttribution,
+} from "./schema";
 
 export interface TelegramAlert {
   /** Message au format HTML de Telegram (b, i, a, code). Utiliser `escapeTelegram` pour le texte du client. */
@@ -33,13 +41,6 @@ export function telegramConfigured(): boolean {
 
 export function escapeTelegram(text: string): string {
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-/** « 0486 12 34 56 » → « 32486123456 » (format wa.me), ou undefined si le numéro est inexploitable. */
-export function internationalDigits(phone: string): string | undefined {
-  const digits = phone.trim().replace(/^\+/, "00").replace(/\D/g, "");
-  const international = digits.startsWith("00") ? digits.slice(2) : digits.startsWith("0") ? `32${digits.slice(1)}` : digits;
-  return /^\d{9,15}$/.test(international) ? international : undefined;
 }
 
 /** Une ligne : canal d'acquisition + page d'arrivée. */

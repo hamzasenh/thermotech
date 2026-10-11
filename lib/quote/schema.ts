@@ -116,6 +116,13 @@ export function isValidPhone(value: string): boolean {
   return /^\+?\d{9,15}$/.test(digits);
 }
 
+/** « 0486 12 34 56 » → « 32486123456 » (format wa.me), ou undefined si le numéro est inexploitable. */
+export function internationalDigits(phone: string): string | undefined {
+  const digits = phone.trim().replace(/^\+/, "00").replace(/\D/g, "");
+  const international = digits.startsWith("00") ? digits.slice(2) : digits.startsWith("0") ? `32${digits.slice(1)}` : digits;
+  return /^\d{9,15}$/.test(international) ? international : undefined;
+}
+
 export function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim());
 }

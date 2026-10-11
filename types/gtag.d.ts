@@ -1,5 +1,7 @@
-// gtag (Google Analytics) n'existe que si le visiteur a consenti à la mesure
-// d'audience (components/site/CookieConsent.tsx) : toujours l'appeler avec `?.`.
+// Outils de mesure, présents seulement après consentement (lib/tracking.ts) :
+// toujours les appeler avec `?.`, ou passer par trackLead / trackContactClick.
 interface Window {
+  dataLayer?: unknown[];
   gtag?: (...args: unknown[]) => void;
+  clarity?: ((...args: unknown[]) => void) & { q?: unknown[] };
 }

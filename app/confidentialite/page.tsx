@@ -13,12 +13,15 @@ export const metadata = pageMetadata({
 
 export default function ConfidentialitePage() {
   const { legal, address } = company;
+  // Outils activés par leur identifiant (company.ts) : la page ne décrit que ce qui tourne réellement.
+  const clarity = Boolean(company.clarityId);
+  const ads = Boolean(company.googleAds.id);
 
   return (
     <LegalPage
       title="Politique de confidentialité"
       path="/confidentialite"
-      updated="4 octobre 2026"
+      updated="11 octobre 2026"
       intro="Vos données servent à répondre à vos demandes et à intervenir chez vous, rien d'autre. Cette page explique lesquelles nous collectons, pourquoi, combien de temps, et comment exercer vos droits."
     >
       <h2>Responsable du traitement</h2>
@@ -66,9 +69,25 @@ export default function ConfidentialitePage() {
         d&apos;utiliser&nbsp;; le message pré-rempli indique la page d&apos;où vous nous contactez.
       </p>
       <h3>Quand vous naviguez sur le site</h3>
+      <p>Uniquement si vous l&apos;acceptez&nbsp;:</p>
+      <ul>
+        <li>des statistiques de visite via Google Analytics (pages vues, type d&apos;appareil, provenance)&nbsp;;</li>
+        {clarity && (
+          <li>
+            des enregistrements anonymisés de votre parcours via Microsoft Clarity (clics, défilement, pages vues),
+            sans ce que vous saisissez dans les formulaires&nbsp;;
+          </li>
+        )}
+        {ads && (
+          <li>
+            si vous arrivez par une annonce Google, la mesure des demandes qu&apos;elle nous a apportées (Google Ads).
+            Quand vous envoyez un formulaire, votre e-mail et votre téléphone sont alors transmis à Google sous forme
+            codée (hachée), pour relier la demande à l&apos;annonce. Pas de publicité ciblée.
+          </li>
+        )}
+      </ul>
       <p>
-        Uniquement si vous l&apos;acceptez&nbsp;: des statistiques de visite via Google Analytics (pages vues, type
-        d&apos;appareil, provenance). Voir notre <Link href="/cookies">politique cookies</Link>.
+        Voir notre <Link href="/cookies">politique cookies</Link>.
       </p>
 
       <h2>Pourquoi et sur quelle base</h2>
@@ -79,6 +98,7 @@ export default function ConfidentialitePage() {
           ["Réaliser l'intervention, la facturer, assurer la garantie", "Exécution du contrat (art. 6.1.b)"],
           ["Tenir notre comptabilité", "Obligation légale (art. 6.1.c)"],
           ["Mesurer l'audience du site", "Votre consentement (art. 6.1.a), retirable à tout moment"],
+          ...(ads ? [["Mesurer l'efficacité de nos annonces Google Ads", "Votre consentement (art. 6.1.a), retirable à tout moment"]] : []),
           ["Savoir quels canaux nous amènent des demandes", "Intérêt légitime à évaluer nos actions commerciales (art. 6.1.f)"],
         ]}
       />
@@ -98,6 +118,8 @@ export default function ConfidentialitePage() {
         dans l'UE : European Data Protection Office, EDPO),
         whatsapp.com/legal/privacy-policy-eea et business-data-transfer-addendum (WhatsApp Ireland Limited ;
         transferts vers WhatsApp LLC et Meta Platforms, Inc. sous DPF, clauses contractuelles types en repli),
+        learn.microsoft.com/clarity (Microsoft Azure ; enregistrements 30 jours, cartes de clics 13 mois ;
+        Microsoft Corporation certifiée DPF), Google Ads : mêmes conditions que Google Analytics (Google LLC, DPF),
         vercel.com/legal/privacy-policy (États-Unis et autres pays, DPF + clauses contractuelles types).
       */}
       <LegalTable
@@ -116,6 +138,18 @@ export default function ConfidentialitePage() {
             "Données stockées aux Pays-Bas (comptes ouverts dans l'Union européenne) ; société établie hors UE, représentée dans l'UE par l'EDPO",
           ],
           ["Google (Analytics)", "Mesure d'audience, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"],
+          ...(ads
+            ? [["Google (Ads)", "Mesure des demandes issues de nos annonces, uniquement avec votre accord", "Google LLC (États-Unis), certifiée EU-U.S. Data Privacy Framework"]]
+            : []),
+          ...(clarity
+            ? [
+                [
+                  "Microsoft (Clarity)",
+                  "Enregistrements anonymisés des parcours et cartes de clics, uniquement avec votre accord",
+                  "Microsoft Corporation (États-Unis), certifiée EU-U.S. Data Privacy Framework",
+                ],
+              ]
+            : []),
           [
             "WhatsApp",
             "Messagerie, si vous choisissez de nous écrire sur WhatsApp",
@@ -144,6 +178,8 @@ export default function ConfidentialitePage() {
         <li>Données clients liées à une intervention&nbsp;: pendant la relation et la durée de la garantie, puis archivées.</li>
         <li>Factures et pièces comptables&nbsp;: pendant la durée imposée par la législation comptable et fiscale belge.</li>
         <li>Statistiques Google Analytics&nbsp;: 13 mois maximum pour les cookies.</li>
+        {clarity && <li>Microsoft Clarity&nbsp;: enregistrements 30 jours, cartes de clics 13 mois.</li>}
+        {ads && <li>Google Ads&nbsp;: 90 jours pour les cookies de mesure des annonces.</li>}
       </ul>
 
       <h2>Vos droits</h2>

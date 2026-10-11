@@ -3,6 +3,9 @@
 // promesse (délai, garantie…) doit lire ce fichier — ne jamais recopier ces
 // valeurs en dur dans une page.
 
+/** Actions mesurées comme conversions Google Ads (lib/tracking.ts). */
+export type AdsConversion = "devis" | "rappel" | "rendezVous" | "appel" | "whatsapp";
+
 export const company = {
   name: "Radialec",
   tagline: "Chauffage, électricité, plomberie et climatisation à Bruxelles",
@@ -92,6 +95,27 @@ export const company = {
 
   // Mesure d'audience — chargée uniquement après consentement (CookieConsent).
   analyticsId: process.env.NEXT_PUBLIC_GA_ID ?? "G-T01KFFNNN3",
+
+  // Microsoft Clarity (enregistrements de visites anonymisés, cartes de clics) :
+  // identifiant du projet (clarity.microsoft.com → Paramètres). Absent = désactivé.
+  // Chargé uniquement après accord « mesure d'audience ».
+  clarityId: (process.env.NEXT_PUBLIC_CLARITY_ID || null) as string | null,
+
+  // Google Ads : balise « AW-123456789 » (Objectifs → Conversions → Configuration
+  // de la balise). Absent = désactivé, et la bannière cookies ne parle pas de publicité.
+  // Chargée uniquement après accord « publicité ». Pas de remarketing (ad_personalization refusé).
+  googleAds: {
+    id: (process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || null) as string | null,
+    // Libellé de chaque action de conversion (« AW-123456789/AbCdEf… » → « AbCdEf… »).
+    // null = conversion non envoyée. Voir prompts/refonte/07-suivi-ads-clarity.md.
+    conversions: {
+      devis: null,
+      rappel: null,
+      rendezVous: null,
+      appel: null,
+      whatsapp: null,
+    } as Record<AdsConversion, string | null>,
+  },
 
   // À CONFIRMER — domaine de production, utilisé pour les URL canoniques, le
   // sitemap et les données structurées. Surchargeable via NEXT_PUBLIC_SITE_URL.
