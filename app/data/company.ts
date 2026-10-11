@@ -56,6 +56,11 @@ export const company = {
     rating: 5,
     reviewsFloor: 30,
     url: "https://share.google/2lcgT4FuqMHlxXEqc",
+    // Formulaire « Écrire un avis » (ordinateur et mobile). Place ID tiré de l'identifiant
+    // Maps de la fiche (0x47c3ddc0a0322b9f:0x481790fd4bad26ad) ; vérifié le 11/10/2026 :
+    // ouvre bien le formulaire d'avis RADIALEC. Toujours diffusé via radialec.be/avis
+    // (next.config.ts) : la cible peut changer sans réimprimer les cartes QR.
+    reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJnysyoMDdw0cRrSatS_2QF0g",
   },
 
   // À FOURNIR — les icônes existaient dans l'ancien footer mais sans URL.

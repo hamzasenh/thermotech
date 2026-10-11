@@ -88,6 +88,12 @@ export function ContactDetails({ tone = "white" }: { tone?: Tone }) {
                     {google.rating}/5 sur Google
                   </span>
                 </a>
+                <p className="mt-1 text-sm text-night/60">
+                  Déjà client&nbsp;?{" "}
+                  <a href="/avis" target="_blank" rel="noopener" className="font-semibold text-navy underline-offset-4 hover:underline">
+                    Laissez-nous un avis
+                  </a>
+                </p>
               </Row>
             </ul>
           </div>

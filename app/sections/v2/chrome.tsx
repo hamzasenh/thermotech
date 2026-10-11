@@ -219,6 +219,10 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
               </span>
               {`${company.google.rating}/5 sur Google · plus de ${company.google.reviewsFloor} avis`}
             </a>
+            {/* Clients qui reviennent chercher le numéro : discret, hors du parcours des prospects. */}
+            <a href="/avis" target="_blank" rel="noopener" className={cn("mt-2 block w-fit text-xs underline underline-offset-4", muted)}>
+              Déjà client&nbsp;? Laissez-nous un avis
+            </a>
           </div>
 
           <nav aria-label="Plan du site" className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">

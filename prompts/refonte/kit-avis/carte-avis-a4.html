@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Cartes avis Radialec (A4)</title>
+<!--
+  Planche A4 à imprimer soi-même : 10 cartes « avis Google » (recto seul), à
+  découper le long des pointillés. Version imprimeur recto/verso : carte-avis.html.
+  Le QR pointe vers https://www.radialec.be/avis (redirection, next.config.ts).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Geist:wght@800&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root { --night: #0B1222; --lavender: #EAEEFE; --flame: #E52619; --ember: #ED7020; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body { font-family: "Archivo", system-ui, sans-serif; color: var(--night); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  /* Une page = la carte + 3 mm de fond perdu ; tout le contenu reste à 3 mm au moins du trait de coupe. */
+  .page { width: 91mm; height: 61mm; padding: 6mm; position: relative; overflow: hidden; break-after: page; display: flex; }
+  .page:last-child { break-after: auto; }
+  .energy { height: 0.7mm; width: 9mm; border-radius: 1mm; background: linear-gradient(90deg, #e52619 0%, #ed7020 28%, #ffd505 52%, #38b7e8 76%, #3468af 100%); }
+  .brand { display: flex; align-items: center; gap: 1.6mm; }
+  .brand img { height: 6.2mm; width: auto; }
+  .brand span { font-family: "Geist", sans-serif; font-weight: 800; font-size: 4.1mm; letter-spacing: -0.02em; }
+
+  /* Recto */
+  .recto { gap: 4mm; }
+  .recto .text { flex: 1; display: flex; flex-direction: column; }
+  .recto h1 { font-size: 4.6mm; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em; margin-top: auto; }
+  .recto .energy { margin-top: 3.4mm; }
+  .recto p { font-size: 2.55mm; line-height: 1.4; color: rgba(11, 18, 34, 0.72); margin-top: 2.2mm; }
+  .recto .qr { width: 27mm; border-radius: 2.6mm; background: var(--lavender); padding: 2.4mm 2.4mm 2mm; display: flex; flex-direction: column; align-items: center; align-self: center; }
+  .recto .qr img { width: 22.2mm; height: 22.2mm; display: block; border: 1.2mm solid #fff; border-radius: 1mm; background: #fff; }
+  .recto .qr strong { font-size: 2.2mm; font-weight: 600; margin-top: 1.6mm; text-align: center; line-height: 1.25; }
+  .recto .qr small { font-size: 2.15mm; font-weight: 800; margin-top: 0.6mm; letter-spacing: -0.01em; }
+
+  /* Verso */
+  .verso { flex-direction: column; justify-content: space-between; }
+  .verso .eyebrow { display: flex; align-items: center; gap: 1.8mm; font-size: 2mm; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(11, 18, 34, 0.6); }
+  .verso h2 { font-size: 4.4mm; font-weight: 800; letter-spacing: -0.02em; margin-top: 1.6mm; }
+  .verso .date { display: flex; align-items: flex-end; gap: 1.6mm; font-size: 2.8mm; margin-top: 3.2mm; color: rgba(11, 18, 34, 0.7); }
+  .verso .date i { display: inline-block; border-bottom: 0.25mm solid rgba(11, 18, 34, 0.45); height: 4.2mm; }
+  .verso .bottom { display: flex; align-items: center; justify-content: space-between; gap: 3mm; }
+  .verso .phone { display: inline-flex; align-items: center; gap: 1.4mm; border-radius: 99mm; padding: 1.6mm 3.2mm; color: #fff; font-weight: 800; font-size: 2.9mm; letter-spacing: -0.01em; background: radial-gradient(circle at 30% 20%, #ed7020 0%, #e52619 70%); }
+  .verso .phone svg { width: 2.6mm; height: 2.6mm; fill: #fff; }
+  .verso .meta { font-size: 2.1mm; line-height: 1.35; text-align: right; color: rgba(11, 18, 34, 0.6); }
+
+  /* Planche A4 : 2 × 5 cartes au format final, à découper le long des pointillés. */
+  .sheet { width: 210mm; height: 297mm; display: grid; grid-template-columns: repeat(2, 85mm); grid-auto-rows: 55mm; justify-content: center; align-content: center; }
+  .sheet .page { width: 85mm; height: 55mm; padding: 4mm; outline: 0.15mm dashed #c9ccd6; outline-offset: -0.075mm; break-after: auto; }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+    <section class="page recto">
+      <div class="text">
+        <div class="brand"><img src="../../../assets/logo.png" alt=""><span>Radialec</span></div>
+        <h1>Merci pour votre confiance.</h1>
+        <div class="energy"></div>
+        <p>Votre avis Google aide d'autres familles à choisir un technicien de confiance. Il ne prend que 30&nbsp;secondes.</p>
+      </div>
+      <div class="qr">
+        <img src="qr-avis.svg" alt="QR code vers le formulaire d'avis Google de Radialec">
+        <strong>Scannez pour donner votre avis</strong>
+        <small>radialec.be/avis</small>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
