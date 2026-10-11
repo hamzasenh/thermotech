@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { FaCamera, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { PHOTO_LIMITS } from "@/lib/quote/schema";
 import { ErrorText, FieldLabel } from "@/components/site/FormFields";
 
@@ -78,14 +78,14 @@ export function PhotoPicker({ onChange }: { onChange: (files: File[]) => void })
       </FieldLabel>
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
         {photos.map((photo, index) => (
-          <div key={photo.url} className="relative aspect-square overflow-hidden rounded-2xl border border-ink/10 bg-lavender">
+          <div key={photo.url} className="relative aspect-square overflow-hidden rounded-2xl bg-chalk ring-1 ring-night/[0.08]">
             {/* eslint-disable-next-line @next/next/no-img-element -- aperçu local (URL blob) */}
             <img src={photo.url} alt={`Photo ${index + 1}`} className="h-full w-full object-cover" />
             <button
               type="button"
               onClick={() => remove(index)}
               aria-label={`Retirer la photo ${index + 1}`}
-              className="absolute right-1.5 top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-ink/80 text-white hover:bg-flame"
+              className="absolute right-1.5 top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-night/80 text-white backdrop-blur-sm hover:bg-flame"
             >
               <FaTimes className="h-3 w-3" aria-hidden="true" />
             </button>
@@ -94,12 +94,12 @@ export function PhotoPicker({ onChange }: { onChange: (files: File[]) => void })
         {photos.length < PHOTO_LIMITS.maxCount && (
           <label
             htmlFor="field-photos"
-            className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-navy/25 bg-[repeating-linear-gradient(135deg,#F7F8FE_0_10px,#EFF2FD_10px_20px)] p-2 text-center text-navy transition-colors hover:border-navy/60 focus-within:ring-4 focus-within:ring-navy/20"
+            className="group flex aspect-square cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-night/15 bg-chalk p-2 text-center text-night transition-colors hover:border-night/40 focus-within:ring-4 focus-within:ring-water-light/40"
           >
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm">
-              <FaCamera className="h-4 w-4" aria-hidden="true" />
+            <span aria-hidden="true" className="v2-wide font-display text-2xl font-light leading-none text-night/40 transition-colors group-hover:text-night">
+              +
             </span>
-            <span className="text-xs font-semibold">{busy ? "Préparation…" : "Ajouter"}</span>
+            <span className="text-xs font-semibold">{busy ? "Préparation…" : "Ajouter une photo"}</span>
           </label>
         )}
       </div>
@@ -113,7 +113,7 @@ export function PhotoPicker({ onChange }: { onChange: (files: File[]) => void })
         aria-describedby="field-photos-hint"
         className="sr-only"
       />
-      <p id="field-photos-hint" className="mt-2 text-sm text-ink/55">
+      <p id="field-photos-hint" className="mt-3 text-sm leading-relaxed text-night/55">
         Jusqu&apos;à {PHOTO_LIMITS.maxCount} photos : l&apos;appareil, sa plaque signalétique, la fuite ou le tableau.
         Elles nous aident à chiffrer au plus juste.
       </p>

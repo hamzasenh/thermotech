@@ -1,8 +1,10 @@
 "use client";
 import type { ComponentProps, ReactNode } from "react";
-import { FaCheck, FaExclamationCircle } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import { cn } from "@/lib/utils";
-import { Icon, type IconKey } from "@/components/site/Icon";
+
+// Champs de formulaire du design « les trois énergies » (devis, rappel) :
+// typographie Archivo, encre night, aucun pictogramme décoratif.
 
 export function ErrorText({ id, children }: { id: string; children?: string }) {
   if (!children) return null;
@@ -29,15 +31,15 @@ export function FieldLabel({
 }) {
   const Tag = as;
   return (
-    <Tag id={id} htmlFor={as === "label" ? htmlFor : undefined} className="mb-2.5 block text-sm font-semibold text-ink">
+    <Tag id={id} htmlFor={as === "label" ? htmlFor : undefined} className="mb-3 block text-[15px] font-semibold text-night">
       {children}
-      {optional && <span className="ml-1.5 font-normal text-ink/50">(facultatif)</span>}
+      {optional && <span className="ml-1.5 font-normal text-night/45">(facultatif)</span>}
     </Tag>
   );
 }
 
 export const inputClass =
-  "block w-full rounded-xl border border-ink/15 bg-white px-4 text-base text-ink placeholder:text-ink/35 transition-shadow focus:border-navy focus:outline-none focus:ring-4 focus:ring-navy/10 aria-[invalid=true]:border-flame aria-[invalid=true]:ring-flame/10";
+  "block w-full rounded-2xl border border-night/[0.12] bg-white px-4 text-base text-night placeholder:text-night/35 transition-[border-color,box-shadow] duration-200 hover:border-night/25 focus:border-night focus:outline-none focus:ring-4 focus:ring-night/[0.06] aria-[invalid=true]:border-flame aria-[invalid=true]:ring-flame/10";
 
 interface TextFieldProps extends Omit<ComponentProps<"input">, "name"> {
   name: string;
@@ -60,11 +62,11 @@ export function TextField({ name, label, error, optional, hint, className, ...pr
         name={name}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
-        className={cn(inputClass, "h-12")}
+        className={cn(inputClass, "h-14")}
         {...props}
       />
       {hint && !error && (
-        <p id={`${id}-hint`} className="mt-2 text-sm text-ink/55">
+        <p id={`${id}-hint`} className="mt-2 text-sm text-night/55">
           {hint}
         </p>
       )}
@@ -73,34 +75,25 @@ export function TextField({ name, label, error, optional, hint, className, ...pr
   );
 }
 
-interface ChoiceCardProps {
+interface OptionCardProps {
   name: string;
   value: string;
   checked: boolean;
   onChange: (value: string) => void;
   label: string;
-  description?: string;
-  icon?: IconKey;
+  /** Précision sous le libellé (ex. exemples de prestations). */
+  hint?: string;
+  /** Numéro affiché en tête de carte (« 01 »). */
+  index?: number;
   describedBy?: string;
-  /** Pictogramme au-dessus du libellé. */
-  stacked?: boolean;
   className?: string;
 }
 
-/** Bouton radio sous forme de carte (sélection du domaine, de la nature, du bien). */
-export function ChoiceCard({
-  name,
-  value,
-  checked,
-  onChange,
-  label,
-  description,
-  icon,
-  describedBy,
-  stacked,
-  className,
-}: ChoiceCardProps) {
-  const vertical = Boolean(stacked);
+/**
+ * Bouton radio en carte typographique : numéro, libellé, précision et pastille
+ * de sélection. Sélectionnée, la carte passe en night (pas de pictogramme).
+ */
+export function OptionCard({ name, value, checked, onChange, label, hint, index, describedBy, className }: OptionCardProps) {
   return (
     <label className={cn("group relative block cursor-pointer", className)}>
       <input
@@ -114,34 +107,36 @@ export function ChoiceCard({
       />
       <span
         className={cn(
-          "flex h-full items-center gap-3 rounded-2xl border bg-white p-3.5 transition-all duration-200 peer-focus-visible:ring-4 peer-focus-visible:ring-navy/20",
-          vertical && "flex-col justify-center gap-2 px-2 py-4 text-center",
+          "relative flex h-full flex-col overflow-hidden rounded-2xl p-4 transition-all duration-200 peer-focus-visible:ring-4 peer-focus-visible:ring-water-light/40 sm:p-5",
           checked
-            ? "border-navy shadow-[0_0_0_1px_#001E80] bg-navy/[0.03]"
-            : "border-ink/10 hover:border-navy/40 hover:shadow-sm"
+            ? "bg-night text-white shadow-[0_18px_40px_-22px_rgba(11,18,34,0.7)]"
+            : "bg-white text-night ring-1 ring-night/[0.1] group-hover:-translate-y-0.5 group-hover:ring-night/30 group-hover:shadow-[0_14px_30px_-22px_rgba(11,18,34,0.45)]"
         )}
       >
-        {icon ? (
+        {checked && <span aria-hidden="true" className="v2-energy absolute inset-x-0 top-0 h-[3px]" />}
+        <span className="flex items-start justify-between gap-3">
+          {index !== undefined ? (
+            <span className={cn("v2-wide font-display text-xs font-bold", checked ? "text-bolt" : "text-ember")}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          ) : (
+            <span />
+          )}
           <span
+            aria-hidden="true"
             className={cn(
-              "inline-flex flex-shrink-0 items-center justify-center rounded-xl transition-colors",
-              vertical ? "h-12 w-12 sm:h-14 sm:w-14" : "h-10 w-10",
-              checked ? "bg-navy text-white" : "bg-lavender text-navy"
+              "flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+              checked ? "border-white" : "border-night/20 group-hover:border-night/40"
             )}
           >
-            <Icon name={icon} className={vertical ? "h-5 w-5 sm:h-6 sm:w-6" : "h-4 w-4"} />
+            <span className={cn("h-2 w-2 rounded-full transition-transform", checked ? "scale-100 bg-white" : "scale-0")} />
           </span>
-        ) : null}
-        <span className="min-w-0">
-          <span className="block text-sm font-semibold leading-snug text-ink sm:text-[15px]">{label}</span>
-          {description && <span className="mt-0.5 block text-xs text-ink/55">{description}</span>}
         </span>
+        <span className={cn("v2-semi font-display text-[17px] font-bold leading-snug", index !== undefined ? "mt-4" : "mt-2")}>
+          {label}
+        </span>
+        {hint && <span className={cn("mt-1 text-sm leading-snug", checked ? "text-white/65" : "text-night/55")}>{hint}</span>}
       </span>
-      {checked && (
-        <span className="absolute -right-1.5 -top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-flame text-white shadow-md">
-          <FaCheck className="h-2.5 w-2.5" aria-hidden="true" />
-        </span>
-      )}
     </label>
   );
 }
@@ -155,7 +150,7 @@ interface PillProps {
   describedBy?: string;
 }
 
-/** Bouton radio compact (délai, créneau, prestation). */
+/** Bouton radio compact (prestation, délai, créneau). */
 export function Pill({ name, value, checked, onChange, children, describedBy }: PillProps) {
   return (
     <label className="cursor-pointer">
@@ -170,8 +165,8 @@ export function Pill({ name, value, checked, onChange, children, describedBy }: 
       />
       <span
         className={cn(
-          "inline-flex min-h-[44px] items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 peer-focus-visible:ring-4 peer-focus-visible:ring-navy/20",
-          checked ? "border-navy bg-navy text-white shadow-md" : "border-ink/15 bg-white text-ink hover:border-navy/40"
+          "inline-flex min-h-[46px] items-center gap-2 rounded-full px-4 py-2 text-[15px] font-medium transition-all duration-200 peer-focus-visible:ring-4 peer-focus-visible:ring-water-light/40",
+          checked ? "bg-night text-white" : "bg-white text-night ring-1 ring-night/[0.12] hover:ring-night/35"
         )}
       >
         {children}

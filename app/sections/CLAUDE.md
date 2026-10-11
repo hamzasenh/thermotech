@@ -33,6 +33,6 @@ Quick reference so you don't have to open every file. Keep it in sync whenever a
 | `ContactActions.tsx`, `ContactDetails.tsx` | `/contact` | 3 numbered action cards (devis / rendez-vous / rappel) and coordinates (phone button, address/hours placeholders). |
 | `CallbackForm.tsx` (client) | `/contact#formulaire-rappel`, `/rendez-vous` | « Être rappelé » → `/api/rappel`. |
 | `booking/*` (client) | `/rendez-vous` | Cal.com agenda or callback form per origin service. |
-| `devis/*` | `/devis` | `QuoteForm` (client, 3 steps), `PhotoPicker`, `QuoteRecap`, `QuoteSuccess`, `HowItWorks`. |
+| `devis/*` | `/devis` | `QuoteForm` (client, 3 steps; desktop: server `intro` + sticky `QuoteSummary` on the left, form card on the right, visible on arrival; typographic `OptionCard`s, energy progress rail), `QuoteSummary` (clean live recap — **never a receipt/ticket look**), `QuoteSuccess`, `PhotoPicker`, `HowItWorks` (numbered v2 list). The hero section uses `overflow-clip` (not `hidden`) so scrolling to the form never shifts it sideways. |
 | `tarifs/*` | `/tarifs` | `PriceMenu` (navy price board the owner likes — kept as is), `PromoBanner` (lavender card, extends the previous section: `tone` + `attached`), `QuoteProcess` (numbered steps). |
 | `ctaDefaults.ts` | templates | Final CTA titles/eyebrows per intent (validated copy). |

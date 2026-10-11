@@ -1,7 +1,5 @@
-import localFont from "next/font/local";
+import { FaStar } from "react-icons/fa";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
-import { GoogleRating } from "@/components/site/GoogleRating";
-import { Icon } from "@/components/site/Icon";
 import { JsonLd } from "@/components/site/JsonLd";
 import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { fr } from "@/lib/typography";
@@ -18,13 +16,6 @@ import { FaqV2 } from "../sections/v2/FaqV2";
 import { backgrounds } from "../sections/v2/tones";
 import { Eyebrow } from "../sections/v2/ui";
 
-// Chiffres du récapitulatif « ticket » (même esthétique que /tarifs).
-const geistMono = localFont({
-  src: "../fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata = pageMetadata({
   title: "Devis gratuit chauffage, électricité, plomberie à Bruxelles",
   description:
@@ -36,37 +27,37 @@ const categoryOptions: CategoryOption[] = [
   {
     id: "chauffage",
     label: "Chauffage",
-    icon: "fire",
+    hint: "Chaudière, radiateurs, pompe à chaleur",
     placeholder: "Ex. : chaudière gaz d'une quinzaine d'années à remplacer, maison 3 façades, 4 radiateurs par étage…",
   },
   {
     id: "electricite",
     label: "Électricité",
-    icon: "bolt",
+    hint: "Tableau, prises, borne de recharge",
     placeholder: "Ex. : tableau à fusibles à remplacer avant la vente de la maison, contrôle RGIE prévu le mois prochain…",
   },
   {
     id: "plomberie",
     label: "Plomberie",
-    icon: "faucet",
+    hint: "Fuite, débouchage, détartrage",
     placeholder: "Ex. : évier de cuisine qui s'écoule très mal depuis une semaine, appartement au 3e étage…",
   },
   {
     id: "climatisation",
     label: "Clim & PAC",
-    icon: "snowflake",
+    hint: "Airco et pompe à chaleur",
     placeholder: "Ex. : airco réversible pour 2 chambres à l'étage, maison mitoyenne, jardin à l'arrière…",
   },
   {
     id: "professionnels",
     label: "Syndic / copropriété",
-    icon: "building",
+    hint: "Parties communes d'immeuble",
     placeholder: "Ex. : immeuble de 12 logements, entretien annuel de la chaufferie collective et du parlophone…",
   },
   {
     id: "autre",
     label: "Autre besoin",
-    icon: "comments",
+    hint: "Nous vous orientons",
     placeholder: "Décrivez votre besoin : nous vous orientons vers la bonne solution.",
   },
 ];
@@ -137,45 +128,52 @@ export default function DevisPage() {
   const tones = { how: bg.next(), related: bg.next(), proof: bg.next(), faq: bg.next(), zones: bg.next() };
 
   return (
-    <div className={geistMono.variable}>
+    <>
       <JsonLd data={faqJsonLd(faqs)} />
 
-      <section className="relative isolate overflow-hidden bg-lavender pb-16 pt-24 sm:pt-28 md:pb-24 lg:pt-32">
+      {/* overflow-clip (et non hidden) : le défilement vers le formulaire ne doit jamais décaler la section. */}
+      <section className="relative isolate overflow-clip bg-lavender pb-16 pt-24 sm:pt-28 md:pb-24 lg:pt-32">
         <div aria-hidden="true" className="v2-glow" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 -z-10 h-[460px] w-[460px] rounded-full bg-water/20 blur-[120px]" />
         <div className="container">
-          <Breadcrumbs
-            items={[
-              { label: "Accueil", href: "/" },
-              { label: "Demander un devis", href: "/devis" },
-            ]}
+          <QuoteForm
+            intro={
+              <div>
+                <Breadcrumbs
+                  items={[
+                    { label: "Accueil", href: "/" },
+                    { label: "Demander un devis", href: "/devis" },
+                  ]}
+                />
+                <div className="mt-8 lg:mt-10">
+                  <Eyebrow>Devis gratuit · Réponse sous 24h</Eyebrow>
+                  <h1 className="v2-title mt-5 text-[2.1rem] sm:text-[2.7rem] lg:text-[2.7rem] xl:text-[3.1rem]">
+                    {fr("Demandez votre devis gratuit à Bruxelles")}
+                  </h1>
+                  <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-night/70 lg:text-lg">
+                    {fr(
+                      "Chauffage, électricité, plomberie, climatisation : décrivez votre besoin en 2 minutes, un technicien vous recontacte sous 24h avec un devis clair et sans engagement."
+                    )}
+                  </p>
+                  <ul className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-night/70">
+                    <li className="flex items-center gap-2">
+                      <span className="flex text-bolt" aria-hidden="true">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <FaStar key={i} className="h-3.5 w-3.5" />
+                        ))}
+                      </span>
+                      <strong className="font-semibold text-night">{company.google.rating}/5</strong> sur Google
+                    </li>
+                    <li>{company.promises.clients}</li>
+                    <li>{company.promises.warranty}</li>
+                  </ul>
+                </div>
+              </div>
+            }
+            categories={categoryOptions}
+            services={serviceOptions}
+            communes={communes}
           />
-
-          <div className="mb-10 mt-8 max-w-3xl md:mb-12 md:mt-10">
-            <Eyebrow>Devis gratuit · Réponse sous 24h</Eyebrow>
-            <h1 className="v2-title mt-5 text-[2.1rem] sm:text-[2.7rem] lg:text-[3.4rem]">
-              {fr("Demandez votre devis gratuit à Bruxelles")}
-            </h1>
-            <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-night/70 lg:text-lg">
-              {fr(
-                "Chauffage, électricité, plomberie, climatisation : décrivez votre besoin en 2 minutes, un technicien vous recontacte sous 24h avec un devis clair et sans engagement."
-              )}
-            </p>
-            <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium text-ink">
-              <li>
-                <GoogleRating />
-              </li>
-              <li className="flex items-center gap-2">
-                <Icon name="users" className="h-4 w-4 text-navy" />
-                {company.promises.clients}
-              </li>
-              <li className="flex items-center gap-2">
-                <Icon name="shield" className="h-4 w-4 text-navy" />
-                {company.promises.warranty}
-              </li>
-            </ul>
-          </div>
-
-          <QuoteForm categories={categoryOptions} services={serviceOptions} communes={communes} />
         </div>
       </section>
 
@@ -198,6 +196,6 @@ export default function DevisPage() {
       <ProofV2 tone={tones.proof} />
       <FaqV2 faqs={faqs} title="Questions fréquentes sur nos devis" rappelHref="/contact#formulaire-rappel" tone={tones.faq} />
       <ZonesV2 tone={tones.zones} />
-    </div>
+    </>
   );
 }

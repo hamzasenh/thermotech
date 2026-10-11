@@ -1,12 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaArrowLeft, FaLock } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import { cn } from "@/lib/utils";
-import { Icon, type IconKey } from "@/components/site/Icon";
-import { PhoneLink } from "@/components/site/Actions";
 import { useAttribution } from "@/components/site/useAttribution";
 import { fr } from "@/lib/typography";
 import {
@@ -28,15 +26,17 @@ import {
   type RequestType,
 } from "@/lib/quote/schema";
 import type { ServiceIntent } from "../../data/services/types";
-import { ChoiceCard, ErrorText, FieldLabel, inputClass, Pill, TextField } from "@/components/site/FormFields";
+import { ErrorText, FieldLabel, inputClass, OptionCard, Pill, TextField } from "@/components/site/FormFields";
+import { btn, PhoneButton } from "../v2/ui";
 import { PhotoPicker } from "./PhotoPicker";
-import { QuoteRecap } from "./QuoteRecap";
 import { QuoteSuccess } from "./QuoteSuccess";
+import { QuoteSummary } from "./QuoteSummary";
 
 export interface CategoryOption {
   id: string;
   label: string;
-  icon: IconKey;
+  /** Exemples affichés sous le libellé (« Chaudière, radiateurs… »). */
+  hint?: string;
   placeholder: string;
 }
 
@@ -54,20 +54,6 @@ const intentToType: Record<ServiceIntent, RequestType> = {
   urgence: "reparation",
 };
 
-const requestIcons: Record<RequestType, IconKey> = {
-  installation: "tools",
-  entretien: "calendarCheck",
-  reparation: "wrench",
-  autre: "comments",
-};
-
-const propertyIcons: Record<keyof typeof properties, IconKey> = {
-  maison: "home",
-  appartement: "layers",
-  professionnel: "userTie",
-  copropriete: "users",
-};
-
 const steps = [
   { label: "Votre projet", title: "Quel est votre projet ?", intro: "Choisissez le domaine, puis la prestation qui s'en rapproche le plus." },
   { label: "Les détails", title: "Parlez-nous de votre besoin", intro: "Plus c'est précis, plus le devis sera juste. Deux minutes suffisent." },
@@ -76,11 +62,18 @@ const steps = [
 
 type Status = "idle" | "sending" | "success" | "error";
 
+/**
+ * Formulaire de devis en 3 étapes. Desktop : présentation (`intro`, rendue côté
+ * serveur) et récapitulatif vivant à gauche, formulaire à droite, visible dès
+ * l'arrivée. Mobile : présentation, formulaire, puis aide « panne en cours ».
+ */
 export function QuoteForm({
+  intro,
   categories,
   services,
   communes,
 }: {
+  intro: ReactNode;
   categories: CategoryOption[];
   services: ServiceOption[];
   communes: string[];
@@ -241,410 +234,433 @@ export function QuoteForm({
 
   const err = (field: QuoteField) => (errors[field] ? `field-${field}-error` : undefined);
   const sending = status === "sending";
+  const progress = status === "success" ? 100 : ((step + 1) / steps.length) * 100;
 
   return (
-    <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12">
-      <div
-        ref={cardRef}
-        className="min-w-0 scroll-mt-28 rounded-[2rem] bg-white p-5 shadow-soft ring-1 ring-ink/5 sm:p-8 md:p-10"
-      >
-        {status === "success" && result ? (
-          <QuoteSuccess quote={quote} reference={result.reference} delivered={result.delivered} />
-        ) : (
-          <form noValidate onSubmit={handleSubmit} aria-labelledby="quote-step-title">
-            {/* Progression */}
-            <div className="mb-8">
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-ink/55">
-                Étape {step + 1} sur {steps.length}
-              </p>
-              <ol className="mt-3 grid grid-cols-3 gap-2">
-                {steps.map((s, index) => (
-                  <li key={s.label} aria-current={index === step ? "step" : undefined}>
-                    <button
-                      type="button"
-                      disabled={index >= step}
-                      onClick={() => goTo(index)}
-                      className="group w-full text-left disabled:cursor-default"
-                    >
-                      <span
-                        className={cn(
-                          "block h-1.5 rounded-full transition-colors duration-500",
-                          index < step ? "bg-navy group-hover:bg-flame" : index === step ? "bg-flame" : "bg-ink/10"
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "mt-2 hidden text-xs sm:block",
-                          index === step ? "font-bold text-ink" : index < step ? "text-navy underline-offset-2 group-hover:underline" : "text-ink/40"
-                        )}
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-10 xl:gap-x-20">
+      {/* Présentation (serveur) */}
+      <div className="min-w-0 lg:col-start-1 lg:row-start-1">{intro}</div>
+
+      {/* Récapitulatif vivant (desktop) : reste visible pendant la saisie. */}
+      <aside className="hidden min-w-0 lg:col-start-1 lg:row-start-2 lg:block" aria-label="Récapitulatif de votre demande">
+        <div className="lg:sticky lg:top-28">
+          <QuoteSummary
+            quote={quote}
+            categoryLabel={category?.label}
+            serviceLabel={quote.service === OTHER_SERVICE ? "Autre besoin" : service?.label}
+            amount={service?.intent !== "installation" ? service?.amount : undefined}
+            photoCount={photos.length}
+          />
+        </div>
+      </aside>
+
+      {/* Formulaire */}
+      <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+        <div
+          ref={cardRef}
+          className="scroll-mt-28 rounded-[32px] bg-white p-5 shadow-[0_40px_80px_-48px_rgba(11,18,34,0.45)] ring-1 ring-night/[0.06] sm:p-8 lg:p-10"
+        >
+          {status === "success" && result ? (
+            <QuoteSuccess quote={quote} reference={result.reference} delivered={result.delivered} />
+          ) : (
+            <form noValidate onSubmit={handleSubmit} aria-labelledby="quote-step-title">
+              {/* Progression : étapes cliquables une fois franchies, filet aux trois énergies */}
+              <div className="mb-9">
+                <ol className="flex items-center gap-2 text-sm sm:gap-3">
+                  {steps.map((s, index) => (
+                    <li key={s.label} aria-current={index === step ? "step" : undefined} className="flex items-center gap-2 sm:gap-3">
+                      {index > 0 && <span aria-hidden="true" className="h-px w-4 bg-night/15 sm:w-8" />}
+                      <button
+                        type="button"
+                        disabled={index >= step}
+                        onClick={() => goTo(index)}
+                        className="group flex items-center gap-2 disabled:cursor-default"
                       >
-                        {s.label}
-                        {index < step && <span className="sr-only"> (terminée, modifier)</span>}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ol>
-            </div>
+                        <span
+                          className={cn(
+                            "v2-wide flex h-7 w-7 items-center justify-center rounded-full font-display text-[11px] font-bold transition-colors",
+                            index === step ? "bg-night text-white" : index < step ? "bg-lavender text-night group-hover:bg-night group-hover:text-white" : "text-night/35 ring-1 ring-night/15"
+                          )}
+                        >
+                          {index + 1}
+                        </span>
+                        <span
+                          className={cn(
+                            "hidden font-medium sm:inline",
+                            index === step ? "text-night" : index < step ? "text-night/60 group-hover:text-night" : "text-night/35"
+                          )}
+                        >
+                          {s.label}
+                          {index < step && <span className="sr-only"> (terminée, modifier)</span>}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-5 h-[3px] overflow-hidden rounded-full bg-night/[0.06]" aria-hidden="true">
+                  <div className="v2-energy h-full rounded-full transition-[width] duration-700 ease-out" style={{ width: `${progress}%` }} />
+                </div>
+              </div>
 
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <h2 id="quote-step-title" className="text-2xl font-bold tracking-tight text-ink md:text-3xl">
-                  {fr(steps[step].title)}
-                </h2>
-                <p className="mt-2 text-ink/65">{fr(steps[step].intro)}</p>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={step}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-night/45">
+                    Étape {step + 1} sur {steps.length}
+                  </p>
+                  <h2 id="quote-step-title" className="v2-title mt-3 text-[1.75rem] sm:text-[2.1rem]">
+                    {fr(steps[step].title)}
+                  </h2>
+                  <p className="mt-3 text-[17px] leading-relaxed text-night/65">{fr(steps[step].intro)}</p>
 
-                <div className="mt-8 space-y-8">
-                  {step === 0 && (
-                    <>
-                      <fieldset>
-                        <legend className="sr-only">Domaine</legend>
-                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                          {categories.map((c) => (
-                            <ChoiceCard
-                              key={c.id}
-                              name="category"
-                              value={c.id}
-                              checked={quote.category === c.id}
-                              onChange={chooseCategory}
-                              label={c.label}
-                              icon={c.icon}
-                              describedBy={err("category")}
-                              stacked
-                            />
-                          ))}
-                        </div>
-                        <ErrorText id="field-category-error">{errors.category}</ErrorText>
-                      </fieldset>
-
-                      {category && category.id !== "autre" && (
+                  <div className="mt-9 space-y-9">
+                    {step === 0 && (
+                      <>
                         <fieldset>
-                          <FieldLabel as="legend">Quelle prestation ?</FieldLabel>
-                          <div className="flex flex-wrap gap-2">
-                            {categoryServices.map((s) => (
+                          <legend className="sr-only">Domaine</legend>
+                          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                            {categories.map((c, index) => (
+                              <OptionCard
+                                key={c.id}
+                                name="category"
+                                value={c.id}
+                                checked={quote.category === c.id}
+                                onChange={chooseCategory}
+                                label={c.label}
+                                hint={c.hint}
+                                index={index}
+                                describedBy={err("category")}
+                              />
+                            ))}
+                          </div>
+                          <ErrorText id="field-category-error">{errors.category}</ErrorText>
+                        </fieldset>
+
+                        {category && category.id !== "autre" && (
+                          <fieldset>
+                            <FieldLabel as="legend">Quelle prestation&nbsp;?</FieldLabel>
+                            <div className="flex flex-wrap gap-2">
+                              {categoryServices.map((s) => (
+                                <Pill
+                                  key={s.ref}
+                                  name="service"
+                                  value={s.ref}
+                                  checked={quote.service === s.ref}
+                                  onChange={chooseService}
+                                  describedBy={err("service")}
+                                >
+                                  {s.label}
+                                  {s.amount !== undefined && (
+                                    <span className={cn("text-sm tabular-nums", quote.service === s.ref ? "text-white/60" : "text-night/45")}>
+                                      {s.amount}€
+                                    </span>
+                                  )}
+                                </Pill>
+                              ))}
                               <Pill
-                                key={s.ref}
                                 name="service"
-                                value={s.ref}
-                                checked={quote.service === s.ref}
+                                value={OTHER_SERVICE}
+                                checked={quote.service === OTHER_SERVICE}
                                 onChange={chooseService}
                                 describedBy={err("service")}
                               >
-                                {s.label}
-                                {s.amount !== undefined && (
-                                  <span className={cn("font-mono text-xs", quote.service === s.ref ? "text-amber" : "text-navy")}>
-                                    {s.amount}€
-                                  </span>
-                                )}
+                                Autre / je ne sais pas
                               </Pill>
-                            ))}
-                            <Pill
-                              name="service"
-                              value={OTHER_SERVICE}
-                              checked={quote.service === OTHER_SERVICE}
-                              onChange={chooseService}
-                              describedBy={err("service")}
-                            >
-                              Autre / je ne sais pas
-                            </Pill>
-                          </div>
-                          <ErrorText id="field-service-error">{errors.service}</ErrorText>
-                        </fieldset>
-                      )}
-
-                      {service?.amount !== undefined && service.intent !== "installation" && (
-                        <div className="flex gap-3 rounded-2xl bg-lavender p-4 text-sm text-ink">
-                          <Icon name="euro" className="mt-0.5 h-4 w-4 flex-shrink-0 text-navy" />
-                          <p>
-                            <strong>Bon à savoir :</strong> cette prestation a un prix affiché de{" "}
-                            <strong className="font-mono">{service.amount}€ TVAC</strong>. Pas besoin d&apos;attendre un
-                            devis : continuez et nous vous rappelons pour fixer l&apos;intervention — ou appelez-nous
-                            directement.
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  )}
-
-                  {step === 1 && (
-                    <>
-                      <fieldset>
-                        <FieldLabel as="legend">Nature de la demande</FieldLabel>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          {(Object.keys(requestTypes) as RequestType[]).map((key) => (
-                            <ChoiceCard
-                              key={key}
-                              name="requestType"
-                              value={key}
-                              checked={quote.requestType === key}
-                              onChange={(v) => set("requestType", v as RequestType)}
-                              label={requestTypes[key]}
-                              icon={requestIcons[key]}
-                              describedBy={err("requestType")}
-                            />
-                          ))}
-                        </div>
-                        <ErrorText id="field-requestType-error">{errors.requestType}</ErrorText>
-                      </fieldset>
-
-                      <fieldset>
-                        <FieldLabel as="legend">Délai souhaité</FieldLabel>
-                        <div className="flex flex-wrap gap-2">
-                          {(Object.keys(timings) as (keyof typeof timings)[]).map((key) => (
-                            <Pill
-                              key={key}
-                              name="timing"
-                              value={key}
-                              checked={quote.timing === key}
-                              onChange={(v) => set("timing", v as keyof typeof timings)}
-                              describedBy={err("timing")}
-                            >
-                              {timings[key]}
-                            </Pill>
-                          ))}
-                        </div>
-                        <ErrorText id="field-timing-error">{errors.timing}</ErrorText>
-                        {quote.timing === "asap" && quote.requestType === "reparation" && (
-                          <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink/75">
-                            Panne en cours ? Le plus rapide reste l&apos;appel :
-                            <PhoneLink variant="secondary" className="btn-sm" />
-                          </p>
+                            </div>
+                            <ErrorText id="field-service-error">{errors.service}</ErrorText>
+                          </fieldset>
                         )}
-                      </fieldset>
 
-                      <fieldset>
-                        <FieldLabel as="legend">Type de bien</FieldLabel>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          {(Object.keys(properties) as (keyof typeof properties)[]).map((key) => (
-                            <ChoiceCard
-                              key={key}
-                              name="property"
-                              value={key}
-                              checked={quote.property === key}
-                              onChange={(v) => set("property", v as keyof typeof properties)}
-                              label={properties[key]}
-                              icon={propertyIcons[key]}
-                              describedBy={err("property")}
-                            />
-                          ))}
-                        </div>
-                        <ErrorText id="field-property-error">{errors.property}</ErrorText>
-                      </fieldset>
+                        {service?.amount !== undefined && service.intent !== "installation" && (
+                          <div className="rounded-2xl bg-lavender p-5 text-[15px] leading-relaxed text-night/80">
+                            <p>
+                              <strong className="font-semibold text-night">Bon à savoir :</strong> cette prestation a un prix
+                              affiché de <strong className="font-semibold text-night">{service.amount}€ TVAC</strong>. Pas
+                              besoin d&apos;attendre un devis : continuez et nous vous rappelons pour fixer
+                              l&apos;intervention, ou appelez-nous directement.
+                            </p>
+                          </div>
+                        )}
+                      </>
+                    )}
 
-                      <div>
-                        <FieldLabel htmlFor="field-description">Votre besoin en quelques mots</FieldLabel>
-                        <textarea
-                          id="field-description"
-                          name="description"
-                          rows={5}
-                          maxLength={LIMITS.description}
-                          value={quote.description}
-                          onChange={(e) => set("description", e.target.value)}
-                          placeholder={category?.placeholder ?? "Décrivez votre besoin…"}
-                          aria-invalid={errors.description ? true : undefined}
-                          aria-describedby={errors.description ? "field-description-error" : "field-description-count"}
-                          className={cn(inputClass, "resize-y py-3 leading-relaxed")}
-                        />
-                        <div className="mt-1.5 flex justify-end">
-                          <span id="field-description-count" className="font-mono text-xs text-ink/40">
-                            {quote.description.length}/{LIMITS.description}
-                          </span>
-                        </div>
-                        <ErrorText id="field-description-error">{errors.description}</ErrorText>
-                      </div>
-
-                      <PhotoPicker onChange={setPhotos} />
-                    </>
-                  )}
-
-                  {step === 2 && (
-                    <>
-                      <TextField
-                        name="name"
-                        label="Nom et prénom"
-                        autoComplete="name"
-                        value={quote.name}
-                        onChange={(e) => set("name", e.target.value)}
-                        error={errors.name}
-                        maxLength={LIMITS.name}
-                      />
-                      <div className="grid gap-6 sm:grid-cols-2">
-                        <TextField
-                          name="phone"
-                          label="Téléphone"
-                          type="tel"
-                          inputMode="tel"
-                          autoComplete="tel"
-                          placeholder="0486 12 34 56"
-                          value={quote.phone}
-                          onChange={(e) => set("phone", e.target.value)}
-                          error={errors.phone}
-                        />
-                        <TextField
-                          name="email"
-                          label="E-mail"
-                          type="email"
-                          inputMode="email"
-                          autoComplete="email"
-                          placeholder="vous@exemple.be"
-                          value={quote.email}
-                          onChange={(e) => set("email", e.target.value)}
-                          error={errors.email}
-                        />
-                      </div>
-                      <div className="grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] gap-4 sm:gap-6">
-                        <TextField
-                          name="postalCode"
-                          label="Code postal"
-                          inputMode="numeric"
-                          autoComplete="postal-code"
-                          maxLength={4}
-                          placeholder="1050"
-                          value={quote.postalCode}
-                          onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))}
-                          error={errors.postalCode}
-                        />
-                        <TextField
-                          name="commune"
-                          label="Commune"
-                          autoComplete="address-level2"
-                          list="communes-desservies"
-                          placeholder="Ixelles"
-                          value={quote.commune}
-                          onChange={(e) => set("commune", e.target.value)}
-                          error={errors.commune}
-                          maxLength={LIMITS.commune}
-                          hint={
-                            quote.commune.trim().length > 2 &&
-                            !communes.some((c) => c.toLowerCase() === quote.commune.trim().toLowerCase())
-                              ? "Hors de nos communes habituelles ? Envoyez quand même : nous vous confirmons si nous intervenons."
-                              : undefined
-                          }
-                        />
-                        <datalist id="communes-desservies">
-                          {communes.map((c) => (
-                            <option key={c} value={c} />
-                          ))}
-                        </datalist>
-                      </div>
-                      <TextField
-                        name="address"
-                        label="Adresse"
-                        optional
-                        autoComplete="street-address"
-                        placeholder="Rue et numéro"
-                        value={quote.address}
-                        onChange={(e) => set("address", e.target.value)}
-                        error={errors.address}
-                        maxLength={LIMITS.address}
-                      />
-
-                      <fieldset>
-                        <FieldLabel as="legend">Comment préférez-vous être contacté ?</FieldLabel>
-                        <div className="flex flex-wrap gap-2">
-                          {(Object.keys(contactPreferences) as (keyof typeof contactPreferences)[]).map((key) => (
-                            <Pill
-                              key={key}
-                              name="contactPreference"
-                              value={key}
-                              checked={quote.contactPreference === key}
-                              onChange={(v) => set("contactPreference", v as keyof typeof contactPreferences)}
-                            >
-                              <Icon name={key === "telephone" ? "phone" : "envelope"} className="h-3.5 w-3.5" />
-                              {contactPreferences[key]}
-                            </Pill>
-                          ))}
-                        </div>
-                      </fieldset>
-
-                      {quote.contactPreference === "telephone" && (
+                    {step === 1 && (
+                      <>
                         <fieldset>
-                          <FieldLabel as="legend">Meilleur moment pour vous rappeler</FieldLabel>
+                          <FieldLabel as="legend">Nature de la demande</FieldLabel>
+                          <div className="grid grid-cols-2 gap-3">
+                            {(Object.keys(requestTypes) as RequestType[]).map((key) => (
+                              <OptionCard
+                                key={key}
+                                name="requestType"
+                                value={key}
+                                checked={quote.requestType === key}
+                                onChange={(v) => set("requestType", v as RequestType)}
+                                label={requestTypes[key]}
+                                describedBy={err("requestType")}
+                              />
+                            ))}
+                          </div>
+                          <ErrorText id="field-requestType-error">{errors.requestType}</ErrorText>
+                        </fieldset>
+
+                        <fieldset>
+                          <FieldLabel as="legend">Délai souhaité</FieldLabel>
                           <div className="flex flex-wrap gap-2">
-                            {(Object.keys(callbackSlots) as (keyof typeof callbackSlots)[]).map((key) => (
+                            {(Object.keys(timings) as (keyof typeof timings)[]).map((key) => (
                               <Pill
                                 key={key}
-                                name="callbackSlot"
+                                name="timing"
                                 value={key}
-                                checked={quote.callbackSlot === key}
-                                onChange={(v) => set("callbackSlot", v as keyof typeof callbackSlots)}
+                                checked={quote.timing === key}
+                                onChange={(v) => set("timing", v as keyof typeof timings)}
+                                describedBy={err("timing")}
                               >
-                                {callbackSlots[key]}
+                                {timings[key]}
+                              </Pill>
+                            ))}
+                          </div>
+                          <ErrorText id="field-timing-error">{errors.timing}</ErrorText>
+                          {quote.timing === "asap" && quote.requestType === "reparation" && (
+                            <div className="mt-4 flex flex-col gap-3 rounded-2xl bg-chalk p-4 sm:flex-row sm:items-center sm:justify-between">
+                              <p className="text-[15px] text-night/75">Panne en cours ? Le plus rapide reste l&apos;appel.</p>
+                              <PhoneButton variant="primary" className="min-h-[44px] px-5 text-sm" />
+                            </div>
+                          )}
+                        </fieldset>
+
+                        <fieldset>
+                          <FieldLabel as="legend">Type de bien</FieldLabel>
+                          <div className="grid grid-cols-2 gap-3">
+                            {(Object.keys(properties) as (keyof typeof properties)[]).map((key) => (
+                              <OptionCard
+                                key={key}
+                                name="property"
+                                value={key}
+                                checked={quote.property === key}
+                                onChange={(v) => set("property", v as keyof typeof properties)}
+                                label={properties[key]}
+                                describedBy={err("property")}
+                              />
+                            ))}
+                          </div>
+                          <ErrorText id="field-property-error">{errors.property}</ErrorText>
+                        </fieldset>
+
+                        <div>
+                          <FieldLabel htmlFor="field-description">Votre besoin en quelques mots</FieldLabel>
+                          <textarea
+                            id="field-description"
+                            name="description"
+                            rows={5}
+                            maxLength={LIMITS.description}
+                            value={quote.description}
+                            onChange={(e) => set("description", e.target.value)}
+                            placeholder={category?.placeholder ?? "Décrivez votre besoin…"}
+                            aria-invalid={errors.description ? true : undefined}
+                            aria-describedby={errors.description ? "field-description-error" : "field-description-count"}
+                            className={cn(inputClass, "resize-y py-3.5 leading-relaxed")}
+                          />
+                          <div className="mt-2 flex justify-end">
+                            <span id="field-description-count" className="text-xs tabular-nums text-night/40">
+                              {quote.description.length}/{LIMITS.description}
+                            </span>
+                          </div>
+                          <ErrorText id="field-description-error">{errors.description}</ErrorText>
+                        </div>
+
+                        <PhotoPicker onChange={setPhotos} />
+                      </>
+                    )}
+
+                    {step === 2 && (
+                      <>
+                        <TextField
+                          name="name"
+                          label="Nom et prénom"
+                          autoComplete="name"
+                          value={quote.name}
+                          onChange={(e) => set("name", e.target.value)}
+                          error={errors.name}
+                          maxLength={LIMITS.name}
+                        />
+                        <div className="grid gap-6 sm:grid-cols-2">
+                          <TextField
+                            name="phone"
+                            label="Téléphone"
+                            type="tel"
+                            inputMode="tel"
+                            autoComplete="tel"
+                            placeholder="0486 12 34 56"
+                            value={quote.phone}
+                            onChange={(e) => set("phone", e.target.value)}
+                            error={errors.phone}
+                          />
+                          <TextField
+                            name="email"
+                            label="E-mail"
+                            type="email"
+                            inputMode="email"
+                            autoComplete="email"
+                            placeholder="vous@exemple.be"
+                            value={quote.email}
+                            onChange={(e) => set("email", e.target.value)}
+                            error={errors.email}
+                          />
+                        </div>
+                        <div className="grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] gap-4 sm:gap-6">
+                          <TextField
+                            name="postalCode"
+                            label="Code postal"
+                            inputMode="numeric"
+                            autoComplete="postal-code"
+                            maxLength={4}
+                            placeholder="1050"
+                            value={quote.postalCode}
+                            onChange={(e) => set("postalCode", e.target.value.replace(/\D/g, ""))}
+                            error={errors.postalCode}
+                          />
+                          <TextField
+                            name="commune"
+                            label="Commune"
+                            autoComplete="address-level2"
+                            list="communes-desservies"
+                            placeholder="Ixelles"
+                            value={quote.commune}
+                            onChange={(e) => set("commune", e.target.value)}
+                            error={errors.commune}
+                            maxLength={LIMITS.commune}
+                            hint={
+                              quote.commune.trim().length > 2 &&
+                              !communes.some((c) => c.toLowerCase() === quote.commune.trim().toLowerCase())
+                                ? "Hors de nos communes habituelles ? Envoyez quand même : nous vous confirmons si nous intervenons."
+                                : undefined
+                            }
+                          />
+                          <datalist id="communes-desservies">
+                            {communes.map((c) => (
+                              <option key={c} value={c} />
+                            ))}
+                          </datalist>
+                        </div>
+                        <TextField
+                          name="address"
+                          label="Adresse"
+                          optional
+                          autoComplete="street-address"
+                          placeholder="Rue et numéro"
+                          value={quote.address}
+                          onChange={(e) => set("address", e.target.value)}
+                          error={errors.address}
+                          maxLength={LIMITS.address}
+                        />
+
+                        <fieldset>
+                          <FieldLabel as="legend">Comment préférez-vous être contacté&nbsp;?</FieldLabel>
+                          <div className="flex flex-wrap gap-2">
+                            {(Object.keys(contactPreferences) as (keyof typeof contactPreferences)[]).map((key) => (
+                              <Pill
+                                key={key}
+                                name="contactPreference"
+                                value={key}
+                                checked={quote.contactPreference === key}
+                                onChange={(v) => set("contactPreference", v as keyof typeof contactPreferences)}
+                              >
+                                {contactPreferences[key]}
                               </Pill>
                             ))}
                           </div>
                         </fieldset>
-                      )}
 
-                      {/* Champ piège anti-robots : invisible pour les humains. */}
-                      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-                        <label htmlFor="field-website">Site web</label>
-                        <input ref={honeypot} id="field-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-                      </div>
-                    </>
-                  )}
+                        {quote.contactPreference === "telephone" && (
+                          <fieldset>
+                            <FieldLabel as="legend">Meilleur moment pour vous rappeler</FieldLabel>
+                            <div className="flex flex-wrap gap-2">
+                              {(Object.keys(callbackSlots) as (keyof typeof callbackSlots)[]).map((key) => (
+                                <Pill
+                                  key={key}
+                                  name="callbackSlot"
+                                  value={key}
+                                  checked={quote.callbackSlot === key}
+                                  onChange={(v) => set("callbackSlot", v as keyof typeof callbackSlots)}
+                                >
+                                  {callbackSlots[key]}
+                                </Pill>
+                              ))}
+                            </div>
+                          </fieldset>
+                        )}
+
+                        {/* Champ piège anti-robots : invisible pour les humains. */}
+                        <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                          <label htmlFor="field-website">Site web</label>
+                          <input ref={honeypot} id="field-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {status === "error" && serverMessage && (
+                <div role="alert" className="mt-9 rounded-2xl bg-flame/[0.06] p-5 text-[15px] text-night">
+                  <p className="font-semibold text-flame">{serverMessage}</p>
+                  <PhoneButton variant="primary" className="mt-4 min-h-[44px] px-5 text-sm" />
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              )}
 
-            {status === "error" && serverMessage && (
-              <div role="alert" className="mt-8 rounded-2xl border border-flame/30 bg-flame/[0.05] p-4 text-sm text-ink">
-                <p className="font-semibold text-flame">{serverMessage}</p>
-                <PhoneLink className="btn-sm mt-3" />
-              </div>
-            )}
-
-            <div className="mt-10 flex flex-col-reverse gap-3 border-t border-ink/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-              {step > 0 ? (
+              <div className="mt-10 flex flex-col-reverse gap-3 border-t border-night/[0.08] pt-7 sm:flex-row sm:items-center sm:justify-between">
+                {step > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => goTo(step - 1)}
+                    className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-4 font-semibold text-night/60 transition-colors hover:text-night"
+                  >
+                    <FaArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                    Retour
+                  </button>
+                ) : (
+                  <p className="hidden text-sm text-night/45 sm:block">2 minutes · gratuit · sans engagement</p>
+                )}
                 <button
-                  type="button"
-                  onClick={() => goTo(step - 1)}
-                  className="btn btn-text gap-2 text-ink/70 hover:text-navy"
+                  type="submit"
+                  disabled={sending}
+                  className={btn("dark", "group min-h-[56px] w-full px-8 text-base disabled:opacity-70 sm:w-auto")}
                 >
-                  <FaArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-                  Retour
+                  {step < steps.length - 1 ? "Continuer" : sending ? "Envoi en cours…" : "Envoyer ma demande de devis"}
+                  {!sending && (
+                    <BsArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  )}
                 </button>
-              ) : (
-                <p className="hidden font-mono text-xs uppercase tracking-[0.15em] text-ink/45 sm:block">
-                  2 minutes · gratuit · sans engagement
+              </div>
+
+              {step === steps.length - 1 && (
+                <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-night/50">
+                  <FaLock className="mt-0.5 h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                  <span>
+                    Vos coordonnées servent uniquement à traiter votre demande de devis.{" "}
+                    <Link href="/confidentialite" className="font-semibold text-night underline underline-offset-2 hover:text-flame">
+                      Politique de confidentialité
+                    </Link>
+                  </span>
                 </p>
               )}
-              <button type="submit" disabled={sending} className="btn btn-primary w-full disabled:opacity-70 sm:w-auto">
-                {step < steps.length - 1 ? "Continuer" : sending ? "Envoi en cours…" : "Envoyer ma demande de devis"}
-                {!sending && <BsArrowRight className="h-5 w-5" aria-hidden="true" />}
-              </button>
-            </div>
+            </form>
+          )}
+        </div>
 
-            {step === steps.length - 1 && (
-              <p className="mt-5 flex items-start gap-2 text-xs leading-relaxed text-ink/55">
-                <FaLock className="mt-0.5 h-3 w-3 flex-shrink-0" aria-hidden="true" />
-                <span>
-                  Vos coordonnées servent uniquement à traiter votre demande de devis.{" "}
-                  <Link href="/confidentialite" className="font-semibold text-navy underline underline-offset-2 hover:text-flame">
-                    Politique de confidentialité
-                  </Link>
-                </span>
-              </p>
-            )}
-          </form>
-        )}
+        {/* Mobile : l'aide « panne en cours » après le formulaire (le récapitulatif reste réservé au desktop). */}
+        <div className="mt-6 flex flex-col gap-4 rounded-[28px] bg-night p-6 text-white lg:hidden">
+          <p className="v2-semi font-display text-lg font-bold">Une panne en cours&nbsp;?</p>
+          <p className="-mt-2 text-sm text-white/65">N&apos;attendez pas le devis : appelez-nous directement.</p>
+          <PhoneButton variant="primary" className="min-h-[52px] w-full text-base" />
+        </div>
       </div>
-
-      <aside className="min-w-0 lg:sticky lg:top-28" aria-label="Récapitulatif de votre demande">
-        <QuoteRecap
-          quote={quote}
-          categoryLabel={category?.label}
-          serviceLabel={quote.service === OTHER_SERVICE ? "Autre besoin" : service?.label}
-          amount={service?.intent !== "installation" ? service?.amount : undefined}
-          photoCount={photos.length}
-        />
-      </aside>
     </div>
   );
 }
