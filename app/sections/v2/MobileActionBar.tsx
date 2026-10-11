@@ -33,7 +33,7 @@ export function MobileActionBar({ actions }: { actions: Record<string, PageActio
   );
 
   return (
-    <div className="v2-mobile-bar fixed inset-x-0 bottom-0 z-30 border-t border-night/[0.08] bg-white/95 px-3 pb-[max(env(safe-area-inset-bottom),12px)] pt-3 backdrop-blur-xl lg:hidden">
+    <div className="v2-mobile-bar fixed inset-x-0 bottom-0 z-30 border-t border-night/[0.08] bg-white/95 px-3 pb-[max(env(safe-area-inset-bottom),12px)] pt-3 lg:hidden">
       {page?.intent === "urgence" ? (
         <div className="mx-auto grid max-w-md grid-cols-2 gap-2">
           {call}

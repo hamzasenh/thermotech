@@ -183,7 +183,7 @@ export function FooterV2({ surface = "night" }: { surface?: Surface }) {
           <div>
             <Link href="/" className="inline-flex items-center gap-3" aria-label="Radialec — accueil">
               <Image src={logo} alt="" height={48} width={43} />
-              <span className={cn("font-sans text-[28px] font-extrabold tracking-tight", light && "text-ink")}>Radialec</span>
+              <span className={cn("font-wordmark text-[28px] font-extrabold tracking-tight", light && "text-ink")}>Radialec</span>
             </Link>
             <p className={cn("mt-5 max-w-sm text-[15px] leading-relaxed", light ? "text-night/65" : "text-white/60")}>{company.description}</p>
             <PhoneButton variant="primary" className="mt-8 min-h-[52px] px-6 text-base" />

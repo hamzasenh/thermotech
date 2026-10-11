@@ -10,11 +10,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+        // Archivo (variable en graisse et en largeur) : la police du site, y compris par défaut.
+        sans: ["var(--font-archivo)", ...defaultTheme.fontFamily.sans],
+        display: ["var(--font-archivo)", ...defaultTheme.fontFamily.sans],
+        // Geist : uniquement le mot « Radialec » du logo (identité inchangeable).
+        wordmark: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
         // Geist Mono n'est chargée que là où elle sert (afficheur de prix de /tarifs).
         mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
-        // Refonte : Archivo (variable en graisse et en largeur), chargée sur les pages refondues.
-        display: ["var(--font-archivo)", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         // Palette de marque Radialec — utiliser ces tokens plutôt que les hex bruts.
@@ -30,48 +32,16 @@ export default {
         water: { DEFAULT: "#3468AF", light: "#38B7E8" }, // goutte
         night: "#0B1222", // fonds « cinéma », texte des titres
         chalk: "#F6F3EE", // fond de lecture chaud (remplace le lavande)
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--primary-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-        },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
       },
+      // Couleur des bordures sans couleur explicite (gris neutre clair).
+      borderColor: { DEFAULT: "#e5e5e5" },
       boxShadow: {
         soft: "0 20px 60px -15px rgba(0, 30, 128, 0.25)",
-        card: "0 7px 14px #EAEAEA",
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "0.625rem",
+        md: "calc(0.625rem - 2px)",
+        sm: "calc(0.625rem - 4px)",
       },
       container: {
         center: true,
@@ -82,5 +52,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 } satisfies Config;

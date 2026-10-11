@@ -10,13 +10,12 @@ import {
   type ContactActionKey,
 } from "@/app/data/company";
 
-export type ButtonVariant = "primary" | "secondary" | "dark" | "glass" | "light";
+export type ButtonVariant = "primary" | "secondary" | "dark" | "light";
 
 const variantClass: Record<ButtonVariant, string> = {
   primary: "btn btn-primary",
   secondary: "btn btn-secondary",
   dark: "btn btn-dark",
-  glass: "btn btn-glass",
   light: "btn bg-white text-flame shadow-lg hover:bg-lavender",
 };
 

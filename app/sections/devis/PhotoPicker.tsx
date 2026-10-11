@@ -85,7 +85,7 @@ export function PhotoPicker({ onChange }: { onChange: (files: File[]) => void })
               type="button"
               onClick={() => remove(index)}
               aria-label={`Retirer la photo ${index + 1}`}
-              className="absolute right-1.5 top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-night/80 text-white backdrop-blur-sm hover:bg-flame"
+              className="absolute right-1.5 top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-night/80 text-white hover:bg-flame"
             >
               <FaTimes className="h-3 w-3" aria-hidden="true" />
             </button>

@@ -30,7 +30,7 @@ export function QuoteSummary({ quote, categoryLabel, serviceLabel, amount, photo
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[28px] bg-white/75 p-6 ring-1 ring-night/[0.06] backdrop-blur-sm xl:p-7">
+      <div className="rounded-[28px] bg-white/75 p-6 ring-1 ring-night/[0.06] xl:p-7">
         <Eyebrow>Votre demande</Eyebrow>
         <dl className="mt-4 divide-y divide-night/[0.07]">
           <Row label="Domaine" value={categoryLabel} />

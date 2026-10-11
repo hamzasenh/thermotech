@@ -11,7 +11,7 @@ import { startingPrice } from "./content";
  */
 export function ServicesPanel({ eyebrow, title, services }: { eyebrow: string; title: string; services: Service[] }) {
   return (
-    <div className="rounded-[28px] bg-white/80 p-6 text-night ring-1 ring-night/[0.07] backdrop-blur-sm sm:p-8">
+    <div className="rounded-[28px] bg-white/80 p-6 text-night ring-1 ring-night/[0.07] sm:p-8">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-flame">{eyebrow}</p>
       <p className="v2-semi mt-1.5 font-display text-xl font-bold leading-snug">{fr(title)}</p>
       <ul className="mt-5 divide-y divide-night/[0.08] border-t border-night/[0.08]">

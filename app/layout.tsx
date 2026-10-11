@@ -48,8 +48,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr-BE">
-      <body className={`${geistSans.variable} ${archivo.variable} bg-white font-display text-night antialiased`}>
+    // Variables de police sur <html> : la page entière est en Archivo (Geist : mot « Radialec » du logo seulement).
+    <html lang="fr-BE" className={`${geistSans.variable} ${archivo.variable}`}>
+      <body className="bg-white font-display text-night antialiased">
         <a
           href="#contenu"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-3 focus:font-bold focus:text-white"

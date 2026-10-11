@@ -94,7 +94,7 @@ export function HeaderV2({ groups }: { groups: NavGroup[] }) {
         <div className="flex h-16 items-center justify-between gap-2 pl-3 pr-1.5 sm:gap-3 sm:pl-5 sm:pr-2.5 lg:h-[72px]">
           <Link href="/" aria-label="Radialec — accueil" className="flex flex-shrink-0 items-center gap-1.5 sm:gap-2" onClick={closeAll}>
             <Image src={Logo} alt="" height={44} width={39} priority className="h-8 w-auto min-[380px]:h-9 md:h-11" />
-            <span className="font-sans text-[17px] font-extrabold tracking-tight text-ink min-[360px]:text-[19px] min-[380px]:text-[21px] sm:text-[28px] xl:text-[24px] 2xl:text-[28px]">
+            <span className="font-wordmark text-[17px] font-extrabold tracking-tight text-ink min-[360px]:text-[19px] min-[380px]:text-[21px] sm:text-[28px] xl:text-[24px] 2xl:text-[28px]">
               Radialec
             </span>
           </Link>

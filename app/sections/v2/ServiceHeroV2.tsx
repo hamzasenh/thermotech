@@ -197,7 +197,7 @@ export function ServiceHeroV2({
         {facts.length > 0 && (
           <dl
             className={cn(
-              "mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl ring-1 backdrop-blur-md lg:mt-16 lg:grid-cols-4",
+              "mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-2xl ring-1 lg:mt-16 lg:grid-cols-4",
               light ? "bg-night/10 ring-night/10" : "bg-white/15 ring-white/15"
             )}
           >
