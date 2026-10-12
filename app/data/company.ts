@@ -193,14 +193,14 @@ export const onlineBooking = {
   brandColor: "#e52619",
   events: [
     {
-      calLink: "mohamed-senhaji-yzzi5r/rendez-vous-de-45-min-entretien-chaudiere",
+      calLink: "radialec/entretien-60-min",
       label: "Entretien de chaudière",
       // Page marque Vaillant (brouillon) : son intention est l'entretien.
       services: ["chauffage/entretien-chaudiere", "chauffage/vaillant"],
     },
   ],
   /** Type proposé quand le visiteur arrive sans prestation précise (accueil, /contact, /tarifs…). */
-  defaultEvent: "mohamed-senhaji-yzzi5r/rendez-vous-de-45-min-entretien-chaudiere",
+  defaultEvent: "radialec/entretien-60-min",
 };
 
 export type BookingEvent = (typeof onlineBooking.events)[number];

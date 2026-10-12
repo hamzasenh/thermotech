@@ -136,7 +136,7 @@ Toute somme écrite dans un texte passe par `${prices.…}`, jamais tapée en du
 | Google | 5/5, « plus de 30 avis » (31 le 11/10), lien vers la fiche, lien d'avis `/avis` |
 | Réseaux sociaux | Aucun (Instagram et TikTok non renseignés, masqués) |
 | Société | Thermo Tech Solutions SRL, BE 1008.693.201 (vérifié à la BCE) ; éditeur : Houdaifa Senhaji, gérant ; hébergeur : Vercel Inc. |
-| Rendez-vous en ligne | Cal.com, un seul type : « Entretien de chaudière » (45 min) |
+| Rendez-vous en ligne | Cal.com, un seul type : « Entretien de chaudière » (60 min, lien `radialec/entretien-60-min`) |
 
 ## 6. Conversion : boutons d'action, WhatsApp, avis
 
