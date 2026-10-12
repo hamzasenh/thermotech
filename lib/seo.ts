@@ -17,14 +17,18 @@ export function pageMetadata({
   description,
   path,
   absoluteTitle,
+  noindex,
 }: {
   title: string;
   description: string;
   path: string;
   /** Titre complet sans suffixe automatique (homepage). */
   absoluteTitle?: boolean;
+  /** Brouillon affiché en aperçu : jamais indexé. */
+  noindex?: boolean;
 }): Metadata {
   return {
+    ...(noindex ? { robots: { index: false, follow: false } } : {}),
     title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: { canonical: path },

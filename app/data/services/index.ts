@@ -3,6 +3,7 @@ import { electriciteServices } from "./electricite";
 import { plomberieServices } from "./plomberie";
 import { climatisationServices } from "./climatisation";
 import { professionnelsServices } from "./professionnels";
+import { isVisible } from "../visibility";
 import type { Service, ServiceCategory, ServiceRef } from "./types";
 
 export * from "./types";
@@ -10,14 +11,15 @@ export * from "./types";
 // Toutes les pages service du site. Une entrée = une URL /<category>/<slug>,
 // générée statiquement par app/<category>/[slug]/page.tsx. Pour ajouter un
 // service : ajouter un objet dans le fichier de sa catégorie — la page, le
-// menu, le footer et le sitemap suivent automatiquement.
+// menu, le footer et le sitemap suivent automatiquement. Les brouillons
+// (draft: true) n'existent pas en production (app/data/visibility.ts).
 export const services: Service[] = [
   ...chauffageServices,
   ...electriciteServices,
   ...plomberieServices,
   ...climatisationServices,
   ...professionnelsServices,
-];
+].filter(isVisible);
 
 export function getServicesByCategory(category: ServiceCategory): Service[] {
   return services.filter((s) => s.category === category);

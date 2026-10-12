@@ -61,6 +61,10 @@ export const neededAssets = {
   // P62 abandonnée le 08/10/2026 (pas de photo d'équipe sur le site).
   P62: { file: "equipe.png", subject: "Portrait d'équipe, le jour où les tenues Radialec existent.", format: "Paysage" },
   P63: { file: "camionnette.png", subject: "La camionnette, si elle est floquée Radialec.", format: "Paysage" },
+  // Guides et pages marque (12/10/2026)
+  P64: { file: "vaillant-ecran-code.png", subject: "Gros plan sur l'écran d'une chaudière Vaillant ecoTEC qui affiche un code d'erreur (ex. F.28), une main qui montre l'écran.", format: "Paysage 4:3" },
+  P65: { file: "manometre-pression.png", subject: "Gros plan sur le manomètre d'une chaudière, l'aiguille entre 1 et 2 bar, doigt qui pointe la zone.", format: "Paysage 4:3" },
+  P66: { file: "chaudiere-vaillant.png", subject: "Chaudière murale Vaillant ecoTEC en situation (cuisine ou buanderie), mains du technicien sur la façade.", format: "Paysage" },
   // Vidéos courtes (facultatives)
   V01: { file: "video-ecran-chaudiere.mp4", subject: "L'écran d'une chaudière qui s'allume, ou la flamme par le hublot. 6 à 10 s, téléphone posé, sans son.", format: "Vertical" },
   V02: { file: "video-raccord.mp4", subject: "Mains qui serrent un raccord. 6 à 10 s, téléphone posé, sans son.", format: "Vertical" },

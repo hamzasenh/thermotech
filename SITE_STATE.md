@@ -283,9 +283,20 @@ Elle ne part qu'avec un expéditeur sur un domaine vérifié dans Resend (`QUOTE
 7. **Relecture juridique** des pages légales ; détails des cookies Cal.com.
 8. **Réseaux sociaux** : les ajouter s'ils existent.
 
+### Guides d'aide (plan du 12/10 : `prompts/refonte/08-guides.md`)
+
+- **Rédigés en brouillon, invisibles en production :** `/chauffage/vaillant` (page marque) et `/chauffage/vaillant/codes-erreur` (F.20, F.22, F.27, F.28, F.29, F.75). À relire par le gestionnaire (liste de contrôle dans le fichier 08) ; photos P64 à P66 à fournir.
+- **Suite du plan :**
+  1. Bulex et ses codes d'erreur ;
+  2. chaudière en panne, avec la page d'accueil `/guide` ;
+  3. pression chaudière ;
+  4. renforcer la page Entretien (réglementation) ;
+  5. purger un radiateur ;
+  6. chaudière à condensation (sans pourcentage de TVA ni prix) ;
+  7. monoxyde de carbone.
+
 ### Prochaines pistes (proposées, non commencées)
 
-- **Pages « codes erreur » par marque** (Vaillant et Bulex d'abord), en brouillon à relire par le gestionnaire. Puis le guide « prix d'une nouvelle chaudière » et le simulateur (il faut des fourchettes de prix), puis « entretien obligatoire à Bruxelles ».
 - **Une page par commune** (Uccle d'abord), seulement avec de vraies réalisations sur place.
 - **Option « Urgence en 2 heures » (+50 €)** rendue visible sur les pages de dépannage (texte à valider).
 - **Contenu de la fiche Google Business** et textes WhatsApp Business prêts à coller.

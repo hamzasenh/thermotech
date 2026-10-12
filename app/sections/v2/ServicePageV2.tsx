@@ -10,6 +10,7 @@ import { AlertV2, ChecklistV2, FeaturesV2, OptionsV2, PricingV2 } from "./conten
 import { finalCtaVisual } from "./cta";
 import { FaqV2 } from "./FaqV2";
 import { ServiceHeroV2 } from "./ServiceHeroV2";
+import { DraftBanner } from "./DraftBanner";
 import { StepsV2 } from "./StepsV2";
 import { backgrounds } from "./tones";
 import { ButtonLink, PhoneButton, type Surface } from "./ui";
@@ -111,6 +112,7 @@ export function ServicePageV2({ service, surface = "lavender" }: { service: Serv
     <>
       <JsonLd data={serviceJsonLd({ name: service.name, description: service.metaDescription, path, price: service.price })} />
       <JsonLd data={faqJsonLd(service.faqs)} />
+      {service.draft && <DraftBanner />}
 
       <ServiceHeroV2
         breadcrumbs={breadcrumbs}

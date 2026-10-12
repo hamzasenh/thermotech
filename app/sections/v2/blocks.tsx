@@ -218,6 +218,7 @@ const callBandCopy: Record<ServiceIntent | "chaudiere", { eyebrow: string; title
 
 export function CallBandV2({
   context,
+  copyKey,
   topic,
   surface = "lavender",
   intent = "installation",
@@ -228,6 +229,8 @@ export function CallBandV2({
 }: {
   /** Page d'origine transmise au rappel / rendez-vous (absente sur /contact). */
   context?: string;
+  /** Texte à utiliser (défaut : « chaudière » sur les pages chauffage, sinon celui de l'intention). */
+  copyKey?: ServiceIntent | "chaudiere";
   /** Sujet du message WhatsApp pré-rempli. */
   topic?: string;
   surface?: Surface;
@@ -241,7 +244,7 @@ export function CallBandV2({
   attached?: boolean;
 }) {
   const light = surface === "lavender";
-  const copy = callBandCopy[context?.startsWith("chauffage") ? "chaudiere" : intent];
+  const copy = callBandCopy[copyKey ?? (context?.startsWith("chauffage") ? "chaudiere" : intent)];
   // Entretien : le rendez-vous reste la 2e action, WhatsApp passe en lien. Ailleurs :
   // WhatsApp (photo de la panne ou du projet), le rappel en repli (prompts/refonte/06).
   const entretien = intent === "entretien";

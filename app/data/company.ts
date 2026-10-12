@@ -195,7 +195,8 @@ export const onlineBooking = {
     {
       calLink: "mohamed-senhaji-yzzi5r/rendez-vous-de-45-min-entretien-chaudiere",
       label: "Entretien de chaudière",
-      services: ["chauffage/entretien-chaudiere"],
+      // Page marque Vaillant (brouillon) : son intention est l'entretien.
+      services: ["chauffage/entretien-chaudiere", "chauffage/vaillant"],
     },
   ],
   /** Type proposé quand le visiteur arrive sans prestation précise (accueil, /contact, /tarifs…). */

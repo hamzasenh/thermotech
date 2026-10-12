@@ -1,5 +1,6 @@
 import { boilerBrandNames } from "../brands";
 import { prices } from "../pricing";
+import { gasLeakAlert } from "../safety";
 import type { Service } from "./types";
 
 import boilerMaintenance from "@/assets/boiler-maintenance.png";
@@ -433,15 +434,7 @@ export const chauffageServices: Service[] = [
       {
         type: "alert",
         tone: "danger",
-        title: "Odeur de gaz ? Les bons réflexes, dans cet ordre",
-        // Consignes officielles Sibelga / Fluvius et numéros vérifiés le 06/10/2026 (sibelga.be, fluvius.be,
-        // ores.be). Formulation validée par le gestionnaire le 08/10/2026 (Q33) : ne pas la modifier sans lui.
-        paragraphs: [
-          "**Ouvrez portes et fenêtres.** Aucune flamme ni étincelle : ne touchez à aucun interrupteur, n'allumez pas de lampe, n'utilisez ni appareil électrique ni téléphone dans le logement.",
-          "Si le robinet du compteur de gaz est accessible sans allumer la lumière, fermez-le. Puis **quittez le logement** et appelez depuis l'extérieur.",
-          "Numéros d'urgence gaz, gratuits : **Bruxelles** (Sibelga) **0800 19 400** · **Brabant flamand** (Fluvius) **0800 65 0 65** · **Brabant wallon** (ORES) **0800 87 087** · ou le **112**.",
-          "Quand la situation est sécurisée, contactez-nous pour contrôler et remettre votre installation en service.",
-        ],
+        ...gasLeakAlert,
       },
       {
         type: "callout",
@@ -1570,5 +1563,107 @@ export const chauffageServices: Service[] = [
       body: "Cheminée, insert, poêle ou chaudière au mazout : prenez rendez-vous avant la saison de chauffe. Un ramonage au prix affiché, et vous profitez de vos flambées en toute sérénité.",
     },
     draft: false,
+  },
+
+  // --- Page marque Vaillant (12/10/2026) — BROUILLON, invisible en production ---
+  // Mots-clés : chauffagiste vaillant, entretien chaudière vaillant. Aucun agrément
+  // Vaillant (réponse du 12/10) : ne jamais en affirmer un. Pas de fourchette de prix
+  // pour un remplacement : devis. Parent du guide /chauffage/vaillant/codes-erreur.
+  {
+    category: "chauffage",
+    slug: "vaillant",
+    title: "Vaillant",
+    name: "Chaudières Vaillant",
+    pageTitle: "Chauffagiste pour votre chaudière Vaillant à Bruxelles",
+    metaTitle: "Chauffagiste Vaillant à Bruxelles : entretien et dépannage",
+    metaDescription: `Entretien (${prices.entretienChaudiereGaz.amount} € TVAC), dépannage 7j/7 et remplacement de votre chaudière Vaillant à Bruxelles. Prix annoncé à l'avance, codes d'erreur expliqués.`,
+    summary: "Entretien, dépannage et remplacement de votre chaudière Vaillant, avec un seul interlocuteur.",
+    icon: "fire",
+    intent: "entretien",
+    price: { key: "entretienChaudiereGaz" },
+    hero: {
+      eyebrow: "Chaudières Vaillant · Bruxelles",
+      intro: "Entretien annuel, panne, code d'erreur ou chaudière en fin de vie : nos techniciens s'occupent de votre Vaillant, 7j/7, avec un prix annoncé avant toute intervention.",
+      image: { asset: "P66", alt: "Chaudière murale Vaillant, technicien au travail" },
+    },
+    facts: [
+      { icon: "clipboard", stat: `Entretien ${prices.entretienChaudiereGaz.amount} €`, label: "Chaudière gaz, TVAC, attestation comprise" },
+      { icon: "clock", stat: "Sous 24h", label: "Intervention 7j/7" },
+      { icon: "map", stat: "19 communes", label: "Bruxelles et périphérie" },
+      { icon: "award", stat: "Prix annoncé", label: "Avant toute intervention" },
+    ],
+    blocks: [
+      {
+        type: "features",
+        eyebrow: "Votre Vaillant entre de bonnes mains",
+        title: "Entretien, dépannage, remplacement : un seul interlocuteur",
+        items: [
+          {
+            icon: "clipboard",
+            title: "Entretien",
+            text: `Contrôle complet et attestation remise le jour même, **${prices.entretienChaudiereGaz.amount} € TVAC** pour une chaudière gaz. [Voir l'entretien](/chauffage/entretien-chaudiere)`,
+          },
+          {
+            icon: "wrench",
+            title: "Dépannage",
+            text: `7j/7, intervention sous 24h. **${prices.depannage.amount} € TVAC**, déplacement, diagnostic et première heure compris. [Voir le dépannage](/chauffage/depannage-chaudiere)`,
+          },
+          {
+            icon: "tools",
+            title: "Remplacement",
+            text: "Votre Vaillant arrive en fin de vie ? Visite et devis gratuits, sans engagement. [Voir le remplacement](/chauffage/remplacement-chaudiere)",
+          },
+        ],
+      },
+      {
+        type: "callout",
+        title: "Un code d'erreur sur l'écran ?",
+        paragraphs: [
+          "F.28, F.22, F.75… Notre [guide des codes d'erreur Vaillant](/chauffage/vaillant/codes-erreur) explique ce que chaque code veut dire, ce que vous pouvez vérifier sans risque et quand il vaut mieux nous appeler.",
+        ],
+      },
+      {
+        type: "pricing",
+        title: "Les prix, annoncés à l'avance",
+        intro: "Les mêmes tarifs, quelle que soit la marque de votre chaudière.",
+        items: [
+          { key: "entretienChaudiereGaz" },
+          { key: "depannage" },
+          { key: "heureSupplementaire" },
+          { label: "Remplacement de chaudière", note: "Sur devis gratuit, après visite" },
+        ],
+      },
+    ],
+    faqTitle: "Questions fréquentes sur les chaudières Vaillant",
+    faqs: [
+      {
+        id: 1,
+        question: "Êtes-vous un service agréé Vaillant ?",
+        answer:
+          "Non : Radialec est un chauffagiste indépendant, pas le service après-vente de Vaillant. Nos techniciens sont agréés et entretiennent et dépannent les chaudières Vaillant comme les autres marques que nous installons.",
+      },
+      {
+        id: 2,
+        question: "Combien coûte l'entretien d'une chaudière Vaillant ?",
+        answer: `**${prices.entretienChaudiereGaz.amount} € TVAC** pour une chaudière gaz, contrôle complet et attestation compris. Le prix est le même quelle que soit la marque. [Prendre rendez-vous](/rendez-vous?service=chauffage/vaillant)`,
+      },
+      {
+        id: 3,
+        question: "Ma Vaillant affiche un code d'erreur. Que faire ?",
+        answer:
+          "Notez le code, regardez la pression et réarmez une seule fois. Notre [guide des codes d'erreur Vaillant](/chauffage/vaillant/codes-erreur) détaille F.20, F.22, F.27, F.28, F.29 et F.75. Si le code revient, appelez-nous.",
+      },
+      {
+        id: 4,
+        question: "Combien coûte une nouvelle chaudière Vaillant ?",
+        answer:
+          "Cela dépend de votre logement, du modèle choisi et de l'installation existante : nous établissons un devis gratuit et détaillé après une visite, sans engagement. [Demander un devis](/devis?service=chauffage/remplacement-chaudiere)",
+      },
+    ],
+    related: ["chauffage/entretien-chaudiere", "chauffage/depannage-chaudiere", "chauffage/remplacement-chaudiere"],
+    cta: {
+      body: "Entretien, panne ou remplacement de votre Vaillant : un technicien vous répond 7j/7. Prenez rendez-vous en ligne ou appelez-nous, le prix vous est annoncé avant toute intervention.",
+    },
+    draft: true,
   },
 ];

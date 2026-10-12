@@ -9,6 +9,7 @@ Quick reference so you don't have to open every file. Keep it in sync whenever a
 | `ServicePage.tsx` | — | Only `serviceRoute(category)` (static params, metadata, page) used by the `[slug]/page.tsx` files; services with a `path` override are excluded. |
 | `CategoryPage.tsx` | `/<category>` | `ServiceHeroV2` with `ServicesPanel` (« Votre besoin ? », no image) → `ServiceGridV2` (chauffage: 3 boiler services featured) → `CallBandV2` → why (`FeaturesV2`) / `PricingV2` / `BrandsV2` / `GuideV2` → proof → zones → FAQ → final CTA. `categoryMetadata()`. |
 | `LegalPage.tsx` | legal pages | Lavender header + reading typography + `LegalTable`. |
+| `guide/GuidePage.tsx` (+ `guideRoute.tsx`, client `GuideToc.tsx`) | `/<category>/<parent>/<guide>` | Help guide: lavender hero (short answer, reading time, call + WhatsApp photo, code tiles or summary) → safety `AlertV2` (`#securite`) → reading column 44rem / 18px on chalk with reflexes and sections (big code, status pill, checks card, « Appelez un technicien si… » flame rule, per-section help card) + sticky summary and night help card on lg → `CallBandV2` (`copyKey` = intent) → `ProofV2` → `FaqV2#faq` → `RelatedV2` → `FinalCtaV2`. Article + FAQPage JSON-LD. |
 
 ## Design components (`v2/`)
 | File | Notes |

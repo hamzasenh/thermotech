@@ -30,6 +30,7 @@ export function serviceRoute(category: ServiceCategory) {
         title: service.metaTitle,
         description: service.metaDescription,
         path: serviceHref(service),
+        noindex: service.draft,
       });
     },
 

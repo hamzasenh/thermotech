@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/seo";
 import { categoryOrder } from "./data/categories";
+import { guideHref, guides } from "./data/guides";
 import { serviceHref, services } from "./data/services";
 
 type Entry = MetadataRoute.Sitemap[number];
@@ -20,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    ...guides.map((guide) => ({
+      url: absoluteUrl(guideHref(guide)),
+      lastModified: new Date(guide.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
     { url: absoluteUrl("/devis"), lastModified, changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/rendez-vous"), lastModified, changeFrequency: "monthly", priority: 0.7 },

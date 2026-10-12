@@ -1,4 +1,5 @@
 import { categoryLabels, categoryOrder, getCategory } from "./categories";
+import { guideHref, guides } from "./guides";
 import { getServiceByRef, serviceHref, services, type ServiceCategory } from "./services";
 import type { ServiceIntent } from "./services/types";
 
@@ -49,6 +50,9 @@ export function getPageActions(): Record<string, PageAction> {
   }
   for (const service of services) {
     actions[serviceHref(service)] = { intent: service.intent, label: service.name };
+  }
+  for (const guide of guides) {
+    actions[guideHref(guide)] = { intent: guide.intent, label: guide.topic };
   }
   return actions;
 }
